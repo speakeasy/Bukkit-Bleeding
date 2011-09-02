@@ -1,6 +1,5 @@
 package org.bukkit.event.block;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.block.Block;
@@ -29,6 +28,7 @@ public class BlockBreakEvent extends BlockEvent implements Cancellable {
         super(theBlock);
         this.player = player;
         this.cancel = false;
+        this.drops = drops;
     }
 
     /**
