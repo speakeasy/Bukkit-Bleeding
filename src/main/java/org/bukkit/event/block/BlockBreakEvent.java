@@ -43,10 +43,6 @@ public class BlockBreakEvent extends BlockEvent implements Cancellable {
     public List<ItemStack> getDrops() {
         return drops;
     }
-    
-    public void setDrops(List<ItemStack> drops) {
-        this.drops = drops;
-    }
 
     public boolean isCancelled() {
         return cancel;
