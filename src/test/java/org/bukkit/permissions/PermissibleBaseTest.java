@@ -72,8 +72,9 @@ public class PermissibleBaseTest extends PermissionTest {
         // unset permissions should return false
         permissionName = "unsetPermission";
         permission = new Permission(permissionName);
-        Assert.assertFalse("isPermissionSet should return false for unset string permission", base.isPermissionSet(permissionName));
-        Assert.assertFalse("isPermissionSet should return false for unset permission", base.isPermissionSet(permission));
+
+        isSet(base, false, permissionName);
+        isSet(base, false, permission);
 
         FakePlugin plugin = new FakePlugin();
         plugin.setEnabled(true);
@@ -84,66 +85,56 @@ public class PermissibleBaseTest extends PermissionTest {
         permissionName = "setPermission";
         permission = new Permission(permissionName);
 
-        Assert.assertTrue("isPermissionSet should return true for set string permission", base.isPermissionSet(permissionName));
-        Assert.assertTrue("isPermissionSet should return true for set permission", base.isPermissionSet(permission));
+        isSet(base, true, permissionName);
+        isSet(base, true, permission);
 
         // removed permissions should return false again
         base.removeAttachment(attachment);
 
-        Assert.assertFalse("isPermissionSet should return false again for removed string permission", base.isPermissionSet(permissionName));
-        Assert.assertFalse("isPermissionSet should return false again for removed permission", base.isPermissionSet(permission));
+        isSet(base, false, permissionName);
+        isSet(base, false, permission);
 
         // default permissions for null serveroperator object
         base = new PermissibleBase(null);
 
-        Assert.assertTrue("isPermissionSet for non-OP should return true for default true permission", base.isPermissionSet(PERM_DEFAULT_TRUE));
-        Assert.assertFalse("isPermissionSet for non-OP should return false for default op permission", base.isPermissionSet(PERM_DEFAULT_OP));
-        Assert.assertFalse("isPermissionSet for non-OP should return false for default false permission", base.isPermissionSet(PERM_DEFAULT_FALSE));
-        Assert.assertTrue("isPermissionSet for non-OP should return true for default not-op permission", base.isPermissionSet(PERM_DEFAULT_NOT_OP));
+        isSet(base, true, PERM_DEFAULT_TRUE, PERM_DEFAULT_NOT_OP, PERM_DEFAULT_PARENT_TRUE, PERM_DEFAULT_CHILD_TRUE, PERM_DEFAULT_PARENT_NOT_OP, PERM_DEFAULT_CHILD_NOT_OP);
+        isSet(base, false, PERM_DEFAULT_OP, PERM_DEFAULT_FALSE, PERM_DEFAULT_PARENT_FALSE, PERM_DEFAULT_CHILD_FALSE, PERM_DEFAULT_PARENT_OP, PERM_DEFAULT_CHILD_OP);
 
         // default permissions set for non OP
         base = new PermissibleBase(createServerOperator(false));
 
-        Assert.assertTrue("isPermissionSet for non-OP should return true for default true permission", base.isPermissionSet(PERM_DEFAULT_TRUE));
-        Assert.assertFalse("isPermissionSet for non-OP should return false for default op permission", base.isPermissionSet(PERM_DEFAULT_OP));
-        Assert.assertFalse("isPermissionSet for non-OP should return false for default false permission", base.isPermissionSet(PERM_DEFAULT_FALSE));
-        Assert.assertTrue("isPermissionSet for non-OP should return true for default not-op permission", base.isPermissionSet(PERM_DEFAULT_NOT_OP));
+        isSet(base, true, PERM_DEFAULT_TRUE, PERM_DEFAULT_NOT_OP, PERM_DEFAULT_PARENT_TRUE, PERM_DEFAULT_CHILD_TRUE, PERM_DEFAULT_PARENT_NOT_OP, PERM_DEFAULT_CHILD_NOT_OP);
+        isSet(base, false, PERM_DEFAULT_OP, PERM_DEFAULT_FALSE, PERM_DEFAULT_PARENT_FALSE, PERM_DEFAULT_CHILD_FALSE, PERM_DEFAULT_PARENT_OP, PERM_DEFAULT_CHILD_OP);
 
         // default permissions set for OP
         base = new PermissibleBase(createServerOperator(true));
 
-        Assert.assertTrue("isPermissionSet for OP should return true for default true permission", base.isPermissionSet(PERM_DEFAULT_TRUE));
-        Assert.assertTrue("isPermissionSet for OP should return true for default op permission", base.isPermissionSet(PERM_DEFAULT_OP));
-        Assert.assertFalse("isPermissionSet for OP should return false for default false permission", base.isPermissionSet(PERM_DEFAULT_FALSE));
-        Assert.assertFalse("isPermissionSet for OP should return false for default not-op permission", base.isPermissionSet(PERM_DEFAULT_NOT_OP));
-
+        isSet(base, true, PERM_DEFAULT_TRUE, PERM_DEFAULT_OP, PERM_DEFAULT_PARENT_TRUE, PERM_DEFAULT_CHILD_TRUE, PERM_DEFAULT_PARENT_OP, PERM_DEFAULT_CHILD_OP);
+        isSet(base, false, PERM_DEFAULT_FALSE, PERM_DEFAULT_NOT_OP, PERM_DEFAULT_PARENT_FALSE, PERM_DEFAULT_CHILD_FALSE, PERM_DEFAULT_PARENT_NOT_OP, PERM_DEFAULT_CHILD_NOT_OP);
     }
 
     @Test
+    /**
+     * Check if all default permissions are assigned correctly to new PermissibleBase objects
+     */
     public void testPermissibleBase_hasPermissionDefaults() {
         // default permissions for null serveroperator object
         PermissibleBase base = new PermissibleBase(null);
 
-        Assert.assertTrue("isPermissionSet for non-OP should return true for default true permission", base.hasPermission(PERM_DEFAULT_TRUE));
-        Assert.assertFalse("isPermissionSet for non-OP should return false for default op permission", base.hasPermission(PERM_DEFAULT_OP));
-        Assert.assertFalse("isPermissionSet for non-OP should return false for default false permission", base.hasPermission(PERM_DEFAULT_FALSE));
-        Assert.assertTrue("isPermissionSet for non-OP should return true for default not-op permission", base.hasPermission(PERM_DEFAULT_NOT_OP));
-
-        // default permissions set for OP
-        base = new PermissibleBase(createServerOperator(true));
-
-        Assert.assertTrue("isPermissionSet for OP should return true for default true permission", base.hasPermission(PERM_DEFAULT_TRUE));
-        Assert.assertTrue("isPermissionSet for OP should return true for default op permission", base.hasPermission(PERM_DEFAULT_OP));
-        Assert.assertFalse("isPermissionSet for OP should return false for default false permission", base.hasPermission(PERM_DEFAULT_FALSE));
-        Assert.assertFalse("isPermissionSet for OP should return false for default not-op permission", base.hasPermission(PERM_DEFAULT_NOT_OP));
+        hasPerm(base, true, PERM_DEFAULT_TRUE, PERM_DEFAULT_NOT_OP, PERM_DEFAULT_PARENT_TRUE, PERM_DEFAULT_CHILD_TRUE, PERM_DEFAULT_PARENT_NOT_OP, PERM_DEFAULT_CHILD_NOT_OP);
+        hasPerm(base, false, PERM_DEFAULT_FALSE, PERM_DEFAULT_OP, PERM_DEFAULT_PARENT_FALSE, PERM_DEFAULT_CHILD_FALSE, PERM_DEFAULT_PARENT_OP, PERM_DEFAULT_CHILD_OP);
 
         // default permissions set for non OP
         base = new PermissibleBase(createServerOperator(false));
 
-        Assert.assertTrue("isPermissionSet for non-OP should return true for default true permission", base.hasPermission(PERM_DEFAULT_TRUE));
-        Assert.assertFalse("isPermissionSet for non-OP should return false for default op permission", base.hasPermission(PERM_DEFAULT_OP));
-        Assert.assertFalse("isPermissionSet for non-OP should return false for default false permission", base.hasPermission(PERM_DEFAULT_FALSE));
-        Assert.assertTrue("isPermissionSet for non-OP should return true for default not-op permission", base.hasPermission(PERM_DEFAULT_NOT_OP));
+        hasPerm(base, true, PERM_DEFAULT_TRUE, PERM_DEFAULT_NOT_OP, PERM_DEFAULT_PARENT_TRUE, PERM_DEFAULT_CHILD_TRUE, PERM_DEFAULT_PARENT_NOT_OP, PERM_DEFAULT_CHILD_NOT_OP);
+        hasPerm(base, false, PERM_DEFAULT_FALSE, PERM_DEFAULT_OP, PERM_DEFAULT_PARENT_FALSE, PERM_DEFAULT_CHILD_FALSE, PERM_DEFAULT_PARENT_OP, PERM_DEFAULT_CHILD_OP);
+
+        // default permissions set for OP
+        base = new PermissibleBase(createServerOperator(true));
+
+        hasPerm(base, true, PERM_DEFAULT_TRUE, PERM_DEFAULT_OP, PERM_DEFAULT_PARENT_TRUE, PERM_DEFAULT_CHILD_TRUE, PERM_DEFAULT_PARENT_OP, PERM_DEFAULT_CHILD_OP);
+        hasPerm(base, false, PERM_DEFAULT_FALSE, PERM_DEFAULT_NOT_OP, PERM_DEFAULT_PARENT_FALSE, PERM_DEFAULT_CHILD_FALSE, PERM_DEFAULT_PARENT_NOT_OP, PERM_DEFAULT_CHILD_NOT_OP);
     }
 
     @Test
@@ -297,11 +288,11 @@ public class PermissibleBaseTest extends PermissionTest {
         String permission2 = "permission2";
 
         PermissionAttachment attachment1 = base.addAttachment(plugin, permission1, false);
-        PermissionAttachment attachment2 = base.addAttachment(plugin, permission2, false);
+        PermissionAttachment attachment2 = base.addAttachment(plugin, permission2, true);
 
         infos = base.getEffectivePermissions();
 
-        // Two default permissions plus two permissions from attachments should
+        // Default permissions plus two permissions from attachments should
         // be set
         Assert.assertEquals(infos.size(), DEFAULT_OP_PERMISSION_COUNT + 2);
 
@@ -314,6 +305,9 @@ public class PermissibleBaseTest extends PermissionTest {
         base.removeAttachment(attachment1);
         base.removeAttachment(attachment2);
 
+        infos = base.getEffectivePermissions();
+
+        // Only Default permissions should remain
         Assert.assertEquals(infos.size(), DEFAULT_OP_PERMISSION_COUNT);
 
         for(PermissionAttachmentInfo info : infos) {
