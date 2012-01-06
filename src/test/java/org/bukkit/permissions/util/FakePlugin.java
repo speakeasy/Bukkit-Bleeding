@@ -28,11 +28,15 @@ public class FakePlugin implements Plugin {
     }
 
     public PluginDescriptionFile getDescription() {
-        return new PluginDescriptionFile("Fake Plugin", "1.0", "fake.plugin.main.class");
+        return new PluginDescriptionFile("Fake Plugin", "1.0", "fake.plugin.main");
     }
 
     public Configuration getConfiguration() {
         throw new RuntimeException("Not implemented!");
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public FileConfiguration getConfig() {
@@ -72,7 +76,7 @@ public class FakePlugin implements Plugin {
     }
 
     public void onDisable() {
-        this.enabled = false;
+        throw new RuntimeException("Not implemented!");
     }
 
     public void onLoad() {
@@ -80,7 +84,7 @@ public class FakePlugin implements Plugin {
     }
 
     public void onEnable() {
-        this.enabled = true;
+        throw new RuntimeException("Not implemented!");
     }
 
     public boolean isNaggable() {

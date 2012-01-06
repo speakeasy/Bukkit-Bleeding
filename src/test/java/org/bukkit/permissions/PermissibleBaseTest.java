@@ -1,43 +1,13 @@
 package org.bukkit.permissions;
 
+import java.util.Set;
+
 import junit.framework.Assert;
 
-import org.bukkit.Bukkit;
 import org.bukkit.permissions.util.FakePlugin;
-import org.bukkit.permissions.util.FakeServer;
-import org.bukkit.plugin.Plugin;
-import org.junit.Before;
 import org.junit.Test;
 
-public class PermissibleBaseTest {
-
-    @Before
-    public void setupFakeEnvironment() {
-        if(Bukkit.getServer() == null) {
-            Bukkit.setServer(new FakeServer());
-        }
-    }
-
-    /**
-     * Create a minimal implementation of "ServerOperator"
-     * 
-     * @param isOp initial op status
-     * @return
-     */
-    private ServerOperator createServerOperator(final boolean isOp) {
-        return new ServerOperator() {
-
-            private boolean op = isOp;
-
-            public boolean isOp() {
-                return op;
-            }
-
-            public void setOp(boolean value) {
-                this.op = value;
-            }
-        };
-    }
+public class PermissibleBaseTest extends PermissionTest {
 
     @Test
     public void testPermissibleBase_isOp() {
@@ -105,14 +75,15 @@ public class PermissibleBaseTest {
         Assert.assertFalse("isPermissionSet should return false for unset string permission", base.isPermissionSet(permissionName));
         Assert.assertFalse("isPermissionSet should return false for unset permission", base.isPermissionSet(permission));
 
-        Plugin plugin = new FakePlugin();
-        plugin.onEnable();
+        FakePlugin plugin = new FakePlugin();
+        plugin.setEnabled(true);
 
         // set permissions should return true
         PermissionAttachment attachment = base.addAttachment(plugin, "setPermission", false);
 
         permissionName = "setPermission";
         permission = new Permission(permissionName);
+
         Assert.assertTrue("isPermissionSet should return true for set string permission", base.isPermissionSet(permissionName));
         Assert.assertTrue("isPermissionSet should return true for set permission", base.isPermissionSet(permission));
 
@@ -122,6 +93,232 @@ public class PermissibleBaseTest {
         Assert.assertFalse("isPermissionSet should return false again for removed string permission", base.isPermissionSet(permissionName));
         Assert.assertFalse("isPermissionSet should return false again for removed permission", base.isPermissionSet(permission));
 
+        // default permissions for null serveroperator object
+        base = new PermissibleBase(null);
+
+        Assert.assertTrue("isPermissionSet for non-OP should return true for default true permission", base.isPermissionSet(PERM_DEFAULT_TRUE));
+        Assert.assertFalse("isPermissionSet for non-OP should return false for default op permission", base.isPermissionSet(PERM_DEFAULT_OP));
+        Assert.assertFalse("isPermissionSet for non-OP should return false for default false permission", base.isPermissionSet(PERM_DEFAULT_FALSE));
+        Assert.assertTrue("isPermissionSet for non-OP should return true for default not-op permission", base.isPermissionSet(PERM_DEFAULT_NOT_OP));
+
+        // default permissions set for non OP
+        base = new PermissibleBase(createServerOperator(false));
+
+        Assert.assertTrue("isPermissionSet for non-OP should return true for default true permission", base.isPermissionSet(PERM_DEFAULT_TRUE));
+        Assert.assertFalse("isPermissionSet for non-OP should return false for default op permission", base.isPermissionSet(PERM_DEFAULT_OP));
+        Assert.assertFalse("isPermissionSet for non-OP should return false for default false permission", base.isPermissionSet(PERM_DEFAULT_FALSE));
+        Assert.assertTrue("isPermissionSet for non-OP should return true for default not-op permission", base.isPermissionSet(PERM_DEFAULT_NOT_OP));
+
+        // default permissions set for OP
+        base = new PermissibleBase(createServerOperator(true));
+
+        Assert.assertTrue("isPermissionSet for OP should return true for default true permission", base.isPermissionSet(PERM_DEFAULT_TRUE));
+        Assert.assertTrue("isPermissionSet for OP should return true for default op permission", base.isPermissionSet(PERM_DEFAULT_OP));
+        Assert.assertFalse("isPermissionSet for OP should return false for default false permission", base.isPermissionSet(PERM_DEFAULT_FALSE));
+        Assert.assertFalse("isPermissionSet for OP should return false for default not-op permission", base.isPermissionSet(PERM_DEFAULT_NOT_OP));
+
     }
 
+    @Test
+    public void testPermissibleBase_hasPermissionDefaults() {
+        // default permissions for null serveroperator object
+        PermissibleBase base = new PermissibleBase(null);
+
+        Assert.assertTrue("isPermissionSet for non-OP should return true for default true permission", base.hasPermission(PERM_DEFAULT_TRUE));
+        Assert.assertFalse("isPermissionSet for non-OP should return false for default op permission", base.hasPermission(PERM_DEFAULT_OP));
+        Assert.assertFalse("isPermissionSet for non-OP should return false for default false permission", base.hasPermission(PERM_DEFAULT_FALSE));
+        Assert.assertTrue("isPermissionSet for non-OP should return true for default not-op permission", base.hasPermission(PERM_DEFAULT_NOT_OP));
+
+        // default permissions set for OP
+        base = new PermissibleBase(createServerOperator(true));
+
+        Assert.assertTrue("isPermissionSet for OP should return true for default true permission", base.hasPermission(PERM_DEFAULT_TRUE));
+        Assert.assertTrue("isPermissionSet for OP should return true for default op permission", base.hasPermission(PERM_DEFAULT_OP));
+        Assert.assertFalse("isPermissionSet for OP should return false for default false permission", base.hasPermission(PERM_DEFAULT_FALSE));
+        Assert.assertFalse("isPermissionSet for OP should return false for default not-op permission", base.hasPermission(PERM_DEFAULT_NOT_OP));
+
+        // default permissions set for non OP
+        base = new PermissibleBase(createServerOperator(false));
+
+        Assert.assertTrue("isPermissionSet for non-OP should return true for default true permission", base.hasPermission(PERM_DEFAULT_TRUE));
+        Assert.assertFalse("isPermissionSet for non-OP should return false for default op permission", base.hasPermission(PERM_DEFAULT_OP));
+        Assert.assertFalse("isPermissionSet for non-OP should return false for default false permission", base.hasPermission(PERM_DEFAULT_FALSE));
+        Assert.assertTrue("isPermissionSet for non-OP should return true for default not-op permission", base.hasPermission(PERM_DEFAULT_NOT_OP));
+    }
+
+    @Test
+    /**
+     * Check if attachments are created and removed correctly, 
+     * ignoring permissions
+     */
+    public void testPermissibleBase_basicAddRemoveAttachments() {
+        PermissibleBase base;
+
+        base = new PermissibleBase(null);
+
+        FakePlugin plugin = new FakePlugin();
+
+        // Illegal operations
+        try {
+            base.addAttachment(null);
+            Assert.fail("addAttachment should fail for null plugin");
+        } catch(Exception e) {}
+
+        try {
+            base.addAttachment(plugin);
+            Assert.fail("addAttachment should fail for disabled plugins");
+        } catch(Exception e) {}
+
+        try {
+            base.removeAttachment(null);
+            Assert.fail("removeAttachment should fail for null attachment");
+        } catch(Exception e) {}
+
+        // enable fake plugin
+        plugin.setEnabled(true);
+
+        PermissionAttachment attachment = base.addAttachment(plugin);
+        Assert.assertNotNull("addAttachment should return a valid attachment", attachment);
+        Assert.assertEquals("the attachment should refer to the permissibleBase that it is part of", base, attachment.getPermissible());
+        Assert.assertEquals("the attachment should refer to the plugin that registered it", plugin, attachment.getPlugin());
+
+        base.removeAttachment(attachment);
+        try {
+            base.removeAttachment(attachment);
+            Assert.fail("removing already removed attachments should fail");
+        } catch(Exception e) {}
+
+        attachment = base.addAttachment(plugin);
+        // Remove at attachment
+        Assert.assertTrue("attachment.remove should return true", attachment.remove());
+        Assert.assertFalse("attachment.remove should return false if already removed", attachment.remove());
+
+        // Cross check if it was really removed from base
+        try {
+            base.removeAttachment(attachment);
+            Assert.fail("the attachment shouldn't have been attached to base anymore");
+        } catch(Exception e) {}
+    }
+
+    @Test
+    /**
+     * Check if permissions are assigned/unassigned correctly when
+     * adding/removing attachments
+     */
+    public void testPermissibleBase_advancedAddRemoveAttachments() {
+        PermissibleBase base;
+
+        // without serveroperator object
+        base = new PermissibleBase(null);
+
+        FakePlugin plugin = new FakePlugin();
+        // enable the fake plugin
+        plugin.setEnabled(true);
+
+        String permission = "permission";
+
+        Assert.assertFalse("base should not have permission yet", base.hasPermission(permission));
+
+        // Stack attachments on top of each other, cancelling each other out
+
+        // Add a positive attachment
+        PermissionAttachment attachment = base.addAttachment(plugin, permission, true);
+        Assert.assertTrue("base should have permission now", base.hasPermission(permission));
+        Assert.assertTrue("permission should be set", base.isPermissionSet(permission));
+
+        // Add a negative attachment on top of that
+        PermissionAttachment attachment2 = base.addAttachment(plugin, permission, false);
+        Assert.assertFalse("base should no longer have permission now", base.hasPermission(permission));
+        Assert.assertTrue("permission should be set", base.isPermissionSet(permission));
+
+        // Remove the negative attachment, it should leave the positive behind
+        attachment2.remove();
+        Assert.assertTrue("base should have permission again", base.hasPermission(permission));
+        Assert.assertTrue("permission should be set", base.isPermissionSet(permission));
+
+        // Remove the negative attachment too
+        attachment.remove();
+        Assert.assertFalse("base should no longer have permission now", base.hasPermission(permission));
+        Assert.assertFalse("permission should no longer be set", base.isPermissionSet(permission));
+    }
+
+    @Test
+    /**
+     * Check if getEffectivePermissions delivers default and
+     * attachment permissions correctly
+     */
+    public void testPermissibleBase_getEffectivePermissions() {
+        PermissibleBase base;
+
+        // without serveroperator object
+        base = new PermissibleBase(null);
+
+        Set<PermissionAttachmentInfo> infos = base.getEffectivePermissions();
+
+        // Two default permissions should be set
+        Assert.assertEquals(infos.size(), DEFAULT_NON_OP_PERMISSION_COUNT);
+
+        for(PermissionAttachmentInfo info : infos) {
+            Assert.assertEquals("effective Permissions have to reference base", info.getPermissible(), base);
+            Assert.assertEquals("effective Permissions have to be the same as result of hasPermission", info.getValue(), base.hasPermission(info.getPermission()));
+        }
+
+        // with non-op serveroperator object
+        base = new PermissibleBase(createServerOperator(false));
+
+        infos = base.getEffectivePermissions();
+
+        // Two default permissions should be set
+        Assert.assertEquals(infos.size(), DEFAULT_NON_OP_PERMISSION_COUNT);
+
+        for(PermissionAttachmentInfo info : infos) {
+            Assert.assertEquals("effective Permissions have to reference base", info.getPermissible(), base);
+            Assert.assertEquals("effective Permissions have to be the same as result of hasPermission", info.getValue(), base.hasPermission(info.getPermission()));
+        }
+
+        // with op serveroperator object
+        base = new PermissibleBase(createServerOperator(true));
+
+        infos = base.getEffectivePermissions();
+
+        // Two default permissions should be set
+        Assert.assertEquals(infos.size(), DEFAULT_OP_PERMISSION_COUNT);
+
+        for(PermissionAttachmentInfo info : infos) {
+            Assert.assertEquals("effective Permissions have to reference base", info.getPermissible(), base);
+            Assert.assertEquals("effective Permissions have to be the same as result of hasPermission", info.getValue(), base.hasPermission(info.getPermission()));
+        }
+
+        // add attachment
+        FakePlugin plugin = new FakePlugin();
+        plugin.setEnabled(true);
+
+        String permission1 = "permission1";
+        String permission2 = "permission2";
+
+        PermissionAttachment attachment1 = base.addAttachment(plugin, permission1, false);
+        PermissionAttachment attachment2 = base.addAttachment(plugin, permission2, false);
+
+        infos = base.getEffectivePermissions();
+
+        // Two default permissions plus two permissions from attachments should
+        // be set
+        Assert.assertEquals(infos.size(), DEFAULT_OP_PERMISSION_COUNT + 2);
+
+        for(PermissionAttachmentInfo info : infos) {
+            Assert.assertEquals("effective Permissions have to reference base", info.getPermissible(), base);
+            Assert.assertEquals("effective Permissions have to be the same as result of hasPermission", info.getValue(), base.hasPermission(info.getPermission()));
+        }
+
+        // Effective permissions should no longer contain these now
+        base.removeAttachment(attachment1);
+        base.removeAttachment(attachment2);
+
+        Assert.assertEquals(infos.size(), DEFAULT_OP_PERMISSION_COUNT);
+
+        for(PermissionAttachmentInfo info : infos) {
+            Assert.assertEquals("effective Permissions have to reference base", info.getPermissible(), base);
+            Assert.assertEquals("effective Permissions have to be the same as result of hasPermission", info.getValue(), base.hasPermission(info.getPermission()));
+        }
+    }
 }
