@@ -14,22 +14,22 @@ import org.junit.Before;
 public class PermissionTest {
 
     // Some default permissions
-    protected static final String PERM_DEFAULT_FALSE              = "defaultFalse";
-    protected static final String PERM_DEFAULT_TRUE               = "defaultTrue";
-    protected static final String PERM_DEFAULT_OP                 = "defaultOP";
-    protected static final String PERM_DEFAULT_NOT_OP             = "defaultNotOp";
+    protected static final String PERM_DEFAULT_FALSE = "defaultFalse";
+    protected static final String PERM_DEFAULT_TRUE = "defaultTrue";
+    protected static final String PERM_DEFAULT_OP = "defaultOP";
+    protected static final String PERM_DEFAULT_NOT_OP = "defaultNotOp";
 
-    protected static final String PERM_DEFAULT_PARENT_TRUE        = "defaultParentTrue";
-    protected static final String PERM_DEFAULT_CHILD_TRUE         = "defaultChildTrue";
-    protected static final String PERM_DEFAULT_PARENT_OP          = "defaultParentOp";
-    protected static final String PERM_DEFAULT_CHILD_OP           = "defaultChildOp";
-    protected static final String PERM_DEFAULT_PARENT_NOT_OP      = "defaultParentNotOp";
-    protected static final String PERM_DEFAULT_CHILD_NOT_OP       = "defaultChildNotOp";
-    protected static final String PERM_DEFAULT_PARENT_FALSE       = "defaultParentFalse";
-    protected static final String PERM_DEFAULT_CHILD_FALSE        = "defaultChildFalse";
+    protected static final String PERM_DEFAULT_PARENT_TRUE = "defaultParentTrue";
+    protected static final String PERM_DEFAULT_CHILD_TRUE = "defaultChildTrue";
+    protected static final String PERM_DEFAULT_PARENT_OP = "defaultParentOp";
+    protected static final String PERM_DEFAULT_CHILD_OP = "defaultChildOp";
+    protected static final String PERM_DEFAULT_PARENT_NOT_OP = "defaultParentNotOp";
+    protected static final String PERM_DEFAULT_CHILD_NOT_OP = "defaultChildNotOp";
+    protected static final String PERM_DEFAULT_PARENT_FALSE = "defaultParentFalse";
+    protected static final String PERM_DEFAULT_CHILD_FALSE = "defaultChildFalse";
 
-    protected static final int    DEFAULT_OP_PERMISSION_COUNT     = 6;
-    protected static final int    DEFAULT_NON_OP_PERMISSION_COUNT = 6;
+    protected static final int DEFAULT_OP_PERMISSION_COUNT = 6;
+    protected static final int DEFAULT_NON_OP_PERMISSION_COUNT = 6;
 
     @Before
     public void setupFakeEnvironment() {
@@ -38,8 +38,7 @@ public class PermissionTest {
             Field f = Bukkit.class.getDeclaredField("server");
             f.setAccessible(true);
             f.set(null, new FakeServer());
-        } catch(Exception e) {
-            // TODO Auto-generated catch block
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -94,20 +93,23 @@ public class PermissionTest {
     }
 
     protected void isSet(PermissibleBase base, boolean expected, String... permission) {
-        for(String p : permission) {
-            Assert.assertEquals("isPermissionSet by name for " + (base.isOp() ? "OP" : "non-OP") + " should return " + expected + " for " + p + " permission", expected, base.isPermissionSet(p));
+        for (String p : permission) {
+            String message = "isPermissionSet by name for " + (base.isOp() ? "OP" : "non-OP") + " should return " + expected + " for " + p + " permission";
+            Assert.assertEquals(message, expected, base.isPermissionSet(p));
         }
     }
 
     protected void isSet(PermissibleBase base, boolean expected, Permission... permission) {
-        for(Permission p : permission) {
-            Assert.assertEquals("isPermissionSet for " + (base.isOp() ? "OP" : "non-OP") + " should return " + expected + " for " + p.getName() + " permission", expected, base.isPermissionSet(p));
+        for (Permission p : permission) {
+            String message = "isPermissionSet for " + (base.isOp() ? "OP" : "non-OP") + " should return " + expected + " for " + p.getName() + " permission";
+            Assert.assertEquals(message, expected, base.isPermissionSet(p));
         }
     }
 
     protected void hasPerm(PermissibleBase base, boolean expected, String... permission) {
-        for(String p : permission) {
-            Assert.assertEquals("hasPermission by name for " + (base.isOp() ? "OP" : "non-OP") + " should return " + expected + " for " + p + " string permission", expected, base.hasPermission(p));
+        for (String p : permission) {
+            String message = "hasPermission by name for " + (base.isOp() ? "OP" : "non-OP") + " should return " + expected + " for " + p + " string permission";
+            Assert.assertEquals(message, expected, base.hasPermission(p));
         }
     }
 }

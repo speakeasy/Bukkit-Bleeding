@@ -20,12 +20,14 @@ public class PermissibleBaseTest extends PermissionTest {
         try {
             base.setOp(true);
             Assert.fail("Setting OP status should cause an exception");
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
         try {
             base.setOp(false);
             Assert.fail("Setting OP status should cause an exception");
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
         // with ServerOperator object without op rights
         ServerOperator op = createServerOperator(false);
@@ -62,12 +64,14 @@ public class PermissibleBaseTest extends PermissionTest {
         try {
             base.isPermissionSet(permissionName);
             Assert.fail("isPermissionSet should cause an exception with null string permission");
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
         try {
             base.isPermissionSet(permission);
             Assert.fail("isPermissionSet should cause an exception with null permission");
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
         // unset permissions should return false
         permissionName = "unsetPermission";
@@ -153,17 +157,20 @@ public class PermissibleBaseTest extends PermissionTest {
         try {
             base.addAttachment(null);
             Assert.fail("addAttachment should fail for null plugin");
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
         try {
             base.addAttachment(plugin);
             Assert.fail("addAttachment should fail for disabled plugins");
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
         try {
             base.removeAttachment(null);
             Assert.fail("removeAttachment should fail for null attachment");
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
         // enable fake plugin
         plugin.setEnabled(true);
@@ -177,9 +184,11 @@ public class PermissibleBaseTest extends PermissionTest {
         try {
             base.removeAttachment(attachment);
             Assert.fail("removing already removed attachments should fail");
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
         attachment = base.addAttachment(plugin);
+
         // Remove at attachment
         Assert.assertTrue("attachment.remove should return true", attachment.remove());
         Assert.assertFalse("attachment.remove should return false if already removed", attachment.remove());
@@ -188,7 +197,8 @@ public class PermissibleBaseTest extends PermissionTest {
         try {
             base.removeAttachment(attachment);
             Assert.fail("the attachment shouldn't have been attached to base anymore");
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     @Test
@@ -249,7 +259,7 @@ public class PermissibleBaseTest extends PermissionTest {
         // Two default permissions should be set
         Assert.assertEquals(infos.size(), DEFAULT_NON_OP_PERMISSION_COUNT);
 
-        for(PermissionAttachmentInfo info : infos) {
+        for (PermissionAttachmentInfo info : infos) {
             Assert.assertEquals("effective Permissions have to reference base", info.getPermissible(), base);
             Assert.assertEquals("effective Permissions have to be the same as result of hasPermission", info.getValue(), base.hasPermission(info.getPermission()));
         }
@@ -262,7 +272,7 @@ public class PermissibleBaseTest extends PermissionTest {
         // Two default permissions should be set
         Assert.assertEquals(infos.size(), DEFAULT_NON_OP_PERMISSION_COUNT);
 
-        for(PermissionAttachmentInfo info : infos) {
+        for (PermissionAttachmentInfo info : infos) {
             Assert.assertEquals("effective Permissions have to reference base", info.getPermissible(), base);
             Assert.assertEquals("effective Permissions have to be the same as result of hasPermission", info.getValue(), base.hasPermission(info.getPermission()));
         }
@@ -275,7 +285,7 @@ public class PermissibleBaseTest extends PermissionTest {
         // Two default permissions should be set
         Assert.assertEquals(infos.size(), DEFAULT_OP_PERMISSION_COUNT);
 
-        for(PermissionAttachmentInfo info : infos) {
+        for (PermissionAttachmentInfo info : infos) {
             Assert.assertEquals("effective Permissions have to reference base", info.getPermissible(), base);
             Assert.assertEquals("effective Permissions have to be the same as result of hasPermission", info.getValue(), base.hasPermission(info.getPermission()));
         }
@@ -292,11 +302,10 @@ public class PermissibleBaseTest extends PermissionTest {
 
         infos = base.getEffectivePermissions();
 
-        // Default permissions plus two permissions from attachments should
-        // be set
+        // Default permissions plus two permissions from attachments should be set
         Assert.assertEquals(infos.size(), DEFAULT_OP_PERMISSION_COUNT + 2);
 
-        for(PermissionAttachmentInfo info : infos) {
+        for (PermissionAttachmentInfo info : infos) {
             Assert.assertEquals("effective Permissions have to reference base", info.getPermissible(), base);
             Assert.assertEquals("effective Permissions have to be the same as result of hasPermission", info.getValue(), base.hasPermission(info.getPermission()));
         }
@@ -310,7 +319,7 @@ public class PermissibleBaseTest extends PermissionTest {
         // Only Default permissions should remain
         Assert.assertEquals(infos.size(), DEFAULT_OP_PERMISSION_COUNT);
 
-        for(PermissionAttachmentInfo info : infos) {
+        for (PermissionAttachmentInfo info : infos) {
             Assert.assertEquals("effective Permissions have to reference base", info.getPermissible(), base);
             Assert.assertEquals("effective Permissions have to be the same as result of hasPermission", info.getValue(), base.hasPermission(info.getPermission()));
         }

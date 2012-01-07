@@ -31,8 +31,8 @@ import com.avaje.ebean.config.ServerConfig;
 
 public class FakeServer implements Server {
 
-    private final SimpleCommandMap commandMap    = new SimpleCommandMap(this);
-    private final PluginManager    pluginManager = new SimplePluginManager(this, commandMap);
+    private final SimpleCommandMap commandMap = new SimpleCommandMap(this);
+    private final PluginManager pluginManager = new SimplePluginManager(this, commandMap);
 
     public String getName() {
         return "FakeServer for Permissions Testing";
