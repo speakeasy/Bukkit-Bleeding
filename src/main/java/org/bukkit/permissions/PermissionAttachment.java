@@ -89,7 +89,7 @@ public class PermissionAttachment {
      * @param value New value of the permission
      */
     public void setPermission(Permission perm, boolean value) {
-        setPermission(perm.getName(), value);
+        permissions.put(perm.getName().toLowerCase(), value);
         permissible.recalculatePermissions();
     }
 
@@ -113,7 +113,7 @@ public class PermissionAttachment {
      * @param perm Permission to remove
      */
     public void unsetPermission(Permission perm) {
-        unsetPermission(perm.getName());
+        permissions.remove(perm.getName().toLowerCase());
         permissible.recalculatePermissions();
     }
 
