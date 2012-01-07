@@ -112,4 +112,11 @@ public class PermissionTest {
             Assert.assertEquals(message, expected, base.hasPermission(p));
         }
     }
+
+    protected void hasPerm(PermissibleBase base, boolean expected, Permission... permission) {
+        for (Permission p : permission) {
+            String message = "hasPermission for " + (base.isOp() ? "OP" : "non-OP") + " should return " + expected + " for " + p.getName() + " permission";
+            Assert.assertEquals(message, expected, base.hasPermission(p));
+        }
+    }
 }
