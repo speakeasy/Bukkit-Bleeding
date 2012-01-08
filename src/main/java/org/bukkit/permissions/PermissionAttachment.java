@@ -101,6 +101,18 @@ public class PermissionAttachment {
      * @param perms Map of Permissions and new values of them
      */
     public void setPermissions(Map<Permission, Boolean> perms) {
+        setPermissions(perms, false);
+    }
+
+    /**
+     * Set multiple permissions to given values at once, optionally unsetting all permissions before
+     *
+     * @param perms Map of Permissions and new values of them
+     * @param clearFirst if true, first remove all existing permissions
+     */
+    public void setPermissions(Map<Permission, Boolean> perms, boolean clearFirst) {
+        if (clearFirst) permissions.clear();
+
         for (Entry<Permission, Boolean> perm : perms.entrySet()) {
             permissions.put(perm.getKey().getName().toLowerCase(), perm.getValue());
         }
@@ -113,6 +125,18 @@ public class PermissionAttachment {
      * @param perms Map of Permissions and new values of them
      */
     public void setPermissionsByName(Map<String, Boolean> perms) {
+        setPermissionsByName(perms, false);
+    }
+
+    /**
+     * Set multiple permissions by name to given values at once, optionally unsetting all permissions before
+     *
+     * @param perms Map of Permission names and new values of them
+     * @param clearFirst if true, first remove all existing permissions
+     */
+    public void setPermissionsByName(Map<String, Boolean> perms, boolean clearFirst) {
+        if (clearFirst) permissions.clear();
+
         for (Entry<String, Boolean> perm : perms.entrySet()) {
             permissions.put(perm.getKey().toLowerCase(), perm.getValue());
         }
@@ -168,6 +192,14 @@ public class PermissionAttachment {
         for (String perm : perms) {
             permissions.remove(perm.toLowerCase());
         }
+        permissible.recalculatePermissions();
+    }
+
+    /**
+     * Unset all permissions of the attachment at once
+     */
+    public void unsetAllPermissions() {
+        permissions.clear();
         permissible.recalculatePermissions();
     }
 
