@@ -2,6 +2,7 @@ package org.bukkit.permissions.util;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -100,6 +101,10 @@ public class FakePlugin implements Plugin {
     }
 
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+        throw new RuntimeException("Not implemented!");
+    }
+
+    public Logger getLogger() {
         throw new RuntimeException("Not implemented!");
     }
 

@@ -14,6 +14,7 @@ public class PermissionAttachment {
     private final Map<String, Boolean> permissions = new LinkedHashMap<String, Boolean>();
     private final Permissible permissible;
     private final Plugin plugin;
+    private int priority = 0;
 
     public PermissionAttachment(Plugin plugin, Permissible permissible) {
         if (plugin == null) {
@@ -33,6 +34,34 @@ public class PermissionAttachment {
      */
     public Plugin getPlugin() {
         return plugin;
+    }
+
+    /**
+     * Gets the priority value of this attachment
+     *
+     * @return A value representing the priority of this attachment
+     */
+    public int getPriority() {
+        return priority;
+    }
+
+    /**
+     * Sets the priority value of this attachment. Higher priority attachments override lower priorities.
+     * 
+     * @param priority A value between -1000 and 1000 representing the priority of this attachment
+     */
+    public void setPriority(int priority) {
+        if (priority < -1000) {
+            this.priority = -1000;
+        } else if (priority > 1000) {
+            this.priority = 1000;
+        } else {
+            this.priority = priority;
+        }
+
+        // If the attachment already contains permissions, recalculate
+        if (permissions.size() > 0)
+            permissible.recalculatePermissions();
     }
 
     /**
@@ -96,16 +125,8 @@ public class PermissionAttachment {
     }
 
     /**
-     * Set multiple permissions to given values at once
-     *
-     * @param perms Map of Permissions and new values of them
-     */
-    public void setPermissions(Map<Permission, Boolean> perms) {
-        setPermissions(perms, false);
-    }
-
-    /**
-     * Set multiple permissions to given values at once, optionally unsetting all permissions before
+     * Set multiple permissions to given values at once, optionally unsetting
+     * all permissions before
      *
      * @param perms Map of Permissions and new values of them
      * @param clearFirst if true, first remove all existing permissions
@@ -120,22 +141,15 @@ public class PermissionAttachment {
     }
 
     /**
-     * Set multiple permissions by name to given values at once
-     *
-     * @param perms Map of Permissions and new values of them
-     */
-    public void setPermissionsByName(Map<String, Boolean> perms) {
-        setPermissionsByName(perms, false);
-    }
-
-    /**
-     * Set multiple permissions by name to given values at once, optionally unsetting all permissions before
+     * Set multiple permissions by name to given values at once, optionally
+     * unsetting all permissions before
      *
      * @param perms Map of Permission names and new values of them
      * @param clearFirst if true, first remove all existing permissions
      */
     public void setPermissionsByName(Map<String, Boolean> perms, boolean clearFirst) {
-        if (clearFirst) permissions.clear();
+        if (clearFirst)
+            permissions.clear();
 
         for (Entry<String, Boolean> perm : perms.entrySet()) {
             permissions.put(perm.getKey().toLowerCase(), perm.getValue());

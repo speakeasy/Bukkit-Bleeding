@@ -22,9 +22,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.SimplePluginManager;
+import org.bukkit.plugin.messaging.Messenger;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import com.avaje.ebean.config.ServerConfig;
@@ -335,6 +337,22 @@ public class FakeServer implements Server {
     }
 
     public OfflinePlayer[] getOfflinePlayers() {
+
+        throw new RuntimeException("Not implemented!");
+    }
+
+    public void sendPluginMessage(Plugin source, String channel, byte[] message) {
+
+        throw new RuntimeException("Not implemented!");
+
+    }
+
+    public Set<String> getListeningPluginChannels() {
+
+        throw new RuntimeException("Not implemented!");
+    }
+
+    public Messenger getMessenger() {
 
         throw new RuntimeException("Not implemented!");
     }

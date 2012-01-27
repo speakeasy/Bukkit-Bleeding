@@ -1,5 +1,7 @@
 package org.bukkit.permissions;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -18,6 +20,12 @@ public class PermissibleBase implements Permissible {
     private Permissible parent = this;
     private final List<PermissionAttachment> attachments = new LinkedList<PermissionAttachment>();
     private final Map<String, PermissionAttachmentInfo> permissions = new HashMap<String, PermissionAttachmentInfo>();
+
+    private static final Comparator<PermissionAttachment> attachmentComparator = new Comparator<PermissionAttachment>() {
+        public int compare(PermissionAttachment a1, PermissionAttachment a2) {
+            return a1.getPriority() - a2.getPriority();
+        }
+    };
 
     public PermissibleBase(ServerOperator opable) {
         this.opable = opable;
@@ -153,6 +161,9 @@ public class PermissibleBase implements Permissible {
             Bukkit.getServer().getPluginManager().subscribeToPermission(name, parent);
             calculateChildPermissions(perm.getChildren(), false, null);
         }
+
+        // Sort attachments based on priority
+        Collections.sort(attachments, attachmentComparator);
 
         for (PermissionAttachment attachment : attachments) {
             calculateChildPermissions(attachment.getPermissions(), false, attachment);

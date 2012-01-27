@@ -106,7 +106,7 @@ public class PermissionAttachmentTest extends PermissionTest {
         permsMap.put(permission2, true);
 
         // setting permissions with different values by name
-        attachment.setPermissionsByName(permsMapByName);
+        attachment.setPermissionsByName(permsMapByName, false);
 
         isSet(base, true, permission1Name, permission2Name);
         isSet(base, true, permission1, permission2);
@@ -124,7 +124,7 @@ public class PermissionAttachmentTest extends PermissionTest {
         hasPerm(base, false, permission1, permission2);
 
         // setting permissions with different values by Permission object
-        attachment.setPermissions(permsMap);
+        attachment.setPermissions(permsMap, false); 
 
         isSet(base, true, permission1Name, permission2Name);
         isSet(base, true, permission1, permission2);
