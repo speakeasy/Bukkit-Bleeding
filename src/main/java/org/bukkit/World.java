@@ -619,6 +619,14 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public <T extends Entity> T spawn(Location location, Class<T> clazz) throws IllegalArgumentException;
 
     /**
+     * Spawn a falling block.
+     * @param location Location to spawn the block at.
+     * @param material Material of the block (must be one of SAND, GRAVEL, or DRAGON_EGG).
+     * @return The new falling block
+     */
+    public FallingBlock spawnFallingBlock(Location location, Material material);
+
+    /**
      * Plays an effect to all players within a default radius around a given location.
      *
      * @param location the {@link Location} around which players must be to hear the sound
