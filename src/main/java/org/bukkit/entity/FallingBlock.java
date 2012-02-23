@@ -11,9 +11,4 @@ public interface FallingBlock extends Entity {
      * @return The type of block.
      */
     Material getBlockType();
-    /**
-     * Set the type of block this is.
-     * @param material The new block type (must be one of SAND, GRAVEL, or DRAGON_EGG).
-     */
-    void setBlockType(Material material);
 }
