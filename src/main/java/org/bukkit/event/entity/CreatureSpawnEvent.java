@@ -22,6 +22,7 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
         this.spawnReason = spawnReason;
     }
 
+    @SuppressWarnings("unused")
     @Deprecated
     public CreatureSpawnEvent(Entity spawnee, CreatureType type, Location loc, SpawnReason reason) {
         super(spawnee);

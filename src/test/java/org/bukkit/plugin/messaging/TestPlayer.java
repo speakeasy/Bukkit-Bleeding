@@ -201,10 +201,6 @@ public class TestPlayer implements Player {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void setExperience(int exp) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public int getLevel() {
         throw new UnsupportedOperationException("Not supported yet.");
     }

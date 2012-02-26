@@ -39,6 +39,7 @@ public class PistonExtensionMaterial extends MaterialData implements Attachable 
         case NORTH:
             data |= 4;
             break;
+        default:
         case SOUTH:
             data |= 5;
             break;

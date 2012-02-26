@@ -38,7 +38,7 @@ public abstract class TexturedMaterial extends MaterialData {
      * @return Material of this block
      */
     public Material getMaterial() {
-        int n = (int) getData();
+        int n = getData();
         if (n > getTextures().size() - 1) {
             n = 0;
         }

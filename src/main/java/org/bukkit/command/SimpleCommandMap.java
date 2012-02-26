@@ -43,10 +43,10 @@ public class SimpleCommandMap implements CommandMap {
 
     public SimpleCommandMap(final Server server) {
         this.server = server;
-        setDefaultCommands(server);
+        setDefaultCommands();
     }
 
-    private void setDefaultCommands(final Server server) {
+    private void setDefaultCommands() {
         register("bukkit", new VersionCommand("version"));
         register("bukkit", new ReloadCommand("reload"));
         register("bukkit", new PluginsCommand("plugins"));
@@ -79,7 +79,7 @@ public class SimpleCommandMap implements CommandMap {
 
         Iterator<String> iterator = command.getAliases().iterator();
         while (iterator.hasNext()) {
-            if (!register((String) iterator.next(), fallbackPrefix, command, true)) {
+            if (!register(iterator.next(), fallbackPrefix, command, true)) {
                 iterator.remove();
             }
         }
@@ -180,7 +180,7 @@ public class SimpleCommandMap implements CommandMap {
         }
         knownCommands.clear();
         aliases.clear();
-        setDefaultCommands(server);
+        setDefaultCommands();
     }
 
     public Command getCommand(String name) {

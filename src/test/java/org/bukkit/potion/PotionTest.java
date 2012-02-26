@@ -85,6 +85,7 @@ public class PotionTest {
         assertTrue((potion.toDamageValue() & 0x3F) == (PotionType.POISON.getDamageValue() | 0x20));
     }
 
+    @SuppressWarnings("unused")
     @Test
     public void useNulls() {
         try {

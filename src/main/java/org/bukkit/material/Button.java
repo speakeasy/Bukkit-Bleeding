@@ -79,6 +79,7 @@ public class Button extends SimpleAttachableMaterialData implements Redstone {
         byte data = (byte) (getData() & 0x8);
 
         switch (face) {
+        default:
         case SOUTH:
             data |= 0x1;
             break;

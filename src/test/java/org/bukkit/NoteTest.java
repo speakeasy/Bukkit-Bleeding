@@ -60,27 +60,32 @@ public class NoteTest {
         }
     }
 
+    @SuppressWarnings("unused")
     @Test(expected = IllegalArgumentException.class)
     public void createNoteBelowMin() {
         new Note((byte) -1);
     }
 
+    @SuppressWarnings("unused")
     @Test(expected = IllegalArgumentException.class)
     public void createNoteAboveMax() {
         new Note((byte) 25);
     }
 
+    @SuppressWarnings("unused")
     @Test(expected = IllegalArgumentException.class)
     public void createNoteOctaveBelowMax() {
         new Note((byte) -1, Note.Tone.A, true);
     }
 
+    @SuppressWarnings("unused")
     @Test(expected = IllegalArgumentException.class)
     public void createNoteOctaveAboveMax() {
         new Note((byte) 3, Note.Tone.A, true);
     }
 
-    @Test
+    @SuppressWarnings("unused")
+    @Test(expected = IllegalArgumentException.class)
     public void createNoteOctaveNonSharpable() {
         Note note = new Note((byte) 0, Note.Tone.B, true);
         assertFalse(note.isSharped());

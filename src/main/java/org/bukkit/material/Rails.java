@@ -116,6 +116,7 @@ public class Rails extends MaterialData {
      */
     public void setDirection(BlockFace face, boolean isOnSlope) {
         switch (face) {
+        default:
         case SOUTH:
             setData((byte) (isOnSlope ? 0x2 : 0x1));
             break;

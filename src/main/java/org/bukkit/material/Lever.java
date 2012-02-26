@@ -88,6 +88,7 @@ public class Lever extends SimpleAttachableMaterialData implements Redstone {
                 data |= 0x5;
                 break;
 
+            default:
             case SOUTH:
             case NORTH:
                 data |= 0x6;
@@ -95,6 +96,7 @@ public class Lever extends SimpleAttachableMaterialData implements Redstone {
             }
         } else {
             switch (face) {
+            default:
             case SOUTH:
                 data |= 0x1;
                 break;

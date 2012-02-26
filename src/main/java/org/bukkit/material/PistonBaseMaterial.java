@@ -39,6 +39,7 @@ public class PistonBaseMaterial extends MaterialData implements Directional, Red
         case NORTH:
             data |= 4;
             break;
+        default:
         case SOUTH:
             data |= 5;
             break;

@@ -47,7 +47,7 @@ public class EventException extends Exception {
      * @return Inner exception, or null if one does not exist
      */
     @Override
-    public Throwable getCause() {
+    public synchronized Throwable getCause() {
         return cause;
     }
 }

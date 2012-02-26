@@ -68,15 +68,18 @@ public class TrapDoor extends SimpleAttachableMaterialData implements Openable {
         byte data = (byte) (getData() & 0x4);
 
         switch (face) {
-            case WEST:
-                data |= 0x1;
-                break;
-            case NORTH:
-                data |= 0x2;
-                break;
-            case SOUTH:
-                data |= 0x3;
-                break;
+        case WEST:
+            data |= 0x1;
+            break;
+        case NORTH:
+            data |= 0x2;
+            break;
+        default:
+        case SOUTH:
+            data |= 0x3;
+            break;
+        case EAST:
+            break;
         }
 
         setData(data);
