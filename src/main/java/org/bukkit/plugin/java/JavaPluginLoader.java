@@ -155,10 +155,6 @@ public class JavaPluginLoader implements PluginLoader {
         return result;
     }
 
-    public Plugin loadPlugin(File file, boolean ignoreSoftDependencies) throws InvalidPluginException {
-        return loadPlugin(file);
-    }
-
     protected File getDataFolder(File file) {
         File dataFolder = null;
 
