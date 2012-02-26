@@ -482,20 +482,10 @@ public class MemorySection implements ConfigurationSection {
                     result.add(Integer.valueOf((String) object));
                 } catch (Exception ex) {
                 }
-            } else if (object instanceof Byte) {
-                result.add((Integer) (int) (byte) (Byte) object);
+            } else if (object instanceof Number) {
+                result.add(((Number) object).intValue());
             } else if (object instanceof Character) {
-                result.add((Integer) (int) (char) (Character) object);
-            } else if (object instanceof Short) {
-                result.add((Integer) (int) (short) (Short) object);
-            } else if (object instanceof Integer) {
-                result.add((Integer) (int) (int) (Integer) object);
-            } else if (object instanceof Long) {
-                result.add((Integer) (int) (long) (Long) object);
-            } else if (object instanceof Float) {
-                result.add((Integer) (int) (float) (Float) object);
-            } else if (object instanceof Double) {
-                result.add((Integer) (int) (double) (Double) object);
+                result.add((int) (Character) object);
             }
         }
 
@@ -551,20 +541,10 @@ public class MemorySection implements ConfigurationSection {
                     result.add(Double.valueOf((String) object));
                 } catch (Exception ex) {
                 }
-            } else if (object instanceof Byte) {
-                result.add((Double) (double) (byte) (Byte) object);
+            } else if (object instanceof Number) {
+                result.add(((Number) object).doubleValue());
             } else if (object instanceof Character) {
-                result.add((Double) (double) (char) (Character) object);
-            } else if (object instanceof Short) {
-                result.add((Double) (double) (short) (Short) object);
-            } else if (object instanceof Integer) {
-                result.add((Double) (double) (int) (Integer) object);
-            } else if (object instanceof Long) {
-                result.add((Double) (double) (long) (Long) object);
-            } else if (object instanceof Float) {
-                result.add((Double) (double) (float) (Float) object);
-            } else if (object instanceof Double) {
-                result.add((Double) (double) (double) (Double) object);
+                result.add((double) (Character) object);
             }
         }
 
@@ -592,20 +572,10 @@ public class MemorySection implements ConfigurationSection {
                     result.add(Float.valueOf((String) object));
                 } catch (Exception ex) {
                 }
-            } else if (object instanceof Byte) {
-                result.add((Float) (float) (byte) (Byte) object);
+            } else if (object instanceof Number) {
+                result.add(((Number) object).floatValue());
             } else if (object instanceof Character) {
-                result.add((Float) (float) (char) (Character) object);
-            } else if (object instanceof Short) {
-                result.add((Float) (float) (short) (Short) object);
-            } else if (object instanceof Integer) {
-                result.add((Float) (float) (int) (Integer) object);
-            } else if (object instanceof Long) {
-                result.add((Float) (float) (long) (Long) object);
-            } else if (object instanceof Float) {
-                result.add((Float) (float) (float) (Float) object);
-            } else if (object instanceof Double) {
-                result.add((Float) (float) (double) (Double) object);
+                result.add((float) (Character) object);
             }
         }
 
@@ -633,20 +603,10 @@ public class MemorySection implements ConfigurationSection {
                     result.add(Long.valueOf((String) object));
                 } catch (Exception ex) {
                 }
-            } else if (object instanceof Byte) {
-                result.add((Long) (long) (byte) (Byte) object);
+            } else if (object instanceof Number) {
+                result.add(((Number) object).longValue());
             } else if (object instanceof Character) {
-                result.add((Long) (long) (char) (Character) object);
-            } else if (object instanceof Short) {
-                result.add((Long) (long) (short) (Short) object);
-            } else if (object instanceof Integer) {
-                result.add((Long) (long) (int) (Integer) object);
-            } else if (object instanceof Long) {
-                result.add((Long) (long) (long) (Long) object);
-            } else if (object instanceof Float) {
-                result.add((Long) (long) (float) (Float) object);
-            } else if (object instanceof Double) {
-                result.add((Long) (long) (double) (Double) object);
+                result.add((long) (Character) object);
             }
         }
 
@@ -674,20 +634,10 @@ public class MemorySection implements ConfigurationSection {
                     result.add(Byte.valueOf((String) object));
                 } catch (Exception ex) {
                 }
-            } else if (object instanceof Byte) {
-                result.add((Byte) (byte) (byte) (Byte) object);
+            } else if (object instanceof Number) {
+                result.add(((Number) object).byteValue());
             } else if (object instanceof Character) {
-                result.add((Byte) (byte) (char) (Character) object);
-            } else if (object instanceof Short) {
-                result.add((Byte) (byte) (short) (Short) object);
-            } else if (object instanceof Integer) {
-                result.add((Byte) (byte) (int) (Integer) object);
-            } else if (object instanceof Long) {
-                result.add((Byte) (byte) (long) (Long) object);
-            } else if (object instanceof Float) {
-                result.add((Byte) (byte) (float) (Float) object);
-            } else if (object instanceof Double) {
-                result.add((Byte) (byte) (double) (Double) object);
+                result.add((byte) (char) (Character) object);
             }
         }
 
@@ -716,20 +666,8 @@ public class MemorySection implements ConfigurationSection {
                 if (str.length() == 1) {
                     result.add(str.charAt(0));
                 }
-            } else if (object instanceof Byte) {
-                result.add((Character) (char) (byte) (Byte) object);
-            } else if (object instanceof Character) {
-                result.add((Character) (char) (char) (Character) object);
-            } else if (object instanceof Short) {
-                result.add((Character) (char) (short) (Short) object);
-            } else if (object instanceof Integer) {
-                result.add((Character) (char) (int) (Integer) object);
-            } else if (object instanceof Long) {
-                result.add((Character) (char) (long) (Long) object);
-            } else if (object instanceof Float) {
-                result.add((Character) (char) (float) (Float) object);
-            } else if (object instanceof Double) {
-                result.add((Character) (char) (double) (Double) object);
+            } else if (object instanceof Number) {
+                result.add((char) ((Number) object).byteValue());
             }
         }
 
@@ -757,20 +695,10 @@ public class MemorySection implements ConfigurationSection {
                     result.add(Short.valueOf((String) object));
                 } catch (Exception ex) {
                 }
-            } else if (object instanceof Byte) {
-                result.add((Short) (short) (byte) (Byte) object);
+            } else if (object instanceof Number) {
+                result.add(((Number) object).shortValue());
             } else if (object instanceof Character) {
-                result.add((Short) (short) (char) (Character) object);
-            } else if (object instanceof Short) {
-                result.add((Short) (short) (short) (Short) object);
-            } else if (object instanceof Integer) {
-                result.add((Short) (short) (int) (Integer) object);
-            } else if (object instanceof Long) {
-                result.add((Short) (short) (long) (Long) object);
-            } else if (object instanceof Float) {
-                result.add((Short) (short) (float) (Float) object);
-            } else if (object instanceof Double) {
-                result.add((Short) (short) (double) (Double) object);
+                result.add((short) (char) (Character) object);
             }
         }
 
