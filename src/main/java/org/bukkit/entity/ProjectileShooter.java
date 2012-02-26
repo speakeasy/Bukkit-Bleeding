@@ -1,13 +1,12 @@
 package org.bukkit.entity;
 
-import org.bukkit.util.Vector;
-
 public interface ProjectileShooter {
     /**
-     * Fires a projectile from this projectile shooter.
-     * @param <E> The projectile class
-     * @param clazz The projectile class
-     * @return The fired projectile.
+     * Launches a {@link Projectile} from the entity.
+     *
+     * @param projectile Class of the projectile to launch
+     *
+     * @return The launched projectile.
      */
-    <E extends Projectile> E fireProjectile(Class<E> clazz);
+    public <T extends Projectile> T launchProjectile(Class<? extends T> projectile);
 }
