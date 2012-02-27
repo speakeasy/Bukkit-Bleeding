@@ -51,29 +51,15 @@ public interface Inventory {
     public HashMap<Integer, ItemStack> addItem(ItemStack... items);
 
     /**
+     * Stores the given ItemStacks in the inventory.
+     * This will try to fill existing stacks and empty slots as good as it can.
+     * It will return a HashMap of what it couldn't fit.
      *
-     * @param forceDurability
-     * @param items
-     * @return
+     * @param oversizedStacks Whether to allow stacks above the normal limit to be inserted into an inventory slot
+     * @param items The ItemStacks to add
+     * @return The items that didn't fit.
      */
-    public HashMap<Integer, ItemStack> addItem(boolean forceDurability, ItemStack... items);
-
-    /**
-     *
-     * @param forceDurability
-     * @param oversizedStacks
-     * @param items
-     * @return
-     */
-    public HashMap<Integer, ItemStack> addItem(boolean forceDurability, int oversizedStacks, ItemStack... items);
-
-    /**
-     *
-     * @param forceDurability
-     * @param items
-     * @return
-     */
-    public boolean addAllItems(boolean forceDurability, ItemStack... items);
+    public HashMap<Integer, ItemStack> addItem(boolean oversizedStacks, ItemStack... items);
 
     /**
      * Removes the given ItemStacks from the inventory.
@@ -166,15 +152,15 @@ public interface Inventory {
     public boolean contains(ItemStack item, int amount);
 
     /**
-     *
-     * @param forceDurability
-     * @param forceEnchantments
-     * @param items
-     * @return
+     * Check if the inventory contains any ItemStacks matching the given ItemStack and having at least the same amount
+     * Unlike the other functions this will return true if an ItemStack larger than the specified stacks amount is found
+     * @param forceEnchantments Whether to include enchantments in matching these item stacks
+     * @param items The itemstack(s) to match
+     * @return If any matching ItemStacks were found
      */
-    public boolean containsItem(boolean forceDurability, boolean forceEnchantments, ItemStack... items);
+    public boolean contains(boolean forceEnchantments, ItemStack... items);
 
-/**
+    /**
      * Find all slots in the inventory containing any ItemStacks with the given materialId
      *
      * @param materialId The materialId to look for
@@ -225,15 +211,14 @@ public interface Inventory {
     public int first(ItemStack item);
 
     /**
-     *
-     * @param inventory
+     * Find the first slot in the inventory containing an ItemStack with the given stack
+     * 
      * @param item The ItemStack to match against
-     * @param forceDurability
-     * @param forceAmount
-     * @param forceEnchantments
+     * @param forceAmount Whether the amount in the slot must be identical, or whether it must be at least the amount found in the ItemStack
+     * @param forceEnchantments Whether to force the found slot to contain enchantment(s) of the same kind
      * @return The Slot found.
      */
-    public int first(Inventory inventory, ItemStack item, boolean forceDurability, boolean forceAmount, boolean forceEnchantments);
+    public int first(ItemStack item,  boolean forceAmount, boolean forceEnchantments);
 
     /**
      * Find the first empty Slot.
@@ -241,23 +226,6 @@ public interface Inventory {
      * @return The first empty Slot found.
      */
     public int firstEmpty();
-
-    /**
-     *
-     * @param item
-     * @param forceDurability
-     * @return
-     */
-    public int firstPartial(ItemStack item, boolean forceDurability);
-
-    /**
-     *
-     * @param item
-     * @param forceDurability
-     * @param maxAmount
-     * @return
-     */
-    public int firstPartial(ItemStack item, boolean forceDurability, int maxAmount);
 
     /**
      * Remove all stacks in the inventory matching the given materialId.
@@ -294,6 +262,7 @@ public interface Inventory {
     public void clear();
 
     /**
+     * Takes an itemstack from this inventory and drops it at the specified location
      *
      * @param location where to drop the itemstack
      * @param item the itemstack to drop
@@ -302,13 +271,13 @@ public interface Inventory {
     public Item[] drop(Location location, ItemStack item);
 
     /**
+     * Finds the next ItemStack matching the given parameters, starting at the specified slot
      *
-     * @param item
-     * @param start
-     * @param forceDurability
-     * @param forceAmount
-     * @param forceEnchantments
-     * @return
+     * @param item The itemstack to find
+     * @param start The slot to start
+     * @param forceAmount Whether the amount must much exactly or just be at least the same amount
+     * @param forceEnchantments Whether enchantments should be included in the search
+     * @return The next slot containing the specified item
      */
-    public int next(ItemStack item, int start, boolean forceDurability, boolean forceAmount, boolean forceEnchantments);
+    public int next(ItemStack item, int start, boolean forceAmount, boolean forceEnchantments);
 }
