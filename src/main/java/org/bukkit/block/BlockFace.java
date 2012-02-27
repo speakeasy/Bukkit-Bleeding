@@ -1,5 +1,7 @@
 package org.bukkit.block;
 
+import org.bukkit.util.Vector;
+
 /**
  * Represents the face of a block
  */
@@ -67,6 +69,16 @@ public enum BlockFace {
         return modZ;
     }
 
+    /**
+     * @return A vector pointing out of this face.
+     */
+    public Vector toVector() {
+        return new Vector(modX, modY, modZ);
+    }
+
+    /**
+     * @return The face opposite to this one.
+     */
     public BlockFace getOppositeFace() {
         switch (this) {
         case NORTH:
