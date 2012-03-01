@@ -4,16 +4,15 @@ import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
 
 /**
- * Represents the different types of leaves.
+ * Represents a leaf block
  */
-public class Leaves extends MaterialData {
+public class Leaves extends Tree {
     public Leaves() {
         super(Material.LEAVES);
     }
 
     public Leaves(TreeSpecies species) {
-        this();
-        setSpecies(species);
+        super(Material.LEAVES, species);
     }
 
     public Leaves(final int type) {
@@ -32,27 +31,53 @@ public class Leaves extends MaterialData {
         super(type, data);
     }
 
-    /**
-     * Gets the current species of this leave
-     *
-     * @return TreeSpecies of this leave
-     */
-    public TreeSpecies getSpecies() {
-        return TreeSpecies.getByData((byte) (getData() & 3));
+    public Leaves(byte data) {
+        super(Material.LEAVES, data);
     }
 
     /**
-     * Sets the species of this leave
-     *
-     * @param species New species of this leave
+     * @return True if the leaves are permanent and will never decay.
      */
-    public void setSpecies(TreeSpecies species) {
-        setData(species.getData());
+    public boolean isPermanent() {
+        return (getData() & 0x4) > 0;
+    }
+
+    /**
+     * @param permanent Whether the leaves should be permanent and never decay.
+     */
+    public void setPermanent(boolean permanent) {
+        byte data = getData();
+        if (permanent) {
+            data |= 0x4;
+        } else {
+            data &= ~0x4;
+        }
+        setData(data);
+    }
+
+    /**
+     * @return True if the leaves are marked to be checked for decay.
+     */
+    public boolean isReadyForDecay() {
+        return (getData() & 0x8) > 0;
+    }
+
+    /**
+     * @param ready Whether the leaves should be checked for decay.
+     */
+    public void setReadyForDecay(boolean ready) {
+        byte data = getData();
+        if (ready) {
+            data |= 0x8;
+        } else {
+            data &= ~0x8;
+        }
+        setData(data);
     }
 
     @Override
     public String toString() {
-        return getSpecies() + " " + super.toString();
+        return super.toString() + (isPermanent() ? " (permanent)" : (isReadyForDecay() ? " (decaying)" : ""));
     }
 
     @Override
