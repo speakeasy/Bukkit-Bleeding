@@ -11,6 +11,11 @@ public class Dye extends MaterialData implements Colorable {
         super(Material.INK_SACK);
     }
 
+    public Dye(DyeColor color) {
+        this();
+        setColor(color);
+    }
+
     public Dye(final int type) {
         super(type);
     }

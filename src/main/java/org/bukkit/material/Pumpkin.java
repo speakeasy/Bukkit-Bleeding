@@ -46,19 +46,19 @@ public class Pumpkin extends MaterialData implements Directional {
         byte data;
 
         switch (face) {
-        case EAST:
+        case SOUTH:
             data = 0x0;
             break;
 
-        case SOUTH:
+        case WEST:
             data = 0x1;
             break;
 
-        case WEST:
+        case NORTH:
             data = 0x2;
             break;
 
-        case NORTH:
+        case EAST:
         default:
             data = 0x3;
         }
@@ -70,18 +70,18 @@ public class Pumpkin extends MaterialData implements Directional {
         byte data = getData();
 
         switch (data) {
+        default:
         case 0x0:
-            return BlockFace.EAST;
+            return BlockFace.SOUTH;
 
         case 0x1:
-            return BlockFace.SOUTH;
-
-        case 0x2:
             return BlockFace.WEST;
 
+        case 0x2:
+            return BlockFace.NORTH;
+
         case 0x3:
-        default:
-            return BlockFace.SOUTH;
+            return BlockFace.EAST;
         }
     }
 

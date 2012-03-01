@@ -1,5 +1,6 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
@@ -133,18 +134,22 @@ public class Rails extends MaterialData {
             break;
 
         case NORTH_EAST:
+            Validate.isTrue(!isOnSlope, "Curved rails cannot be on a slope!");
             setData((byte) 0x6);
             break;
 
         case SOUTH_EAST:
+            Validate.isTrue(!isOnSlope, "Curved rails cannot be on a slope!");
             setData((byte) 0x7);
             break;
 
         case SOUTH_WEST:
+            Validate.isTrue(!isOnSlope, "Curved rails cannot be on a slope!");
             setData((byte) 0x8);
             break;
 
         case NORTH_WEST:
+            Validate.isTrue(!isOnSlope, "Curved rails cannot be on a slope!");
             setData((byte) 0x9);
             break;
         }

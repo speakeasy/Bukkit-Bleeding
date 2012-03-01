@@ -24,6 +24,11 @@ public class Tree extends MaterialData {
         super(type);
     }
 
+    public Tree(final Material type, TreeSpecies species) {
+        super(type);
+        setSpecies(species);
+    }
+
     public Tree(final int type, final byte data) {
         super(type, data);
     }

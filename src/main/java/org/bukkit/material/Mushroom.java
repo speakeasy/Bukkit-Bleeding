@@ -91,7 +91,7 @@ public class Mushroom extends MaterialData {
 
         byte data = getData();
 
-        if (data == SHROOM_STEM) {
+        if (data == SHROOM_STEM || data == SHROOM_NONE) {
             data = 5;
         }
 
