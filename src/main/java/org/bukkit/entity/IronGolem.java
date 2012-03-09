@@ -5,4 +5,10 @@ package org.bukkit.entity;
  */
 public interface IronGolem extends Golem {
 
+    /**
+     * Gets whether this iron golem was built by a player.
+     * 
+     * @return Whether this iron golem was built by a player
+     */
+    public boolean isPlayerCreated();
 }
