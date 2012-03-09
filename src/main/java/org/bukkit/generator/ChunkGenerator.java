@@ -57,7 +57,7 @@ public abstract class ChunkGenerator {
      *
      * Note this deprecated method will only be called when both generateExtBlockSections()
      * and generateBlockSections() are unimplemented and return null.
-
+     *
      * @param world The world this chunk will be used for
      * @param random The random generator to use
      * @param x The X-coordinate of the chunk
@@ -103,7 +103,7 @@ public abstract class ChunkGenerator {
      * @return short[][] containing the types for each block created by this generator
      */
     public short[][] generateExtBlockSections(World world, Random random, int x, int z, BiomeGrid biomes) {
-        return null;    /* Default - returns null, which drives call to generateBlockSections() */
+        return null;    // Default - returns null, which drives call to generateBlockSections()
     }
 
     /**
@@ -137,7 +137,7 @@ public abstract class ChunkGenerator {
      * @return short[][] containing the types for each block created by this generator
      */
     public byte[][] generateBlockSections(World world, Random random, int x, int z, BiomeGrid biomes) {
-        return null;    /* Default - returns null, which drives call to generate() */
+        return null;    // Default - returns null, which drives call to generate()
     }
 
     /**
