@@ -39,7 +39,13 @@ public class BlockBreakEvent extends BlockEvent implements Cancellable {
     public Player getPlayer() {
         return player;
     }
-    
+
+    /**
+     * Gets a list of items that should drop from this block. Modifying this list will modify the items drop.
+     * If the block is a container, the contents of the container will not be included in this list. You can
+     * get the contents of the container by casting the block's state.
+     * @return A list of drops
+     */
     public List<ItemStack> getDrops() {
         return drops;
     }

@@ -39,6 +39,10 @@ public class PaintingBreakEvent extends PaintingEvent implements Cancellable {
         this.cancelled = cancel;
     }
 
+    /**
+     * Gets the list of items to be dropped. Modifying this list will modify what's actually dropped.
+     * @return A list of drops
+     */
     public List<ItemStack> getDrops() {
         return drops;
     }

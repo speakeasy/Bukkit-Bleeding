@@ -51,6 +51,12 @@ public class VehicleDestroyEvent extends VehicleEvent implements Cancellable {
         return handlers;
     }
 
+    /**
+     * Gets a list of drops that this vehicle should drop when broken. Changes to this list will
+     * affect what is actually dropped. This list does not include the contents of the inventory
+     * if this is a storage minecart; if that's needed, it can be fetched by casting.
+     * @return A list of drops
+     */
     public List<ItemStack> getDrops() {
         return drops;
     }
