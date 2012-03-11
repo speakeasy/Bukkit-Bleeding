@@ -495,4 +495,11 @@ public enum Material {
     public boolean isRecord() {
         return id >= GOLD_RECORD.id && id <= RECORD_11.id;
     }
+
+    /**
+     * @return Whether this material is subject to gravity.
+     */
+    public boolean canFall() {
+        return equals(Material.SAND) || equals(Material.GRAVEL) || equals(Material.DRAGON_EGG);
+    }
 }
