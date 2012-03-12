@@ -11,8 +11,6 @@ import org.bukkit.help.HelpMap;
 import org.bukkit.help.HelpTopic;
 import org.bukkit.util.ChatPaginator;
 
-import java.util.Arrays;
-
 public class HelpCommand extends VanillaCommand {
     public HelpCommand() {
         super("help");
