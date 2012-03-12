@@ -65,6 +65,7 @@ public enum InventoryType {
          * A slot in the crafting matrix, or the input slot in a furnace inventory,
          * the potion slot in the brewing stand, or the enchanting slot.
          */
+        @SuppressWarnings("hiding")
         CRAFTING,
         /**
          * An armour slot in the player's inventory.

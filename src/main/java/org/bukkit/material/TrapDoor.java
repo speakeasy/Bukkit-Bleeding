@@ -64,6 +64,7 @@ public class TrapDoor extends SimpleAttachableMaterialData implements Openable {
 
     }
 
+    @SuppressWarnings("incomplete-switch")
     public void setFacingDirection(BlockFace face) {
         byte data = (byte) (getData() & 0x4);
 
