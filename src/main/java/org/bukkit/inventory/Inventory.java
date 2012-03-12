@@ -289,7 +289,7 @@ public interface Inventory extends Iterable<ItemStack> {
      * Gets a list of players viewing. Note that a player is considered to be viewing their own
      * inventory and internal crafting screen even when said inventory is not open. They will normally
      * be considered to be viewing their inventory even when they have a different inventory screen open,
-     * but it's possible for customized inventory screens to exclude the viewers inventory, so this should
+     * but it's possible for customized inventory screens to exclude the viewer's inventory, so this should
      * never be assumed to be non-empty.
      *
      * @return A list of HumanEntities who are viewing this Inventory.
