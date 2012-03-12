@@ -34,6 +34,7 @@ public class InactivityConversationCanceller implements ConversationCanceller {
         return false;
     }
 
+    @Override
     public ConversationCanceller clone() {
         return new InactivityConversationCanceller(plugin, timeoutSeconds);
     }

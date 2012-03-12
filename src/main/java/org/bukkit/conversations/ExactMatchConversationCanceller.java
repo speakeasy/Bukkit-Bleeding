@@ -20,6 +20,7 @@ public class ExactMatchConversationCanceller implements ConversationCanceller {
         return input.equals(escapeSequence);
     }
 
+    @Override
     public ConversationCanceller clone() {
         return new ExactMatchConversationCanceller(escapeSequence);
     }

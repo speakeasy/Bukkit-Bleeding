@@ -13,6 +13,7 @@ public class ManuallyAbandonedConversationCanceller implements ConversationCance
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public ConversationCanceller clone() {
         throw new UnsupportedOperationException();
     }

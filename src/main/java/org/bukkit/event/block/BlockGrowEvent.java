@@ -46,6 +46,7 @@ public class BlockGrowEvent extends BlockEvent implements Cancellable {
         this.cancelled = cancel;
     }
 
+    @Override
     public HandlerList getHandlers() {
         return handlers;
     }

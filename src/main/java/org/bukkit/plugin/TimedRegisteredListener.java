@@ -18,6 +18,7 @@ public class TimedRegisteredListener extends RegisteredListener {
         super(pluginListener, eventExecutor, eventPriority, registeredPlugin, listenCancelled);
     }
 
+    @Override
     public void callEvent(Event event) throws EventException {
         count++;
         if (this.event == null) {
