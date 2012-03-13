@@ -15,13 +15,13 @@ public interface Village {
 
     public int getPopulation();
 
-    public Location getCentre();
+    public Location getCenter();
 
-    public void setCentre(Location centre);
+    public void setCenter(Location centre);
 
     public List<VillageDoor> getDoors();
 
     public void addDoor(VillageDoor door);
 
-    public List<LivingEntity> getAgressors();
+    public List<LivingEntity> getAggressors();
 }
