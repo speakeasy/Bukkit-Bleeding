@@ -70,7 +70,9 @@ public interface Inventory extends Iterable<ItemStack> {
      *
      * @param items The ItemStacks to add
      * @return The items that didn't fit.
+     * @deprecated
      */
+    @Deprecated
     public HashMap<Integer, ItemStack> addItem(ItemStack... items);
 
     /**
@@ -81,7 +83,9 @@ public interface Inventory extends Iterable<ItemStack> {
      *
      * @param items The ItemStacks to remove
      * @return The items that couldn't be removed.
+     * @deprecated
      */
+    @Deprecated
     public HashMap<Integer, ItemStack> removeItem(ItemStack... items);
 
     /**
@@ -121,7 +125,9 @@ public interface Inventory extends Iterable<ItemStack> {
      *
      * @param item The ItemStack to match against
      * @return If any matching ItemStacks were found
+     * @deprecated
      */
+    @Deprecated
     public boolean contains(ItemStack item);
 
     /**
@@ -149,7 +155,9 @@ public interface Inventory extends Iterable<ItemStack> {
      * @param item The ItemStack to match against
      * @param amount The minimum amount
      * @return If any matching ItemStacks were found
+     * @deprecated
      */
+    @Deprecated
     public boolean contains(ItemStack item, int amount);
 
     /**
@@ -157,7 +165,9 @@ public interface Inventory extends Iterable<ItemStack> {
      *
      * @param materialId The materialId to look for
      * @return The Slots found.
+     * @deprecated
      */
+    @Deprecated
     public HashMap<Integer, ? extends ItemStack> all(int materialId);
 
     /**
@@ -165,7 +175,9 @@ public interface Inventory extends Iterable<ItemStack> {
      *
      * @param material The material to look for
      * @return The Slots found.
+     * @deprecated
      */
+    @Deprecated
     public HashMap<Integer, ? extends ItemStack> all(Material material);
 
     /**
@@ -174,7 +186,9 @@ public interface Inventory extends Iterable<ItemStack> {
      *
      * @param item The ItemStack to match against
      * @return The Slots found.
+     * @deprecated
      */
+    @Deprecated
     public HashMap<Integer, ? extends ItemStack> all(ItemStack item);
 
     /**
@@ -199,7 +213,9 @@ public interface Inventory extends Iterable<ItemStack> {
      *
      * @param item The ItemStack to match against
      * @return The Slot found.
+     * @deprecated
      */
+    @Deprecated
     public int first(ItemStack item);
 
     /**
@@ -228,7 +244,9 @@ public interface Inventory extends Iterable<ItemStack> {
      * This will only match a slot if both the type and the amount of the stack match
      *
      * @param item The ItemStack to match against
+     * @deprecated
      */
+    @Deprecated
     public void remove(ItemStack item);
 
     /**
@@ -270,6 +288,12 @@ public interface Inventory extends Iterable<ItemStack> {
      * @return The holder of the inventory; null if it has no holder.
      */
     public InventoryHolder getHolder();
+
+    /**
+     * Begin an advanced transaction on this inventory.
+     * @return The transaction objecy.
+     */
+    InventoryTransaction transaction();
 
     public ListIterator<ItemStack> iterator();
 
