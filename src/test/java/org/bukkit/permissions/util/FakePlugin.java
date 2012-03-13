@@ -7,12 +7,12 @@ import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
-import org.bukkit.util.config.Configuration;
 
 import com.avaje.ebean.EbeanServer;
 
@@ -107,5 +107,9 @@ public class FakePlugin implements Plugin {
     public Logger getLogger() {
         throw new RuntimeException("Not implemented!");
     }
+
+	public String getName() {
+		return "plugin";
+	}
 
 }

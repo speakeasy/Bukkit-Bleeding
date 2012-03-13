@@ -48,13 +48,11 @@ public class PermissionAttachment {
     /**
      * Sets the priority value of this attachment. Higher priority attachments override lower priorities.
      * 
-     * @param priority A value between -1000 and 1000 representing the priority of this attachment
+     * @param priority A value between 0 and Integer.MAX_VALUE representing the priority of this attachment
      */
     public void setPriority(int priority) {
-        if (priority < -1000) {
-            this.priority = -1000;
-        } else if (priority > 1000) {
-            this.priority = 1000;
+        if (priority < 0) {
+            this.priority = 0;
         } else {
             this.priority = priority;
         }

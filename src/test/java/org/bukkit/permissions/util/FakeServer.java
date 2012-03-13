@@ -1,6 +1,7 @@
 package org.bukkit.permissions.util;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,7 +20,12 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.help.HelpMap;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.Plugin;
@@ -356,5 +362,60 @@ public class FakeServer implements Server {
 
         throw new RuntimeException("Not implemented!");
     }
+
+	public String getWorldType() {
+		throw new RuntimeException("Not implemented!");
+	}
+
+	public boolean getGenerateStructures() {
+		throw new RuntimeException("Not implemented!");
+	}
+
+	public int getTicksPerAnimalSpawns() {
+		throw new RuntimeException("Not implemented!");
+	}
+
+	public int getTicksPerMonsterSpawns() {
+		throw new RuntimeException("Not implemented!");
+	}
+
+	public List<Recipe> getRecipesFor(ItemStack result) {
+		throw new RuntimeException("Not implemented!");
+	}
+
+	public Iterator<Recipe> recipeIterator() {
+		throw new RuntimeException("Not implemented!");
+	}
+
+	public void clearRecipes() {
+		throw new RuntimeException("Not implemented!");
+		
+	}
+
+	public void resetRecipes() {
+		throw new RuntimeException("Not implemented!");
+		
+	}
+
+	public boolean useExactLoginLocation() {
+		throw new RuntimeException("Not implemented!");
+	}
+
+	public HelpMap getHelpMap() {
+		throw new RuntimeException("Not implemented!");
+	}
+
+	public Inventory createInventory(InventoryHolder owner, InventoryType type) {
+		throw new RuntimeException("Not implemented!");
+	}
+
+	public Inventory createInventory(InventoryHolder owner, int size) {
+		throw new RuntimeException("Not implemented!");
+	}
+
+	public Inventory createInventory(InventoryHolder owner, int size,
+			String title) {
+		throw new RuntimeException("Not implemented!");
+	}
 
 }
