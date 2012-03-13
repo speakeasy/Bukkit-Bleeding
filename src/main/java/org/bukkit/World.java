@@ -896,6 +896,22 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public void setTicksPerMonsterSpawns(int ticksPerMonsterSpawns);
 
     /**
+     * Gets a set of all villages loaded in this world. Please note that this
+     * list is immutable and removing / adding villages will have no effect
+     *
+     * @return The loaded villages in this world
+     */
+    public List<Village> getVillages();
+
+    /**
+     * Gets the village nearest to the given location
+     *
+     * @param location where to centre the search
+     * @return The nearest village
+     */
+    public Village getVillages(Location location);
+
+    /**
      * Represents various map environment types that a world may be
      */
     public enum Environment {
