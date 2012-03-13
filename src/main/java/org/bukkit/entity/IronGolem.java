@@ -1,10 +1,9 @@
 package org.bukkit.entity;
 
 /**
- * An iron Golem that protects Villages.
+ * An Iron Golem that protects Villages.
  */
-public interface IronGolem extends Golem {
-
+public interface IronGolem extends Golem, VillageEntity {
     /**
      * Gets whether this iron golem was built by a player.
      *
