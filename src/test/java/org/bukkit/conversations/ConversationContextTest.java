@@ -26,7 +26,7 @@ public class ConversationContextTest {
     @Test
     public void TestSessionData() {
         Conversable conversable = new FakeConversable();
-        Map session = new HashMap();
+        Map<Object, Object> session = new HashMap<Object, Object>();
         session.put("key", "value");
         ConversationContext context = new ConversationContext(null, conversable, session);
         assertEquals("value", context.getSessionData("key"));

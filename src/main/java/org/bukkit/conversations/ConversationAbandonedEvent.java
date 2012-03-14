@@ -5,6 +5,7 @@ import java.util.EventObject;
 /**
  * ConversationAbandonedEvent contains information about an abandoned conversation.
  */
+@SuppressWarnings("serial")
 public class ConversationAbandonedEvent extends EventObject {
 
     private ConversationContext context;
