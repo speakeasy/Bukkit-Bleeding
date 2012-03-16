@@ -74,6 +74,8 @@ public interface InventoryTransaction {
      * <p>
      * Note: This is not a matching rule, and as such applies even if you provide
      * your own custom matcher.
+     * <p>
+     * Warning: Stack sizes larger than {@link Byte#MAX_VALUE} may be clipped when the world is saved.
      * @param size Max stack size
      * @return This transaction, for chaining.
      * @see Stacks
@@ -251,7 +253,8 @@ public interface InventoryTransaction {
          */
         MAXIMUM,
         /**
-         * Uses the absolute maximum stack size, which is {@link Short#MAX_VALUE}.
+         * Uses the absolute maximum stack size that the game can <i>reliably</i> handle,
+         * which is {@link Byte#MAX_VALUE}.
          */
         OVERFILL,
         /**
