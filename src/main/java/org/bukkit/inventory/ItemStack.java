@@ -68,6 +68,12 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             this.data = stack.data.clone();
         }
         this.addUnsafeEnchantments(stack.getEnchantments());
+        if (stack.attributes != null) {
+            attributes = new MemoryConfiguration();
+            for (String path : stack.attributes.getKeys(true)) {
+                attributes.set(path, stack.attributes.get(path));
+            }
+        }
     }
 
     /**
@@ -229,6 +235,13 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             itemStack.enchantments = new HashMap<Enchantment, Integer>(this.enchantments);
             if (this.data != null) {
                 itemStack.data = this.data.clone();
+            }
+
+            if (attributes != null) {
+                itemStack.attributes = new MemoryConfiguration();
+                for (String path : attributes.getKeys(true)) {
+                    itemStack.attributes.set(path, attributes.get(path));
+                }
             }
 
             return itemStack;
