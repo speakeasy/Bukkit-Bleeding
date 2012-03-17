@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.material.MaterialData;
@@ -18,6 +20,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     private MaterialData data = null;
     private short durability = 0;
     private Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
+    protected ConfigurationSection attributes;
 
     public ItemStack(final int type) {
         this(type, 1);
@@ -342,6 +345,32 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     public int removeEnchantment(Enchantment ench) {
         Integer previous = enchantments.remove(ench);
         return (previous == null) ? 0 : previous;
+    }
+
+    /**
+     * Get the extended attributes of this item.
+     * @return The attributes.
+     */
+    public ConfigurationSection getAttributes() {
+        if (!hasAttributes()) {
+            attributes = new MemoryConfiguration();
+        }
+        return attributes;
+    }
+
+    /**
+     * Check if this item stack has any extended attributes.
+     * @return Whether it has attributes.
+     */
+    public boolean hasAttributes() {
+        return attributes != null;
+    }
+
+    /**
+     * Remove any extended attributes on this item stack.
+     */
+    public void clearAttributes() {
+        attributes = null;
     }
 
     public Map<String, Object> serialize() {
