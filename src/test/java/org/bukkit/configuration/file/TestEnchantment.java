@@ -52,4 +52,15 @@ public class TestEnchantment extends Enchantment {
         return false;
     }
 
+    @Override
+    public int getMinPower(int level) {
+        return 1;
+    }
+
+    @Override
+    public int getMaxPower(int level) {
+        // TODO Auto-generated method stub
+        return 50;
+    }
+
 }

@@ -153,6 +153,26 @@ public abstract class Enchantment {
     public abstract int getStartLevel();
 
     /**
+     * Gets the minimum enchantment power required to receive this enchantment
+     * at the specified level on an enchanting table.
+     *
+     * @param level Level of the enchantment
+     * @return Minimum enchantment power for the specified level
+     */
+    public abstract int getMinPower(int level);
+
+    /**
+     * Gets the maximum enchantment power for which you could receive this enchantment
+     * at the specified level on an enchanting table.
+     * <p>
+     * Note: The minimum power for the next level trumps this if this is not the max level.
+     *
+     * @param level  Level of the enchantment
+     * @return Maximum enchantment power for the specified level
+     */
+    public abstract int getMaxPower(int level);
+
+    /**
      * Gets the type of {@link ItemStack} that may fit this Enchantment.
      *
      * @return Target type of the Enchantment

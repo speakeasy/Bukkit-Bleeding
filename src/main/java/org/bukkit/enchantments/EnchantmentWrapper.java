@@ -48,4 +48,14 @@ public class EnchantmentWrapper extends Enchantment {
     public boolean conflictsWith(Enchantment other) {
         return getEnchantment().conflictsWith(other);
     }
+
+    @Override
+    public int getMinPower(int level) {
+        return getEnchantment().getMinPower(level);
+    }
+
+    @Override
+    public int getMaxPower(int level) {
+        return getEnchantment().getMaxPower(level);
+    }
 }
