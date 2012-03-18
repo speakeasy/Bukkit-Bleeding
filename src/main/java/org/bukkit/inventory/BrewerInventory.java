@@ -13,6 +13,4 @@ public interface BrewerInventory extends Inventory {
      * @param ingredient The ingredient
      */
     void setIngredient(ItemStack ingredient);
-
-    BrewingStand getHolder();
 }

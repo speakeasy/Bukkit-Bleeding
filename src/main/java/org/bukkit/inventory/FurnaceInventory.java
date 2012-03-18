@@ -38,6 +38,4 @@ public interface FurnaceInventory extends Inventory {
      * @param stack The item
      */
     void setSmelting(ItemStack stack);
-
-    Furnace getHolder();
 }
