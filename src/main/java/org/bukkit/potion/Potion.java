@@ -409,4 +409,8 @@ public class Potion {
             throw new IllegalArgumentException("brewer can only be set internally");
         brewer = other;
     }
+
+    public int getNameId() {
+        return name;
+    }
 }

@@ -136,7 +136,7 @@ public class PotionTest {
     @Test
     public void awkward() {
         Potion potion = new Potion(16);
-        assertEquals(16, potion.getName());
+        assertEquals(16, potion.getNameId());
         assertFalse(potion.isSplash());
         assertFalse(potion.hasExtendedDuration());
         assertNull(potion.getType());
