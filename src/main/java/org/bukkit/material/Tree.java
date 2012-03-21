@@ -7,6 +7,8 @@ import org.bukkit.TreeSpecies;
  * Represents the different types of Trees.
  */
 public class Tree extends MaterialData {
+    private static final byte SPECIES_BIT = 0x3;
+
     public Tree() {
         super(Material.LOG);
     }
@@ -43,7 +45,7 @@ public class Tree extends MaterialData {
      * @return TreeSpecies of this tree
      */
     public TreeSpecies getSpecies() {
-        return TreeSpecies.getByData(getData());
+        return TreeSpecies.getByData((byte) (getData() & SPECIES_BIT));
     }
 
     /**
@@ -52,7 +54,8 @@ public class Tree extends MaterialData {
      * @param species New species of this tree
      */
     public void setSpecies(TreeSpecies species) {
-        setData(species.getData());
+        byte data = (byte) (getData() &~ SPECIES_BIT);
+        setData((byte) (species.getData() | data));
     }
 
     @Override

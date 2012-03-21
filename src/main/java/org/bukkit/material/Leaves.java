@@ -7,6 +7,9 @@ import org.bukkit.TreeSpecies;
  * Represents a leaf block
  */
 public class Leaves extends Tree {
+    private static final byte DECAYING_BIT = 0x8;
+    private static final byte PERMANENT_BIT = 0x4;
+
     public Leaves() {
         super(Material.LEAVES);
     }
@@ -39,7 +42,7 @@ public class Leaves extends Tree {
      * @return True if the leaves are permanent and will never decay.
      */
     public boolean isPermanent() {
-        return (getData() & 0x4) > 0;
+        return (getData() & PERMANENT_BIT) > 0;
     }
 
     /**
@@ -48,9 +51,9 @@ public class Leaves extends Tree {
     public void setPermanent(boolean permanent) {
         byte data = getData();
         if (permanent) {
-            data |= 0x4;
+            data |= PERMANENT_BIT;
         } else {
-            data &= ~0x4;
+            data &= ~PERMANENT_BIT;
         }
         setData(data);
     }
@@ -59,7 +62,7 @@ public class Leaves extends Tree {
      * @return True if the leaves are marked to be checked for decay.
      */
     public boolean isReadyForDecay() {
-        return (getData() & 0x8) > 0;
+        return (getData() & DECAYING_BIT) > 0;
     }
 
     /**
@@ -68,9 +71,9 @@ public class Leaves extends Tree {
     public void setReadyForDecay(boolean ready) {
         byte data = getData();
         if (ready) {
-            data |= 0x8;
+            data |= DECAYING_BIT;
         } else {
-            data &= ~0x8;
+            data &= ~DECAYING_BIT;
         }
         setData(data);
     }
