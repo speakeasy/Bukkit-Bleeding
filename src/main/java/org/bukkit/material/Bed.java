@@ -7,11 +7,11 @@ import org.bukkit.block.BlockFace;
  * Represents a bed.
  */
 public class Bed extends MaterialData implements Directional {
-    private static final int DIR_MASK = 0x7;
-    private static final int SOUTH_BIT = 0x3;
-    private static final int EAST_BIT = 0x2;
-    private static final int NORTH_BIT = 0x1;
-    private static final int WEST_BIT = 0x0;
+    private static final byte DIR_MASK = 0x7;
+    private static final byte SOUTH_BIT = 0x3;
+    private static final byte EAST_BIT = 0x2;
+    private static final byte NORTH_BIT = 0x1;
+    private static final byte WEST_BIT = 0x0;
     private static final byte HEAD_BIT = 0x8;
 
     /**

@@ -7,6 +7,13 @@ import org.bukkit.Material;
  * Represents a button
  */
 public class Button extends SimpleAttachableMaterialData implements Redstone {
+    private static final byte WEST_BIT = 0x4;
+    private static final byte EAST_BIT = 0x3;
+    private static final byte SOUTH_BIT = 0x2;
+    private static final byte NORTH_BIT = 0x1;
+    private static final byte DIR_MASK = 0x7;
+    private static final byte POWER_BIT = 0x8;
+
     public Button() {
         super(Material.STONE_BUTTON);
     }
@@ -34,7 +41,7 @@ public class Button extends SimpleAttachableMaterialData implements Redstone {
      * @return true if powered, otherwise false
      */
     public boolean isPowered() {
-        return (getData() & 0x8) == 0x8;
+        return (getData() & POWER_BIT) == POWER_BIT;
     }
 
     /**
@@ -44,7 +51,7 @@ public class Button extends SimpleAttachableMaterialData implements Redstone {
      *            whether or not the button is powered
      */
     public void setPowered(boolean bool) {
-        setData((byte) (bool ? (getData() | 0x8) : (getData() & ~0x8)));
+        setData((byte) (bool ? (getData() | POWER_BIT) : (getData() & ~POWER_BIT)));
     }
 
     /**
@@ -53,19 +60,19 @@ public class Button extends SimpleAttachableMaterialData implements Redstone {
      * @return BlockFace attached to
      */
     public BlockFace getAttachedFace() {
-        byte data = (byte) (getData() & 0x7);
+        byte data = (byte) (getData() & DIR_MASK);
 
         switch (data) {
-        case 0x1:
+        case NORTH_BIT:
             return BlockFace.NORTH;
 
-        case 0x2:
+        case SOUTH_BIT:
             return BlockFace.SOUTH;
 
-        case 0x3:
+        case EAST_BIT:
             return BlockFace.EAST;
 
-        case 0x4:
+        case WEST_BIT:
             return BlockFace.WEST;
         }
 
@@ -76,23 +83,24 @@ public class Button extends SimpleAttachableMaterialData implements Redstone {
      * Sets the direction this button is pointing toward
      */
     public void setFacingDirection(BlockFace face) {
-        byte data = (byte) (getData() & 0x8);
+        byte data = (byte) (getData() & POWER_BIT);
 
         switch (face) {
         case SOUTH:
-            data |= 0x1;
+        default:
+            data |= NORTH_BIT;
             break;
 
         case NORTH:
-            data |= 0x2;
+            data |= SOUTH_BIT;
             break;
 
         case WEST:
-            data |= 0x3;
+            data |= EAST_BIT;
             break;
 
         case EAST:
-            data |= 0x4;
+            data |= WEST_BIT;
             break;
         }
 
