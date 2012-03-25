@@ -7,6 +7,12 @@ import org.bukkit.block.BlockFace;
  * Represents a bed.
  */
 public class Bed extends MaterialData implements Directional {
+    private static final int DIR_MASK = 0x7;
+    private static final int SOUTH_BIT = 0x3;
+    private static final int EAST_BIT = 0x2;
+    private static final int NORTH_BIT = 0x1;
+    private static final int WEST_BIT = 0x0;
+    private static final byte HEAD_BIT = 0x8;
 
     /**
      * Default constructor for a bed.
@@ -47,7 +53,7 @@ public class Bed extends MaterialData implements Directional {
      * @return true if this is the head of the bed, false if it is the foot
      */
     public boolean isHeadOfBed() {
-        return (getData() & 0x8) == 0x8;
+        return (getData() & HEAD_BIT) == HEAD_BIT;
     }
 
     /**
@@ -56,7 +62,7 @@ public class Bed extends MaterialData implements Directional {
      * @param isHeadOfBed True to make it the head.
      */
     public void setHeadOfBed(boolean isHeadOfBed) {
-        setData((byte) (isHeadOfBed ? (getData() | 0x8) : (getData() & ~0x8)));
+        setData((byte) (isHeadOfBed ? (getData() | HEAD_BIT) : (getData() & ~HEAD_BIT)));
     }
 
     /**
@@ -68,24 +74,24 @@ public class Bed extends MaterialData implements Directional {
 
         switch (face) {
         case WEST:
-            data = 0x0;
+            data = WEST_BIT;
             break;
 
         case NORTH:
-            data = 0x1;
+            data = NORTH_BIT;
             break;
 
         case EAST:
-            data = 0x2;
+            data = EAST_BIT;
             break;
 
         case SOUTH:
         default:
-            data = 0x3;
+            data = SOUTH_BIT;
         }
 
         if (isHeadOfBed()) {
-            data |= 0x8;
+            data |= HEAD_BIT;
         }
 
         setData(data);
@@ -97,19 +103,19 @@ public class Bed extends MaterialData implements Directional {
      * @return the direction the head of the bed is facing
      */
     public BlockFace getFacing() {
-        byte data = (byte) (getData() & 0x7);
+        byte data = (byte) (getData() & DIR_MASK);
 
         switch (data) {
-        case 0x0:
+        case WEST_BIT:
             return BlockFace.WEST;
 
-        case 0x1:
+        case NORTH_BIT:
             return BlockFace.NORTH;
 
-        case 0x2:
+        case EAST_BIT:
             return BlockFace.EAST;
 
-        case 0x3:
+        case SOUTH_BIT:
         default:
             return BlockFace.SOUTH;
         }
