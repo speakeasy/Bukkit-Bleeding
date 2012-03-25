@@ -6,6 +6,8 @@ import org.bukkit.Material;
  * Represents a detector rail
  */
 public class DetectorRail extends ExtendedRails implements PressureSensor {
+    private static final byte PRESSED_BIT = 0x8;
+
     public DetectorRail() {
         super(Material.DETECTOR_RAIL);
     }
@@ -27,11 +29,11 @@ public class DetectorRail extends ExtendedRails implements PressureSensor {
     }
 
     public boolean isPressed() {
-        return (getData() & 0x8) == 0x8;
+        return (getData() & PRESSED_BIT) == PRESSED_BIT;
     }
 
     public void setPressed(boolean isPressed) {
-        setData((byte) (isPressed ? (getData() | 0x8) : (getData() & ~0x8)));
+        setData((byte) (isPressed ? (getData() | PRESSED_BIT) : (getData() & ~PRESSED_BIT)));
     }
 
     @Override
