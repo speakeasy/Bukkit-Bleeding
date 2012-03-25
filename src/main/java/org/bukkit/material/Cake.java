@@ -3,6 +3,8 @@ package org.bukkit.material;
 import org.bukkit.Material;
 
 public class Cake extends MaterialData {
+    private static final byte MAX_SLICES = 6;
+
     public Cake() {
         super(Material.CAKE_BLOCK);
     }
@@ -38,7 +40,7 @@ public class Cake extends MaterialData {
      * @return The number of slices remaining
      */
     public int getSlicesRemaining() {
-        return 6 - getData();
+        return MAX_SLICES - getData();
     }
 
     /**
@@ -47,7 +49,7 @@ public class Cake extends MaterialData {
      * @param n The number of slices eaten
      */
     public void setSlicesEaten(int n) {
-        if (n < 6) {
+        if (n < MAX_SLICES) {
             setData((byte) n);
         } // TODO: else destroy the block? Probably not possible though
     }
@@ -58,10 +60,10 @@ public class Cake extends MaterialData {
      * @param n The number of slices remaining
      */
     public void setSlicesRemaining(int n) {
-        if (n > 6) {
-            n = 6;
+        if (n > MAX_SLICES) {
+            n = MAX_SLICES;
         }
-        setData((byte) (6 - n));
+        setData((byte) (MAX_SLICES - n));
     }
 
     @Override
