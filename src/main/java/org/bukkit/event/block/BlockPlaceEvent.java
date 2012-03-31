@@ -16,19 +16,29 @@ public class BlockPlaceEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     protected boolean cancel;
     protected boolean canBuild;
-    protected Block placedAgainst;
-    protected BlockState replacedBlockState;
-    protected ItemStack itemInHand;
-    protected Player player;
+    @Deprecated protected Block placedAgainst;
+    @Deprecated protected BlockState replacedBlockState;
+    protected final ItemStack itemInHand;
+    protected final Player player;
+    protected final BlockState placedBlock;
 
-    public BlockPlaceEvent(final Block placedBlock, final BlockState replacedBlockState, final Block placedAgainst, final ItemStack itemInHand, final Player thePlayer, final boolean canBuild) {
-        super(placedBlock);
+    public BlockPlaceEvent(final Block block, final BlockState placedBlock, final Player player, final ItemStack itemInHand, final boolean canBuild) {
+        super(block);
+        this.placedBlock = placedBlock;
+        this.player = player;
+        this.itemInHand = itemInHand;
+        this.canBuild = canBuild;
+    }
+
+    @Deprecated
+    public BlockPlaceEvent(final Block block, final BlockState replacedBlockState, final Block placedAgainst, final ItemStack itemInHand, final Player thePlayer, final boolean canBuild) {
+        super(block);
         this.placedAgainst = placedAgainst;
         this.itemInHand = itemInHand;
         this.player = thePlayer;
         this.replacedBlockState = replacedBlockState;
         this.canBuild = canBuild;
-        cancel = false;
+        this.placedBlock = null;
     }
 
     public boolean isCancelled() {
@@ -49,11 +59,22 @@ public class BlockPlaceEvent extends BlockEvent implements Cancellable {
     }
 
     /**
+     * Get the BlockState of the placed block
+     *
+     * @return The BlockState of the placed block
+     */
+    public BlockState getPlacedBlock() {
+        return placedBlock;
+    }
+
+    /**
      * Clarity method for getting the placed block. Not really needed
      * except for reasons of clarity.
      *
      * @return The Block that was placed
+     * @deprecated
      */
+    @Deprecated
     public Block getBlockPlaced() {
         return getBlock();
     }
@@ -62,7 +83,9 @@ public class BlockPlaceEvent extends BlockEvent implements Cancellable {
      * Gets the BlockState for the block which was replaced. Material type air mostly.
      *
      * @return The BlockState for the block which was replaced.
+     * @deprecated
      */
+    @Deprecated
     public BlockState getBlockReplacedState() {
         return this.replacedBlockState;
     }
@@ -72,6 +95,7 @@ public class BlockPlaceEvent extends BlockEvent implements Cancellable {
      *
      * @return Block the block that the new block was placed against
      */
+    @Deprecated
     public Block getBlockAgainst() {
         return placedAgainst;
     }
