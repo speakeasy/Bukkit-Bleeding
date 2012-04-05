@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
@@ -11,7 +12,7 @@ import org.bukkit.event.HandlerList;
  *
  * This event specifically excludes player entities
  */
-public class EntityChangeBlockEvent extends EntityEvent implements Cancellable {
+public class EntityChangeBlockEvent extends EntityEvent implements Cancellable, Event.BlockEvent {
     private static final HandlerList handlers = new HandlerList();
     private final Block block;
     private boolean cancel;

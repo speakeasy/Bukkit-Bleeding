@@ -6,18 +6,13 @@ import org.bukkit.event.Event;
 /**
  * Represents a player related event
  */
-public abstract class PlayerEvent extends Event {
+public abstract class PlayerEvent extends Event implements Event.PlayerEvent {
     protected Player player;
 
     public PlayerEvent(final Player who) {
         player = who;
     }
 
-    /**
-     * Returns the player involved in this event
-     *
-     * @return Player who is involved in this event
-     */
     public final Player getPlayer() {
         return player;
     }

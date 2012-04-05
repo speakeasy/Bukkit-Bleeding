@@ -3,12 +3,13 @@ package org.bukkit.event.entity;
 import java.util.List;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
 /**
  * Thrown whenever a {@link Player} dies
  */
-public class PlayerDeathEvent extends EntityDeathEvent {
+public class PlayerDeathEvent extends EntityDeathEvent implements Event.PlayerEvent {
     private int newExp = 0;
     private String deathMessage = "";
     private int newLevel = 0;
@@ -34,6 +35,10 @@ public class PlayerDeathEvent extends EntityDeathEvent {
     @Override
     public Player getEntity() {
         return (Player) entity;
+    }
+
+    public Player getPlayer() {
+        return getEntity();
     }
 
     /**

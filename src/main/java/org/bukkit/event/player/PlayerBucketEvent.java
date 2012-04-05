@@ -5,9 +5,10 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
-public abstract class PlayerBucketEvent extends PlayerEvent implements Cancellable {
+public abstract class PlayerBucketEvent extends PlayerEvent implements Cancellable, Event.BlockEvent {
     private ItemStack itemStack;
     private boolean cancelled = false;
     private final Block blockClicked;
@@ -55,6 +56,10 @@ public abstract class PlayerBucketEvent extends PlayerEvent implements Cancellab
      * @return the blicked block
      */
     public Block getBlockClicked() {
+        return blockClicked;
+    }
+
+    public Block getBlock() {
         return blockClicked;
     }
 

@@ -1,5 +1,10 @@
 package org.bukkit.event;
 
+import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+
 /**
  * Represents an event
  */
@@ -37,5 +42,39 @@ public abstract class Event {
          * Some actions may not be allowed.
          */
         ALLOW;
+    }
+
+    public interface PlayerEvent {
+        /**
+         * Returns the player involved in this event
+         *
+         * @return Player involved in this event
+         */
+        Player getPlayer();
+    }
+
+    public interface EntityEvent {
+        /**
+         * Returns the entity involved in this event
+         *
+         * @return Entity involved in this event
+         */
+        Entity getEntity();
+
+        /**
+         * Gets the EntityType of the Entity involved in this event.
+         *
+         * @return EntityType of the Entity involved in this event
+         */
+        EntityType getEntityType();
+    }
+
+    public interface BlockEvent {
+        /**
+         * Gets the block involved in this event
+         *
+         * @return Block involved in this event
+         */
+        Block getBlock();
     }
 }

@@ -3,6 +3,7 @@ package org.bukkit.event.block;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
@@ -10,7 +11,7 @@ import org.bukkit.event.HandlerList;
  * <p />
  * If a Block Ignite event is cancelled, the block will not be ignited.
  */
-public class BlockIgniteEvent extends BlockEvent implements Cancellable {
+public class BlockIgniteEvent extends BlockEvent implements Cancellable, Event.PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final IgniteCause cause;
     private boolean cancel;

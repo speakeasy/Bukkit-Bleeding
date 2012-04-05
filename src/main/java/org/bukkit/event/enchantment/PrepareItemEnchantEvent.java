@@ -3,6 +3,7 @@ package org.bukkit.event.enchantment;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.inventory.InventoryView;
@@ -11,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Called when an ItemStack is inserted in an enchantment table - can be called multiple times
  */
-public class PrepareItemEnchantEvent extends InventoryEvent implements Cancellable {
+public class PrepareItemEnchantEvent extends InventoryEvent implements Cancellable, Event.PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final Block table;
     private final ItemStack item;
@@ -36,6 +37,10 @@ public class PrepareItemEnchantEvent extends InventoryEvent implements Cancellab
      * @return enchanting player
      */
     public Player getEnchanter() {
+        return enchanter;
+    }
+
+    public Player getPlayer() {
         return enchanter;
     }
 
