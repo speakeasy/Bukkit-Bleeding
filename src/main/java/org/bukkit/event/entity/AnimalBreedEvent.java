@@ -6,39 +6,33 @@ import org.bukkit.event.HandlerList;
 
 public class AnimalBreedEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private final Animals parent;
-    private final Animals child;
+    private final Animals[] parents;
     private boolean cancelled;
 
     public AnimalBreedEvent(Animals parent, Animals parent2, Animals child) {
-        super(parent);
-        this.parent = parent2;
-        this.child = child;
+        super(child);
+        this.parents = new Animals[] { parent, parent2 };
     }
 
+    /**
+     * Gets the child entity
+     * 
+     * @return child entity
+     */
     @Override
     public Animals getEntity() {
         return (Animals) entity;
     }
-
+    
     /**
-     * Return the other parent of the child
-     *
-     * @return Animal parent
+     * Gets the parent entities.  The array will always have a length of two
+     * 
+     * @return parent entities
      */
-    public Animals getOtherParent() {
-        return parent;
+    public Animals[] getParents() {
+        return parents;
     }
-
-    /**
-     * Return the Animal spawned by this event
-     *
-     * @return Animal child
-     */
-    public Animals getChild() {
-        return child;
-    }
-
+    
     public boolean isCancelled() {
         return cancelled;
     }
