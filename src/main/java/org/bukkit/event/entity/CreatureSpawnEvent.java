@@ -137,7 +137,10 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
         VILLAGE_INVASION,
         /**
          * When an animal breeds to create a child
+         * 
+         * @deprecated Listen for EntityBreedEvent instead
          */
+        @Deprecated
         BREEDING,
         /**
          * When a creature is manually spawned
