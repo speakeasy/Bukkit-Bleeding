@@ -7,6 +7,17 @@ import org.bukkit.permissions.ServerOperator;
 
 public interface OfflinePlayer extends ServerOperator, AnimalTamer, ConfigurationSerializable {
     /**
+     * Gets the world the player is currently in if the player is online, or was last in if the player is offline
+     * @return world the player is in
+     */
+    public World getWorld();
+    
+    /**
+     * Gets the location the player is currently at if the player is online, or was last at if the player is offline
+     * @return location the player is at
+     */
+    public Location getLocation();
+    /**
      * Checks if this player is currently online
      *
      * @return true if they are online
