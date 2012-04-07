@@ -72,8 +72,13 @@ public class JavaPluginLoader implements PluginLoader {
         File dataFolder = new File(file.getParentFile(), description.getName());
         File oldDataFolder = getDataFolder(file);
 
+        boolean equalPaths = false;
+        try {
+            equalPaths = dataFolder.getCanonicalPath().equals(oldDataFolder.getCanonicalPath());
+        } catch (IOException ignore) {}
+
         // Found old data folder
-        if (dataFolder.equals(oldDataFolder)) {
+        if (dataFolder.equals(oldDataFolder) || equalPaths) {
             // They are equal -- nothing needs to be done!
         } else if (dataFolder.isDirectory() && oldDataFolder.isDirectory()) {
             server.getLogger().log(Level.INFO, String.format(
