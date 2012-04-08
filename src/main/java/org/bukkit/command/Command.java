@@ -22,6 +22,8 @@ public abstract class Command {
     protected String usageMessage;
     private String permission;
     private String permissionMessage;
+    protected long totalTime;
+    protected int count;
 
     protected Command(String name) {
         this(name, "", "/" + name, new ArrayList<String>());
@@ -295,5 +297,31 @@ public abstract class Command {
                 }
             }
         }
+    }
+
+    /**
+     * Resets the call count and total time for this command
+     */
+    public void reset() {
+        count = 0;
+        totalTime = 0;
+    }
+
+    /**
+     * Gets the total times this command has been called
+     *
+     * @return Times this command has been called
+     */
+    public int getCount() {
+        return count;
+    }
+
+    /**
+     * Gets the total time calls to this command have taken
+     *
+     * @return Total time for all calls of this command
+     */
+    public long getTotalTime() {
+        return totalTime;
     }
 }

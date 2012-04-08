@@ -35,6 +35,8 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
         if (!testPermission(sender)) {
             return true;
         }
+        this.count++;
+        long start = System.nanoTime();
 
         try {
             success = executor.onCommand(sender, this, commandLabel, args);
@@ -42,6 +44,7 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
             throw new CommandException("Unhandled exception executing command '" + commandLabel + "' in plugin " + owningPlugin.getDescription().getFullName(), ex);
         }
 
+        this.totalTime += System.nanoTime() - start;
         if (!success && usageMessage.length() > 0) {
             for (String line : usageMessage.replace("<command>", commandLabel).split("\n")) {
                 sender.sendMessage(line);

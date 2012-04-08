@@ -8,11 +8,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommandYamlParser;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.TimedRegisteredListener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class TimingsCommand extends BukkitCommand {
     public TimingsCommand(String name) {
@@ -43,6 +45,16 @@ public class TimingsCommand extends BukkitCommand {
                     }
                 }
             }
+            for (Plugin plugin : Bukkit.getServer().getPluginManager().getPlugins()) {
+                if (plugin instanceof JavaPlugin) {
+                    JavaPlugin p = (JavaPlugin) plugin;
+                    for (Command c : PluginCommandYamlParser.parse(plugin)) {
+                        Command command = p.getCommand(c.getName());
+                        if (command == null) continue;
+                        c.reset();
+                    }
+                }
+            }
             sender.sendMessage("Timings reset");
         } else if ("merged".equals(args[0]) || separate) {
 
@@ -67,8 +79,25 @@ public class TimingsCommand extends BukkitCommand {
                     if (separate) {
                         fileNames.println(pluginIdx + " " + plugin.getDescription().getFullName());
                         fileTimings.println("Plugin " + pluginIdx);
+                    } else{
+                        fileTimings.println(plugin.getDescription().getFullName());
                     }
-                    else fileTimings.println(plugin.getDescription().getFullName());
+                    if (plugin instanceof JavaPlugin) {
+                        JavaPlugin p = (JavaPlugin) plugin;
+                        for (Command c : PluginCommandYamlParser.parse(plugin)) {
+                            Command command = p.getCommand(c.getName());
+                            if (command == null) continue;
+                            long time = command.getTotalTime();
+                            int count = command.getCount();
+                            if (count == 0) continue;
+                        
+                            long avg = time / count;
+                            totalTime += time;
+                            if (count > 0) {
+                                fileTimings.println("    (Command) /" + command.getName() + " Time: " + time + " Count: " + count + " Avg: " + avg);
+                            }
+                        }
+                    }
                     for (RegisteredListener listener : HandlerList.getRegisteredListeners(plugin)) {
                         if (listener instanceof TimedRegisteredListener) {
                             TimedRegisteredListener trl = (TimedRegisteredListener) listener;
