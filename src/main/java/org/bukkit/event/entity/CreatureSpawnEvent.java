@@ -107,11 +107,11 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
         /**
          * When a creature spawns from a Spawner Egg
          */
-        SPAWNER_EGG,
+        SPAWNER_EGG(false),
         /**
          * When a creature spawns because of a lightning strike
          */
-        LIGHTNING,
+        LIGHTNING(false),
         /**
          * When a creature is spawned by a player that is sleeping
          *
@@ -146,10 +146,23 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
         /**
          * When a creature is spawned by plugins
          */
-        CUSTOM,
+        CUSTOM(false),
         /**
          * When an entity is missing a SpawnReason
          */
-        DEFAULT
+        DEFAULT;
+
+        private boolean preventSpawn;
+
+        private SpawnReason() {
+            this(true);
+        }
+        private SpawnReason(boolean prevent) {
+            preventSpawn = prevent;
+        }
+
+        public boolean isFilteringSpawn() {
+            return preventSpawn;
+        }
     }
 }

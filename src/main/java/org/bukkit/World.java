@@ -6,11 +6,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.Metadatable;
@@ -894,6 +896,13 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param ticksPerMonsterSpawns the ticks per monster spawns value you want to set the world to
      */
     public void setTicksPerMonsterSpawns(int ticksPerMonsterSpawns);
+
+    /**
+     * Get a mutable blacklist of spawn reasons containing SpawnReasons to apply Animal and Monster filters to.
+     *
+     * @return A set containing all SpawnReasons to filter
+     */
+    public Set<SpawnReason> getSpawnReasonFilter();
 
     /**
      * Represents various map environment types that a world may be
