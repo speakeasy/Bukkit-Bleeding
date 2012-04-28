@@ -47,4 +47,8 @@ public class TestPlayer implements InvocationHandler {
         }
         throw new UnsupportedOperationException(String.valueOf(method));
     }
+
+    public void setLocation(Location location) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
