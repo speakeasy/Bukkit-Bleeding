@@ -103,4 +103,8 @@ public class TestPlugin extends PluginBase {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         throw new UnsupportedOperationException("Not supported.");
     }
+    
+    public File getFile() {
+        throw new UnsupportedOperationException("Not supported.");
+    }
 }

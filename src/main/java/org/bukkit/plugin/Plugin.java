@@ -160,4 +160,11 @@ public interface Plugin extends CommandExecutor {
      * @return name of the plugin
      */
     public String getName();
+    
+    /**
+     * Returns the file which contains this plugin
+     *
+     * @return File containing this plugin
+     */
+    public File getFile();
 }
