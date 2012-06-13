@@ -1,9 +1,6 @@
 package org.bukkit.block;
 
-import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.Metadatable;
 
@@ -15,14 +12,7 @@ import org.bukkit.metadata.Metadatable;
  * the state of the block and you will not know, or they may change the block to
  * another type entirely, causing your BlockState to become invalid.
  */
-public interface BlockState extends Metadatable {
-
-    /**
-     * Gets the block represented by this BlockState
-     *
-     * @return Block that this BlockState represents
-     */
-    Block getBlock();
+public interface BlockState extends BlockView, Metadatable {
 
     /**
      * Gets the metadata for this block
@@ -30,69 +20,6 @@ public interface BlockState extends Metadatable {
      * @return block specific metadata
      */
     MaterialData getData();
-
-    /**
-     * Gets the type of this block
-     *
-     * @return block type
-     */
-    Material getType();
-
-    /**
-     * Gets the type-id of this block
-     *
-     * @return block type-id
-     */
-    int getTypeId();
-
-    /**
-     * Gets the light level between 0-15
-     *
-     * @return light level
-     */
-    byte getLightLevel();
-
-    /**
-     * Gets the world which contains this Block
-     *
-     * @return World containing this block
-     */
-    World getWorld();
-
-    /**
-     * Gets the x-coordinate of this block
-     *
-     * @return x-coordinate
-     */
-    int getX();
-
-    /**
-     * Gets the y-coordinate of this block
-     *
-     * @return y-coordinate
-     */
-    int getY();
-
-    /**
-     * Gets the z-coordinate of this block
-     *
-     * @return z-coordinate
-     */
-    int getZ();
-
-    /**
-     * Gets the location of this block
-     *
-     * @return location
-     */
-    Location getLocation();
-
-    /**
-     * Gets the chunk which contains this block
-     *
-     * @return Containing Chunk
-     */
-    Chunk getChunk();
 
     /**
      * Sets the metadata for this block
@@ -145,11 +72,6 @@ public interface BlockState extends Metadatable {
      * @return true if the update was successful, otherwise false
      */
     boolean update(boolean force);
-
-    /**
-     * @return The data as a raw byte.
-     */
-    public byte getRawData();
 
     /**
      * @param data The new data value for the block.
