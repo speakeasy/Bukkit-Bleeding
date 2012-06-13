@@ -2,6 +2,7 @@ package org.bukkit.event.block;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.BlockView;
 import org.bukkit.event.HandlerList;
 
 /**
@@ -22,7 +23,18 @@ public class BlockSpreadEvent extends BlockFormEvent {
     private static final HandlerList handlers = new HandlerList();
     private final Block source;
 
+    /**
+     * @deprecated This constructor is provided for compatibility. It will
+     *          create an immutable version from the provided block state.
+     *          For mutability, the BlockState should be downcast.
+     */
+    @Deprecated
     public BlockSpreadEvent(final Block block, final Block source, final BlockState newState) {
+        super(block, newState);
+        this.source = source;
+    }
+
+    public BlockSpreadEvent(final Block block, final Block source, final BlockView newState) {
         super(block, newState);
         this.source = source;
     }

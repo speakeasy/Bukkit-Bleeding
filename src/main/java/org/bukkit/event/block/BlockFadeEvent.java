@@ -2,7 +2,7 @@ package org.bukkit.event.block;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.event.Cancellable;
+import org.bukkit.block.BlockView;
 import org.bukkit.event.HandlerList;
 
 /**
@@ -16,32 +16,36 @@ import org.bukkit.event.HandlerList;
  * <p />
  * If a Block Fade event is cancelled, the block will not fade, melt or disappear.
  */
-public class BlockFadeEvent extends BlockEvent implements Cancellable {
+public class BlockFadeEvent extends BlockStateChangeEvent {
     private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
-    private final BlockState newState;
 
+    /**
+     * @deprecated This constructor is provided for compatibility. It will
+     *          create an immutable version from the provided block state.
+     *          For mutability, the BlockState should be downcast.
+     */
+    @Deprecated
     public BlockFadeEvent(final Block block, final BlockState newState) {
-        super(block);
-        this.newState = newState;
-        this.cancelled = false;
+        super(block, newState);
+    }
+
+    public BlockFadeEvent(final Block block, final BlockView newState) {
+        super(block, newState);
     }
 
     /**
      * Gets the state of the block that will be fading, melting or disappearing.
      *
+     * @deprecated The block state returned here is a new copy from
+     *          the block provided in the underlying BlockView. The
+     *          'copied' behavior should not be relied on, as it may
+     *          change at some time in the future.
      * @return The block state of the block that will be fading, melting or disappearing
      */
+    @Override
+    @Deprecated
     public BlockState getNewState() {
-        return newState;
-    }
-
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
+        return super.getNewState();
     }
 
     @Override
