@@ -7,6 +7,9 @@ import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.ItemMetaFactory;
+import org.bukkit.inventory.meta.SimpleItemMeta;
 import org.bukkit.material.MaterialData;
 
 /**
@@ -18,6 +21,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     private MaterialData data = null;
     private short durability = 0;
     private Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
+    private SimpleItemMeta meta = null;
 
     public ItemStack(final int type) {
         this(type, 1);
@@ -65,6 +69,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             this.data = stack.data.clone();
         }
         this.addUnsafeEnchantments(stack.getEnchantments());
+        this.setItemMeta(stack.getItemMeta());
     }
 
     /**
@@ -215,7 +220,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
         ItemStack item = (ItemStack) obj;
 
-        return item.getAmount() == getAmount() && item.getTypeId() == getTypeId() && getDurability() == item.getDurability() && getEnchantments().equals(item.getEnchantments());
+        return item.getAmount() == getAmount() && item.getTypeId() == getTypeId() && getDurability() == item.getDurability() && getEnchantments().equals(item.getEnchantments()) && ItemMetaFactory.equals(getItemMeta(), item.getItemMeta());
     }
 
     @Override
@@ -228,6 +233,8 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
                 itemStack.data = this.data.clone();
             }
 
+            itemStack.setItemMeta(getItemMeta());
+
             return itemStack;
         } catch (CloneNotSupportedException e) {
             throw new Error(e);
@@ -237,9 +244,11 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     @Override
     public int hashCode() {
         int hash = 11;
+        ItemMeta meta = getItemMeta();
 
         hash = hash * 19 + 7 * getTypeId(); // Overriding hashCode since equals is overridden, it's just
         hash = hash * 7 + 23 * getAmount(); // too bad these are mutable values... Q_Q
+        hash = hash * 13 + 17 * (meta == null ? 0 : meta.hashCode());
         return hash;
     }
 
@@ -369,6 +378,8 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             result.put("enchantments", safeEnchants);
         }
 
+        // TODO: Consider meta data
+
         return result;
     }
 
@@ -403,6 +414,45 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             }
         }
 
+        // TODO: Consider meta data
+
         return result;
+    }
+
+    /**
+     * Gets the current ItemMeta for this item. This method returns a defensive copy.
+     * @return The ItemMeta for this ItemStack, or null if none applied.
+     */
+    public ItemMeta getItemMeta() {
+        return meta == null ? null : meta.clone();
+    }
+
+    /**
+     * Creates an ItemMeta that would be applicable to this ItemStack.
+     * @see ItemMetaFactory#getItemMetaFor(Material)
+     * @return a new ItemMeta for this item
+     */
+    public ItemMeta getNewItemMeta() {
+        return ItemMetaFactory.getItemMetaFor(getType());
+    }
+
+    /**
+     * This sets the ItemMeta for this item. This method stores a defensive copy.
+     * @param meta The ItemMeta to copy onto this ItemStack
+     * @throws IllegalArgumentException if the provided meta is not applicable (see {@link ItemMeta#isApplicableTo(Material)}) to this ItemStack
+     * @throws IllegalArgumentException if the provided meta was not created by the {@link ItemMetaFactory} or {@link #getNewItemMeta()}
+     */
+    public void setItemMeta(final ItemMeta meta) throws IllegalArgumentException {
+        if (meta instanceof SimpleItemMeta) {
+            if (meta.isApplicableTo(getType())) {
+                this.meta = ((SimpleItemMeta) meta).clone();
+            } else {
+                throw new IllegalArgumentException("Meta data type " + meta.getClass() + " is not applicable to " + getType());
+            }
+        } else if (meta == null) {
+            this.meta = null;
+        } else {
+            throw new IllegalArgumentException("Unknown meta data type " + meta.getClass());
+        }
     }
 }
