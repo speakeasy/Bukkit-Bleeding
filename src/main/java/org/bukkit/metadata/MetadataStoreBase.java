@@ -1,5 +1,6 @@
 package org.bukkit.metadata;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.plugin.Plugin;
 
 import java.util.*;
@@ -24,6 +25,7 @@ public abstract class MetadataStoreBase<T> {
      * @see MetadataStore#setMetadata(Object, String, MetadataValue)
      */
     public synchronized void setMetadata(T subject, String metadataKey, MetadataValue newMetadataValue) {
+        Validate.notNull(newMetadataValue, "newMetadataValue cannot be null");
         String key = cachedDisambiguate(subject, metadataKey);
         if (!metadataMap.containsKey(key)) {
             metadataMap.put(key, new ArrayList<MetadataValue>());
@@ -101,10 +103,7 @@ public abstract class MetadataStoreBase<T> {
      * @see MetadataStore#invalidateAll(org.bukkit.plugin.Plugin)
      */
     public synchronized void invalidateAll(Plugin owningPlugin) {
-        if (owningPlugin == null) {
-            throw new IllegalArgumentException("owningPlugin cannot be null");
-        }
-
+        Validate.notNull(owningPlugin, "owningPlugin cannot be null");
         for (List<MetadataValue> values : metadataMap.values()) {
             for (MetadataValue value : values) {
                 if (value.getOwningPlugin().equals(owningPlugin)) {
