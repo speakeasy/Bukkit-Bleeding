@@ -5,9 +5,12 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class PlayerBucketEvent extends PlayerEvent implements Cancellable {
+    private static final HandlerList handlers = new HandlerList();
+
     private ItemStack itemStack;
     private boolean cancelled = false;
     private final Block blockClicked;
@@ -73,5 +76,14 @@ public abstract class PlayerBucketEvent extends PlayerEvent implements Cancellab
 
     public void setCancelled(boolean cancel) {
         this.cancelled = cancel;
+    }
+
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }
