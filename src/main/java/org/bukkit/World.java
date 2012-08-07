@@ -3,6 +3,7 @@ package org.bukkit;
 import java.io.File;
 import org.bukkit.generator.ChunkGenerator;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -948,6 +949,12 @@ public interface World extends PluginMessageRecipient, Metadatable {
      */
     void setWaterAnimalSpawnLimit(int limit);
 
+    /**
+     * Get supported biomes
+     * @return set of supported biomes
+     */
+    EnumSet<Biome> getSupportedBiomes();
+    
     /**
      * Represents various map environment types that a world may be
      */
