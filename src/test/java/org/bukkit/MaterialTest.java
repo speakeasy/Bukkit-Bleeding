@@ -1,7 +1,7 @@
 package org.bukkit;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.isA;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -49,11 +49,11 @@ public class MaterialTest {
         for (Material material : Material.values()) {
             Class clazz = material.getData();
 
-            assertThat(material.getNewData((byte) 0), isA(clazz));
+            assertThat(material.getNewData((byte) 0), instanceOf(clazz));
         }
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void matchMaterialByNull() {
         Material.matchMaterial(null);
     }
