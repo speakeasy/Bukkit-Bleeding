@@ -12,6 +12,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
 
@@ -110,6 +112,8 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * <p />
      * All the values contained within this configuration will be removed, leaving
      * only settings and defaults, and the new values will be loaded from the given stream.
+     * <p />
+     * Assumes the bytes are encoded in the default character set.
      *
      * @param stream Stream to load from
      * @throws IOException Thrown when the given file cannot be read.
@@ -117,9 +121,25 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws IllegalArgumentException Thrown when stream is null.
      */
     public void load(InputStream stream) throws IOException, InvalidConfigurationException {
+        load(stream, Charset.defaultCharset());
+    }
+
+    /**
+     * Loads this {@link FileConfiguration} from the specified stream.
+     * <p />
+     * All the values contained within this configuration will be removed, leaving
+     * only settings and defaults, and the new values will be loaded from the given stream.
+     *
+     * @param stream Stream to load from
+     * @param encoding Character set stream bytes are encoded as
+     * @throws IOException Thrown when the given file cannot be read.
+     * @throws InvalidConfigurationException Thrown when the given file is not a valid Configuration.
+     * @throws IllegalArgumentException Thrown when stream is null.
+     */
+    public void load(InputStream stream, Charset encoding) throws IOException, InvalidConfigurationException {
         Validate.notNull(stream, "Stream cannot be null");
 
-        InputStreamReader reader = new InputStreamReader(stream);
+        InputStreamReader reader = new InputStreamReader(stream, encoding);
         StringBuilder builder = new StringBuilder();
         BufferedReader input = new BufferedReader(reader);
 

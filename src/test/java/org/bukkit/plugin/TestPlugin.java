@@ -2,6 +2,7 @@ package org.bukkit.plugin;
 
 import java.io.File;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import org.bukkit.Server;
@@ -46,6 +47,14 @@ public class TestPlugin extends PluginBase {
     }
 
     public void saveDefaultConfig() {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    public void setDefaultConfigEncoding(Charset encoding) {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    public Charset getDefaultConfigEncoding() {
         throw new UnsupportedOperationException("Not supported.");
     }
 

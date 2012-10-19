@@ -2,6 +2,7 @@ package org.bukkit.plugin;
 
 import java.io.File;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.logging.Logger;
 
 import org.bukkit.Server;
@@ -77,6 +78,20 @@ public interface Plugin extends TabExecutor {
      * Discards any data in {@link #getConfig()} and reloads from disk.
      */
     public void reloadConfig();
+
+    /**
+     * Configures the character set used to decode the embedded default config.yml file
+     *
+     * @param encoding Character set used to decode the embedded default config.yml file
+     */
+    public void setDefaultConfigEncoding(Charset encoding);
+
+    /**
+     * Gets the character set used to decode the embedded default config.yml file
+     *
+     * @return Character set used to decode the embedded default config.yml file
+     */
+    public Charset getDefaultConfigEncoding();
 
     /**
      * Gets the associated PluginLoader responsible for this plugin

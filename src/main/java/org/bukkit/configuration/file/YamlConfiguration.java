@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -188,18 +189,35 @@ public class YamlConfiguration extends FileConfiguration {
      * <p />
      * Any errors loading the Configuration will be logged and then ignored.
      * If the specified input is not a valid config, a blank config will be returned.
+     * <p />
+     * Assumes the bytes are encoded in the default character set.
      *
      * @param stream Input stream
      * @return Resulting configuration
      * @throws IllegalArgumentException Thrown if stream is null
      */
     public static YamlConfiguration loadConfiguration(InputStream stream) {
+        return loadConfiguration(stream, Charset.defaultCharset());
+    }
+
+    /**
+     * Creates a new {@link YamlConfiguration}, loading from the given stream.
+     * <p />
+     * Any errors loading the Configuration will be logged and then ignored.
+     * If the specified input is not a valid config, a blank config will be returned.
+     *
+     * @param stream Input stream
+     * @param encoding Character set stream bytes are encoded as
+     * @return Resulting configuration
+     * @throws IllegalArgumentException Thrown if stream is null
+     */
+    public static YamlConfiguration loadConfiguration(InputStream stream, Charset encoding) {
         Validate.notNull(stream, "Stream cannot be null");
 
         YamlConfiguration config = new YamlConfiguration();
 
         try {
-            config.load(stream);
+            config.load(stream, encoding);
         } catch (IOException ex) {
             Bukkit.getLogger().log(Level.SEVERE, "Cannot load configuration from stream", ex);
         } catch (InvalidConfigurationException ex) {
