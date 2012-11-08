@@ -69,6 +69,10 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             this.data = stack.data.clone();
         }
         this.addUnsafeEnchantments(stack.getEnchantments());
+
+        if (stack.meta != null && Bukkit.getItemFactory().isValidMeta(stack.meta, this)) {
+            this.meta = stack.meta.clone();
+        }
     }
 
     /**
@@ -77,7 +81,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @return Type of the items in this stack
      */
     public Material getType() {
-        return Material.getMaterial(type);
+        return Material.getMaterial(getTypeId());
     }
 
     /**
@@ -217,7 +221,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         if (!(obj instanceof ItemStack)) {
             return false;
         }
@@ -248,11 +252,13 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         int hash = 11;
 
-        hash = hash * 19 + 7 * getTypeId(); // Overriding hashCode since equals is overridden, it's just
-        hash = hash * 7 + 23 * getAmount(); // too bad these are mutable values... Q_Q
+        hash = hash * 19 + 7 * getTypeId();
+        hash = hash * 7 + 23 * getAmount();
+        hash = hash * 12 * getItemMeta().hashCode();
+
         return hash;
     }
 
@@ -296,7 +302,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @throws IllegalArgumentException if any specific enchantment or level is null.
      *          <b>Warning</b>: Some enchantments may be added before this exception is thrown.
      */
-    public void addEnchantments(Map<Enchantment, Integer> enchantments) {
+    public final void addEnchantments(Map<Enchantment, Integer> enchantments) {
         Validate.notNull(enchantments, "Enchantments cannot be null");
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             addEnchantment(entry.getKey(), entry.getValue());
@@ -330,7 +336,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *
      * @param enchantments Enchantments to add
      */
-    public void addUnsafeEnchantments(Map<Enchantment, Integer> enchantments) {
+    public final void addUnsafeEnchantments(Map<Enchantment, Integer> enchantments) {
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             addUnsafeEnchantment(entry.getKey(), entry.getValue());
         }
@@ -371,12 +377,12 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
         result.put("type", getType().name());
 
-        if (durability != 0) {
-            result.put("damage", durability);
+        if (getDurability() != 0) {
+            result.put("damage", getDurability());
         }
 
-        if (amount != 1) {
-            result.put("amount", amount);
+        if (getAmount() != 1) {
+            result.put("amount", getAmount());
         }
 
         Map<Enchantment, Integer> enchants = getEnchantments();
