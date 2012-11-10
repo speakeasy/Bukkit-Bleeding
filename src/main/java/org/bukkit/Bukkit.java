@@ -244,6 +244,10 @@ public final class Bukkit {
         return server.getAllowFlight();
     }
 
+    public static boolean isHardcore() {
+        return server.isHardcore();
+    }
+
     public static void shutdown() {
         server.shutdown();
     }
@@ -366,6 +370,10 @@ public final class Bukkit {
 
     public static int getWaterAnimalSpawnLimit() {
         return server.getWaterAnimalSpawnLimit();
+    }
+
+    public static int getAmbientSpawnLimit() {
+        return server.getAmbientSpawnLimit();
     }
 
     public static boolean isPrimaryThread() {
