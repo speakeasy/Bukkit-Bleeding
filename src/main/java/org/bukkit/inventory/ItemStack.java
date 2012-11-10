@@ -504,11 +504,15 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @return True if successfully applied ItemMeta
      */
     public boolean setItemMeta(ItemMeta itemMeta) {
+        if (itemMeta == null) {
+            this.meta = null;
+            return true;
+        }
         if (!Bukkit.getItemFactory().isValidMeta(itemMeta, this)) {
-            throw new IllegalArgumentException(itemMeta + " is not applicable for " + this);
+            return false;
         }
 
-        this.meta = itemMeta == null ? null : itemMeta.clone();
+        this.meta = itemMeta.clone();
         return true;
     }
 }
