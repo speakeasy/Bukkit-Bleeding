@@ -433,7 +433,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
         ItemStack result = new ItemStack(type, amount, damage);
 
-        if (args.containsKey("enchantments")) {
+        if (args.containsKey("enchantments")) { // Backward compatiblity, @deprecated
             Object raw = args.get("enchantments");
 
             if (raw instanceof Map) {
@@ -447,6 +447,11 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
                     }
                 }
             }
+        } else if (args.containsKey("meta")) { // We cannot and will not have meta when enchantments (pre-ItemMeta) exist
+            Object raw = args.get("meta");
+            if (raw instanceof ItemMeta) {
+                result.setItemMeta((ItemMeta) raw);
+            }
         }
 
         return result;
@@ -458,7 +463,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @return a copy of the current ItemStack's ItemData
      */
     public ItemMeta getItemMeta() {
-        return this.meta == null ? Bukkit.getServer().getItemFactory().getItemMeta(this) : this.meta.clone();
+        return this.meta == null ? Bukkit.getItemFactory().getItemMeta(this) : this.meta.clone();
     }
 
     /**
@@ -470,7 +475,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @return True if successfully applied ItemMeta
      */
     public boolean setItemMeta(ItemMeta itemMeta) {
-        if (!Bukkit.getServer().getItemFactory().isValidMeta(itemMeta, this)) {
+        if (!Bukkit.getItemFactory().isValidMeta(itemMeta, this)) {
             throw new IllegalArgumentException(itemMeta + " is not applicable for " + this);
         }
 
