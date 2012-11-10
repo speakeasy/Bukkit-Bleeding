@@ -64,7 +64,7 @@ public class YamlConfigurationTest extends FileConfigurationTest {
         assertEquals(expected, result);
     }
 
-    // @Test - Disabled while remaking items
+    @Test // TODO: Move to CraftBukkit. In the meantime, serves as a reminder that Bukkit is broken and should not compile
     public void testSaveRestoreCompositeList() throws InvalidConfigurationException {
         YamlConfiguration out = getConfig();
 

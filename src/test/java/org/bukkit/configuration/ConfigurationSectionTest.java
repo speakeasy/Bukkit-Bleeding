@@ -403,7 +403,7 @@ public abstract class ConfigurationSectionTest {
         map.put("two", "two");
         map.put("three", 3.14);
 
-        List<Object> value = Arrays.asList((Object) "One", "Two", "Three", 4, "5", 6.0, true, "false", map);
+        List<Object> value = Arrays.asList("One", "Two", "Three", 4, "5", 6.0, true, "false", map);
 
         section.set(key, value);
 
@@ -482,7 +482,7 @@ public abstract class ConfigurationSectionTest {
         assertFalse(section.isVector("doesntExist"));
     }
 
-    // @Test - Disabled while remaking items
+    @Test // TODO: Move to CraftBukkit. In the meantime, serves as a reminder that Bukkit is broken and should not compile
     public void testGetItemStack_String() {
         ConfigurationSection section = getConfigurationSection();
         String key = "exists";
@@ -494,7 +494,7 @@ public abstract class ConfigurationSectionTest {
         assertNull(section.getString("doesntExist"));
     }
 
-    // @Test - Disabled while remaking items
+    @Test // TODO: Move to CraftBukkit. In the meantime, serves as a reminder that Bukkit is broken and should not compile
     public void testGetItemStack_String_ItemStack() {
         ConfigurationSection section = getConfigurationSection();
         String key = "exists";
