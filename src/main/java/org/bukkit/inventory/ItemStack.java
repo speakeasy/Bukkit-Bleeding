@@ -472,10 +472,10 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     /**
      * Checks to see if any meta data has been defined.
      *
-     * @return Returns true if no specific meta data has been set for this item
+     * @return Returns true if some meta data has been set for this item
      */
     public boolean hasItemMeta() {
-        return this.meta != null && Bukkit.getItemFactory().equals(meta, null);
+        return !(this.meta == null || Bukkit.getItemFactory().equals(meta, null));
     }
 
     /**
