@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Utility;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,11 +18,14 @@ import org.bukkit.material.MaterialData;
  * Represents a stack of items
  */
 public class ItemStack implements Cloneable, ConfigurationSerializable {
-    private int type;
+    private int type = 0;
     private int amount = 0;
     private MaterialData data = null;
     private short durability = 0;
     private ItemMeta meta;
+
+    @Utility
+    protected ItemStack() {}
 
     public ItemStack(final int type) {
         this(type, 1);
@@ -80,6 +84,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *
      * @return Type of the items in this stack
      */
+    @Utility
     public Material getType() {
         return Material.getMaterial(getTypeId());
     }
@@ -91,6 +96,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *
      * @param type New type to set the items in this stack to
      */
+    @Utility
     public void setType(Material type) {
         setTypeId(type.getId());
     }
@@ -221,7 +227,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     @Override
-    public final boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (!(obj instanceof ItemStack)) {
             return false;
         }
@@ -302,6 +308,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @throws IllegalArgumentException if any specific enchantment or level is null.
      *          <b>Warning</b>: Some enchantments may be added before this exception is thrown.
      */
+    @Utility
     public final void addEnchantments(Map<Enchantment, Integer> enchantments) {
         Validate.notNull(enchantments, "Enchantments cannot be null");
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
@@ -316,7 +323,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *
      * @param ench Enchantment to add
      * @param level Level of the enchantment
+     * @throws IllegalArgumentException if enchantment null, or enchantment is not applicable
      */
+    @Utility
     public void addEnchantment(Enchantment ench, int level) {
         Validate.notNull(ench, "Enchantment cannot be null");
         if ((level < ench.getStartLevel()) || (level > ench.getMaxLevel())) {
@@ -336,6 +345,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *
      * @param enchantments Enchantments to add
      */
+    @Utility
     public final void addUnsafeEnchantments(Map<Enchantment, Integer> enchantments) {
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             addUnsafeEnchantment(entry.getKey(), entry.getValue());
@@ -440,11 +450,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @return a copy of the current ItemStack's ItemData
      */
     public ItemMeta getItemMeta() {
-        if (this.meta == null) {
-            this.meta = Bukkit.getServer().getItemFactory().getItemMeta(this);
-        }
-
-        return this.meta.clone();
+        return this.meta == null ? Bukkit.getServer().getItemFactory().getItemMeta(this) : this.meta.clone();
     }
 
     /**
