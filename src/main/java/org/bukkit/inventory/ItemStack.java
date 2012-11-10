@@ -228,6 +228,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     @Override
+    @Utility
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -236,8 +237,24 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             return false;
         }
 
-        ItemStack item = (ItemStack) obj;
-        return item.getAmount() == getAmount() && item.getTypeId() == getTypeId() && getDurability() == item.getDurability() && hasItemMeta() == item.hasItemMeta() && Bukkit.getItemFactory().equals(meta, item.getItemMeta());
+        ItemStack stack = (ItemStack) obj;
+        return getAmount() == stack.getAmount() && isSimilar(stack);
+    }
+
+    /**
+     * This method is the same as equals, but does not consider stack size (amount).
+     *
+     * @param stack the item stack to compare to
+     * @return true if the two stacks are equal, ignoring the amount
+     */
+    public boolean isSimilar(ItemStack stack) {
+        if (stack == null) {
+            return false;
+        }
+        if (stack == this) {
+            return true;
+        }
+        return getTypeId() == stack.getTypeId() && getDurability() == stack.getDurability() && hasItemMeta() == stack.hasItemMeta() && Bukkit.getItemFactory().equals(meta, stack.getItemMeta());
     }
 
     @Override
