@@ -116,13 +116,16 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param stack the stack to copy
      */
     public ItemStack(final ItemStack stack) {
+        Validate.notNull(stack, "Cannot copy null stack");
         this.type = stack.getTypeId();
         this.amount = stack.getAmount();
         this.durability = stack.getDurability();
         this.data = stack.getData();
-        ItemMeta meta = stack.getItemMeta();
-        if (Bukkit.getItemFactory().isValidMeta(meta, this)) {
-            this.meta = meta;
+        if (stack.hasItemMeta()) {
+            ItemMeta meta = stack.getItemMeta();
+            if (Bukkit.getItemFactory().isValidMeta(meta, this)) {
+                this.meta = meta;
+            }
         }
     }
 
