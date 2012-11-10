@@ -264,6 +264,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
         hash = hash * 31 + getTypeId();
         hash = hash * 31 + getAmount();
+        hash = hash * 31 + (getDurability() & 0xffff);
         hash = hash * 31 + getItemMeta().hashCode();
 
         return hash;
