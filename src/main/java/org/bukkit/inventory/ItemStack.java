@@ -1,7 +1,6 @@
 package org.bukkit.inventory;
 
 import com.google.common.collect.ImmutableMap;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -384,6 +383,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         return level;
     }
 
+    @Utility
     public Map<String, Object> serialize() {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
@@ -397,6 +397,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             result.put("amount", getAmount());
         }
 
+        /* No longer applicable; handled in ItemMeta
         Map<Enchantment, Integer> enchants = getEnchantments();
 
         if (enchants.size() > 0) {
@@ -407,6 +408,11 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             }
 
             result.put("enchantments", safeEnchants);
+        }
+        */
+        ItemMeta meta = getItemMeta();
+        if (!Bukkit.getItemFactory().equals(meta, null)) {
+            result.put("meta", meta);
         }
 
         return result;
