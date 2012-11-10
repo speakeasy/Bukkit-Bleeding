@@ -149,7 +149,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     public MaterialData getData() {
         Material mat = Material.getMaterial(getTypeId());
         if (mat != null && mat.getData() != null) {
-            data = mat.getNewData((byte) this.durability);
+            data = mat.getNewData((byte) this.getDurability());
         }
 
         return data;
@@ -198,12 +198,12 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *
      * @return The maximum you can stack this material to.
      */
+    @Utility
     public int getMaxStackSize() {
         Material material = getType();
         if (material != null) {
             return material.getMaxStackSize();
         }
-
         return -1;
     }
 
@@ -235,7 +235,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         ItemStack item = (ItemStack) obj;
         // Account for ItemMeta
 
-        return item.getAmount() == getAmount() && item.getTypeId() == getTypeId() && getDurability() == item.getDurability() && Bukkit.getItemFactory().equals(meta, item.getItemMeta());
+        return item.getAmount() == getAmount() && item.getTypeId() == getTypeId() && getDurability() == item.getDurability() && Bukkit.getItemFactory().equals(meta, item.meta);
     }
 
     @Override
@@ -258,12 +258,13 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     @Override
+    @Utility
     public final int hashCode() {
-        int hash = 11;
+        int hash = 1;
 
-        hash = hash * 19 + 7 * getTypeId();
-        hash = hash * 7 + 23 * getAmount();
-        hash = hash * 12 * getItemMeta().hashCode();
+        hash = hash * 31 + getTypeId();
+        hash = hash * 31 + getAmount();
+        hash = hash * 31 + getItemMeta().hashCode();
 
         return hash;
     }
@@ -309,7 +310,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *          <b>Warning</b>: Some enchantments may be added before this exception is thrown.
      */
     @Utility
-    public final void addEnchantments(Map<Enchantment, Integer> enchantments) {
+    public void addEnchantments(Map<Enchantment, Integer> enchantments) {
         Validate.notNull(enchantments, "Enchantments cannot be null");
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             addEnchantment(entry.getKey(), entry.getValue());
@@ -346,7 +347,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param enchantments Enchantments to add
      */
     @Utility
-    public final void addUnsafeEnchantments(Map<Enchantment, Integer> enchantments) {
+    public void addUnsafeEnchantments(Map<Enchantment, Integer> enchantments) {
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             addUnsafeEnchantment(entry.getKey(), entry.getValue());
         }
