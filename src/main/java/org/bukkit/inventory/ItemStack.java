@@ -199,8 +199,8 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @return MaterialData for this item
      */
     public MaterialData getData() {
-        Material mat = Material.getMaterial(getTypeId());
-        if (mat != null && mat.getData() != null) {
+        Material mat = getType();
+        if (data == null && mat != null && mat.getData() != null) {
             data = mat.getNewData((byte) this.getDurability());
         }
 
@@ -215,7 +215,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     public void setData(MaterialData data) {
         Material mat = getType();
 
-        if ((mat == null) || (mat.getData() == null)) {
+        if (data == null || mat == null || mat.getData() == null) {
             this.data = data;
         } else {
             if ((data.getClass() == mat.getData()) || (data.getClass() == MaterialData.class)) {
