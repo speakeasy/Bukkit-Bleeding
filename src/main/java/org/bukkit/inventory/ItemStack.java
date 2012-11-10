@@ -85,7 +85,8 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      */
     @Utility
     public Material getType() {
-        return Material.getMaterial(getTypeId());
+        Material material = Material.getMaterial(getTypeId());
+        return material == null ? Material.AIR : material;
     }
 
     /**
@@ -97,6 +98,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      */
     @Utility
     public void setType(Material type) {
+        Validate.notNull(type, "Material cannot be null");
         setTypeId(type.getId());
     }
 
@@ -227,14 +229,15 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
         if (!(obj instanceof ItemStack)) {
             return false;
         }
 
         ItemStack item = (ItemStack) obj;
-        // Account for ItemMeta
-
-        return item.getAmount() == getAmount() && item.getTypeId() == getTypeId() && getDurability() == item.getDurability() && Bukkit.getItemFactory().equals(meta, item.meta);
+        return item.getAmount() == getAmount() && item.getTypeId() == getTypeId() && getDurability() == item.getDurability() && hasItemMeta() == item.hasItemMeta() && Bukkit.getItemFactory().equals(meta, item.getItemMeta());
     }
 
     @Override
@@ -264,7 +267,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         hash = hash * 31 + getTypeId();
         hash = hash * 31 + getAmount();
         hash = hash * 31 + (getDurability() & 0xffff);
-        hash = hash * 31 + getItemMeta().hashCode();
+        hash = hash * 31 + (hasItemMeta() ? (meta == null ? getItemMeta().hashCode() : meta.hashCode()) : 0);
 
         return hash;
     }
@@ -464,6 +467,15 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      */
     public ItemMeta getItemMeta() {
         return this.meta == null ? Bukkit.getItemFactory().getItemMeta(this) : this.meta.clone();
+    }
+
+    /**
+     * Checks to see if any meta data has been defined.
+     *
+     * @return Returns true if no specific meta data has been set for this item
+     */
+    public boolean hasItemMeta() {
+        return this.meta != null && Bukkit.getItemFactory().equals(meta, null);
     }
 
     /**
