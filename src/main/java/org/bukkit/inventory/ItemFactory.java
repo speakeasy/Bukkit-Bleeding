@@ -1,8 +1,12 @@
 package org.bukkit.inventory;
 
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.inventory.meta.ItemMeta;
 
+/**
+ * An instance of the ItemFactory can be obtained with {@link Server#getItemFactory()}.
+ */
 public interface ItemFactory {
 
     /**

@@ -26,30 +26,72 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     @Utility
     protected ItemStack() {}
 
+    /**
+     * Defaults stack size to 1, with no extra data
+     *
+     * @param type item material id
+     */
     public ItemStack(final int type) {
         this(type, 1);
     }
 
+    /**
+     * Defaults stack size to 1, with no extra data
+     *
+     * @param type item material
+     */
     public ItemStack(final Material type) {
         this(type, 1);
     }
 
+    /**
+     * An item stack with no extra data
+     *
+     * @param type item material id
+     * @param amount stack size
+     */
     public ItemStack(final int type, final int amount) {
         this(type, amount, (short) 0);
     }
 
+    /**
+     * An item stack with no extra data
+     *
+     * @param type item material
+     * @param amount stack size
+     */
     public ItemStack(final Material type, final int amount) {
         this(type.getId(), amount);
     }
 
+    /**
+     * An item stack with the specified damage / durability
+     *
+     * @param type item material id
+     * @param amount stack size
+     * @param damage durability / damage
+     */
     public ItemStack(final int type, final int amount, final short damage) {
-        this(type, amount, damage, null);
+        this.type = type;
+        this.amount = amount;
+        this.durability = damage;
     }
 
+    /**
+     * An item stack with the specified damage / durabiltiy
+     *
+     * @param type item material
+     * @param amount stack size
+     * @param damage durability / damage
+     */
     public ItemStack(final Material type, final int amount, final short damage) {
         this(type.getId(), amount, damage);
     }
 
+    /**
+     * @deprecated this method uses an ambiguous data byte object
+     */
+    @Deprecated
     public ItemStack(final int type, final int amount, final short damage, final Byte data) {
         this.type = type;
         this.amount = amount;
@@ -60,21 +102,27 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         }
     }
 
+    /**
+     * @deprecated this method uses an ambiguous data byte object
+     */
+    @Deprecated
     public ItemStack(final Material type, final int amount, final short damage, final Byte data) {
         this(type.getId(), amount, damage, data);
     }
 
+    /**
+     * Creates a new item stack derived from the specified stack
+     *
+     * @param stack the stack to copy
+     */
     public ItemStack(final ItemStack stack) {
-        this.type = stack.type;
-        this.amount = stack.amount;
-        this.durability = stack.durability;
-        if (stack.data != null) {
-            this.data = stack.data.clone();
-        }
-        this.addUnsafeEnchantments(stack.getEnchantments());
-
-        if (stack.meta != null && Bukkit.getItemFactory().isValidMeta(stack.meta, this)) {
-            this.meta = stack.meta.clone();
+        this.type = stack.getTypeId();
+        this.amount = stack.getAmount();
+        this.durability = stack.getDurability();
+        this.data = stack.getData();
+        ItemMeta meta = stack.getItemMeta();
+        if (Bukkit.getItemFactory().isValidMeta(meta, this)) {
+            this.meta = meta;
         }
     }
 
