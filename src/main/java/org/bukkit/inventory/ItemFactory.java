@@ -12,14 +12,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 public interface ItemFactory {
 
     /**
-     * This creates a new item meta for the item stack.
-     * This is the same as calling {@link #getItemMeta(Material)} with {@link ItemStack#getType()}
-     * @param itemstack The stack to check material of
-     * @return a new ItemMeta that could be applied to the specified ItemStack.
-     */
-    ItemMeta getItemMeta(final ItemStack itemstack);
-
-    /**
      * This creates a new item meta for the material.
      * @param material The material to consider as base for the meta
      * @return a new ItemMeta that could be applied to an item stack of the specified material

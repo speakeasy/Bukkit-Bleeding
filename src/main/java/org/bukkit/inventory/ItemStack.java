@@ -442,7 +442,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param level Level of the enchantment
      */
     public void addUnsafeEnchantment(Enchantment ench, int level) {
-        (meta == null ? meta = Bukkit.getItemFactory().getItemMeta(this) : meta).addEnchant(ench, level, true);
+        (meta == null ? meta = Bukkit.getItemFactory().getItemMeta(getType0()) : meta).addEnchant(ench, level, true);
     }
 
     /**
