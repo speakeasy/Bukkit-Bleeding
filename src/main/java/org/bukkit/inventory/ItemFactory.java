@@ -58,7 +58,7 @@ public interface ItemFactory {
      *
      * @param meta the meta to convert
      * @param stack the stack to convert the meta for
-     * @return An appropriate item meta for the specified item stack. No guarantees are made as to if a copy is returned.
+     * @return An appropriate item meta for the specified item stack. No guarantees are made as to if a copy is returned. This will be null for a stack of air.
      * @throws IllegalArgumentException if the specified meta was not created by this factory
      */
     ItemMeta asMetaFor(final ItemMeta meta, final ItemStack stack) throws IllegalArgumentException;
@@ -74,7 +74,7 @@ public interface ItemFactory {
      *
      * @param meta the meta to convert
      * @param material the material to convert the meta for
-     * @return An appropriate item meta for the specified item material. No guarantees are made as to if a copy is returned.
+     * @return An appropriate item meta for the specified item material. No guarantees are made as to if a copy is returned. This will be null for air.
      * @throws IllegalArgumentException if the specified meta was not created by this factory
      */
     ItemMeta asMetaFor(final ItemMeta meta, final Material material) throws IllegalArgumentException;

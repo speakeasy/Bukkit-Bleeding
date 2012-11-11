@@ -177,7 +177,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      */
     public void setTypeId(int type) {
         this.type = type;
-        this.meta = null;
+        if (this.meta != null) {
+            this.meta = Bukkit.getItemFactory().asMetaFor(meta, getType0());
+        }
         createData((byte) 0);
     }
 
