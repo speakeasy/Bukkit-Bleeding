@@ -114,18 +114,16 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * Creates a new item stack derived from the specified stack
      *
      * @param stack the stack to copy
+     * @throws IllegalArgumentException if the specified stack is null or returns an item meta not created by the item factory
      */
-    public ItemStack(final ItemStack stack) {
+    public ItemStack(final ItemStack stack) throws IllegalArgumentException {
         Validate.notNull(stack, "Cannot copy null stack");
         this.type = stack.getTypeId();
         this.amount = stack.getAmount();
         this.durability = stack.getDurability();
         this.data = stack.getData();
         if (stack.hasItemMeta()) {
-            ItemMeta meta = stack.getItemMeta();
-            if (Bukkit.getItemFactory().isValidMeta(meta, this)) {
-                this.meta = meta;
-            }
+            setItemMeta0(stack.getItemMeta(), getType0());
         }
     }
 
@@ -136,7 +134,15 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      */
     @Utility
     public Material getType() {
-        Material material = Material.getMaterial(getTypeId());
+        return getType0(getTypeId());
+    }
+
+    private Material getType0() {
+        return getType0(this.type);
+    }
+
+    private static Material getType0(int id) {
+        Material material = Material.getMaterial(id);
         return material == null ? Material.AIR : material;
     }
 
@@ -468,19 +474,6 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             result.put("amount", getAmount());
         }
 
-        /* No longer applicable; handled in ItemMeta
-        Map<Enchantment, Integer> enchants = getEnchantments();
-
-        if (enchants.size() > 0) {
-            Map<String, Integer> safeEnchants = new HashMap<String, Integer>();
-
-            for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
-                safeEnchants.put(entry.getKey().getName(), entry.getValue());
-            }
-
-            result.put("enchantments", safeEnchants);
-        }
-        */
         ItemMeta meta = getItemMeta();
         if (!Bukkit.getItemFactory().equals(meta, null)) {
             result.put("meta", meta);
@@ -489,6 +482,13 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         return result;
     }
 
+    /**
+     * Required method for configuration serialization
+     *
+     * @param args map to deserialize
+     * @return deserialized item stack
+     * @see ConfigurationSerializable
+     */
     public static ItemStack deserialize(Map<String, Object> args) {
         Material type = Material.getMaterial((String) args.get("type"));
         short damage = 0;
@@ -534,7 +534,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @return a copy of the current ItemStack's ItemData
      */
     public ItemMeta getItemMeta() {
-        return this.meta == null ? Bukkit.getItemFactory().getItemMeta(this) : this.meta.clone();
+        return this.meta == null ? Bukkit.getItemFactory().getItemMeta(getType0(this.type)) : this.meta.clone();
     }
 
     /**
@@ -543,27 +543,36 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @return Returns true if some meta data has been set for this item
      */
     public boolean hasItemMeta() {
-        return !(this.meta == null || Bukkit.getItemFactory().equals(meta, null));
+        return !Bukkit.getItemFactory().equals(meta, null);
     }
 
     /**
-     * Set the ItemMeta of this ItemStack
-     * <p />
-     * ItemMeta may not be null and must be a valid ItemMeta for the ItemStack.
+     * Set the ItemMeta of this ItemStack.
      *
-     * @param itemMeta new ItemMeta
-     * @return True if successfully applied ItemMeta
+     * @param itemMeta new ItemMeta, or null to indicate meta data be cleared.
+     * @return True if successfully applied ItemMeta, see {@link ItemFactory#isValidMeta(ItemMeta, ItemStack)}
+     * @throws IllegalArgumentException if the item meta was not created by the {@link ItemFactory}
      */
     public boolean setItemMeta(ItemMeta itemMeta) {
+        return setItemMeta0(itemMeta, getType0());
+    }
+
+    /*
+     * Cannot be overridden, so it's safe for constructor call
+     */
+    private boolean setItemMeta0(ItemMeta itemMeta, Material material) {
         if (itemMeta == null) {
             this.meta = null;
             return true;
         }
-        if (!Bukkit.getItemFactory().isValidMeta(itemMeta, this)) {
+        if (!Bukkit.getItemFactory().isValidMeta(itemMeta, material)) {
             return false;
         }
+        this.meta = Bukkit.getItemFactory().asMetaFor(itemMeta, material);
+        if (this.meta == itemMeta) {
+            this.meta = itemMeta.clone();
+        }
 
-        this.meta = itemMeta.clone();
         return true;
     }
 }
