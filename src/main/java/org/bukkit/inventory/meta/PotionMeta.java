@@ -33,6 +33,13 @@ public interface PotionMeta extends ItemMeta {
     boolean removeCustomEffect(PotionEffectType type);
 
     /**
+     * Checks for a specific custom potion effect type on this potion
+     * @param type the potion effect type to check for
+     * @return true if the potion has this effect
+     */
+    boolean hasCustomEffect(PotionEffectType type);
+
+    /**
      * Moves a potion effect to the top of the potion effect list.
      * This causes the client to display the potion effect in the potion's name.
      * @param type the potion effect type to move
