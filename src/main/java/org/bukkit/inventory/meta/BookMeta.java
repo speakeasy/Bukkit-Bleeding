@@ -19,6 +19,13 @@ public interface BookMeta extends ItemMeta {
     List<String> getPages();
 
     /**
+     * Clears the existing book pages, and sets the book to use the provided pages
+     *
+     * @param pages A list of pages to set the book to use
+     */
+    void setPages(List<String> pages);
+
+    /**
      * Clear the existing book pages and add the provided pages
      *
      * @param pages An array of strings, each index being a page
