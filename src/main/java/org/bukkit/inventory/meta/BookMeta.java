@@ -1,5 +1,7 @@
 package org.bukkit.inventory.meta;
 
+import java.util.List;
+
 public interface BookMeta extends ItemMeta {
     String getTitle();
 
@@ -14,7 +16,7 @@ public interface BookMeta extends ItemMeta {
 
     boolean setPage(int page, String data);
 
-    String[] getPages();
+    List<String> getPages();
 
     int getPageCount();
 }
