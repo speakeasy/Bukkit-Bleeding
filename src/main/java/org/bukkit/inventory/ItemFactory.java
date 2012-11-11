@@ -26,7 +26,7 @@ public interface ItemFactory {
      * @return true if the meta can be applied without losing data, false otherwise
      * @throws IllegalArgumentException if the meta was not created by this factory
      */
-    boolean isValidMeta(final ItemMeta meta, final ItemStack stack);
+    boolean isApplicable(final ItemMeta meta, final ItemStack stack) throws IllegalArgumentException;
 
     /**
      * This method checks the item meta to confirm that it is applicable (no data lost if applied) to the specified Material.
@@ -36,7 +36,7 @@ public interface ItemFactory {
      * @return true if the meta can be applied without losing data, false otherwise
      * @throws IllegalArgumentException if the meta was not created by this factory
      */
-    boolean isValidMeta(final ItemMeta meta, final Material material) throws IllegalArgumentException;
+    boolean isApplicable(final ItemMeta meta, final Material material) throws IllegalArgumentException;
 
     /**
      * This method is used to compare two item meta data objects.

@@ -550,7 +550,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * Set the ItemMeta of this ItemStack.
      *
      * @param itemMeta new ItemMeta, or null to indicate meta data be cleared.
-     * @return True if successfully applied ItemMeta, see {@link ItemFactory#isValidMeta(ItemMeta, ItemStack)}
+     * @return True if successfully applied ItemMeta, see {@link ItemFactory#isApplicable(ItemMeta, ItemStack)}
      * @throws IllegalArgumentException if the item meta was not created by the {@link ItemFactory}
      */
     public boolean setItemMeta(ItemMeta itemMeta) {
@@ -565,7 +565,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             this.meta = null;
             return true;
         }
-        if (!Bukkit.getItemFactory().isValidMeta(itemMeta, material)) {
+        if (!Bukkit.getItemFactory().isApplicable(itemMeta, material)) {
             return false;
         }
         this.meta = Bukkit.getItemFactory().asMetaFor(itemMeta, material);
