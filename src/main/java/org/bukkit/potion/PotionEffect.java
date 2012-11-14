@@ -13,12 +13,18 @@ public class PotionEffect {
     private final int amplifier;
     private final int duration;
     private final PotionEffectType type;
+    private final boolean ambient;
 
-    public PotionEffect(PotionEffectType type, int duration, int amplifier) {
+    public PotionEffect(PotionEffectType type, int duration, int amplifier, boolean ambient) {
         Validate.notNull(type, "effect type cannot be null");
         this.type = type;
         this.duration = duration;
         this.amplifier = amplifier;
+        this.ambient = ambient;
+    }
+
+    public PotionEffect(PotionEffectType type, int duration, int amplifier) {
+        this(type, duration, amplifier, true);
     }
 
     /**
@@ -78,6 +84,11 @@ public class PotionEffect {
      */
     public PotionEffectType getType() {
         return type;
+    }
+
+    // TODO find out what this actually means
+    public boolean isAmbient() {
+        return ambient;
     }
 
     @Override
