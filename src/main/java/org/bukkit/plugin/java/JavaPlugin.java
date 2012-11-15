@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -48,6 +49,7 @@ public abstract class JavaPlugin extends PluginBase {
     private FileConfiguration newConfig = null;
     private File configFile = null;
     private PluginLogger logger = null;
+    private Charset encoding = Charset.defaultCharset();
 
     public JavaPlugin() {}
 
@@ -118,12 +120,12 @@ public abstract class JavaPlugin extends PluginBase {
 
         InputStream defConfigStream = getResource("config.yml");
         if (defConfigStream != null) {
-            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream, encoding);
 
             newConfig.setDefaults(defConfig);
         }
     }
-
+    
     public void saveConfig() {
         try {
             getConfig().save(configFile);
@@ -134,8 +136,23 @@ public abstract class JavaPlugin extends PluginBase {
 
     public void saveDefaultConfig() {
         if (!configFile.exists()) {
-            saveResource("config.yml", false);
+            InputStream defConfigStream = getResource("config.yml");
+            if (defConfigStream != null) {
+                try {
+                    YamlConfiguration.loadConfiguration(defConfigStream, encoding).save(configFile);
+                } catch (IOException ex) {
+                    getLogger().log(Level.SEVERE, "Could not save config to " + configFile, ex);
+                }
+            }
         }
+    }
+
+    public void setDefaultConfigEncoding(final Charset encoding) {
+        this.encoding = encoding;
+    }
+
+    public Charset getDefaultConfigEncoding() {
+        return this.encoding;
     }
 
     public void saveResource(String resourcePath, boolean replace) {
