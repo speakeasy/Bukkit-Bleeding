@@ -8,11 +8,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.CodingErrorAction;
 
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
@@ -46,6 +51,7 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      *
      * @param file File to save to.
      * @throws IOException Thrown when the given file cannot be written to for any reason.
+     * @throws CharacterCodingException Thrown when characters can not be mapped to the default character set.
      * @throws IllegalArgumentException Thrown when file is null.
      */
     public void save(File file) throws IOException {
@@ -55,7 +61,9 @@ public abstract class FileConfiguration extends MemoryConfiguration {
 
         String data = saveToString();
 
-        FileWriter writer = new FileWriter(file);
+        CharsetEncoder encoder = Charset.defaultCharset().newEncoder();
+        encoder.onUnmappableCharacter(CodingErrorAction.REPORT);
+        Writer writer = new OutputStreamWriter(new FileOutputStream(file), encoder);
 
         try {
             writer.write(data);
@@ -133,16 +141,18 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @param stream Stream to load from
      * @param encoding Character set stream bytes are encoded as
      * @throws IOException Thrown when the given file cannot be read.
+     * @throws CharacterCodingException Thrown when characters can not be mapped to the default character set.
      * @throws InvalidConfigurationException Thrown when the given file is not a valid Configuration.
      * @throws IllegalArgumentException Thrown when stream is null.
      */
     public void load(InputStream stream, Charset encoding) throws IOException, InvalidConfigurationException {
         Validate.notNull(stream, "Stream cannot be null");
 
-        InputStreamReader reader = new InputStreamReader(stream, encoding);
+        CharsetDecoder decoder = encoding.newDecoder();
+        decoder.onUnmappableCharacter(CodingErrorAction.REPORT);
+        InputStreamReader reader = new InputStreamReader(stream, decoder);
         StringBuilder builder = new StringBuilder();
         BufferedReader input = new BufferedReader(reader);
-
 
         try {
             String line;
