@@ -5,7 +5,7 @@ import org.bukkit.block.Dispenser;
 /**
  * Represents a shootable entity
  */
-public interface Projectile extends Entity {
+public interface Projectile extends Entity, Expirable {
 
     /**
      * Retrieve the shooter of this projectile. The returned value can be null
