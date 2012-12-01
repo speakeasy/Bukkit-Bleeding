@@ -14,6 +14,16 @@ import org.bukkit.block.Block;
  * For example, the nether chunk generator should shape netherrack and soulsand
  */
 public abstract class ChunkGenerator {
+    private final int seaLevel;
+
+    public ChunkGenerator() {
+        this(64);
+    }
+
+    public ChunkGenerator(int seaLevel) {
+        this.seaLevel = seaLevel;
+    }
+
     /**
      * Interface to biome data for chunk to be generated: initialized with default values for world type and seed.
      *
@@ -241,7 +251,7 @@ public abstract class ChunkGenerator {
      *
      * @return the purported height of this worlds waterline.
      */
-    public int getSeaLevel() {
-        return 64;
+    public final int getSeaLevel() {
+        return this.seaLevel;
     }
 }
