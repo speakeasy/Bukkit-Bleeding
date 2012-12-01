@@ -235,4 +235,13 @@ public abstract class ChunkGenerator {
     public Location getFixedSpawnLocation(World world, Random random) {
         return null;
     }
+
+    /**
+     * Gets the height of this world's water level.
+     *
+     * @return the purported height of this worlds waterline.
+     */
+    public int getSeaLevel() {
+        return 64;
+    }
 }
