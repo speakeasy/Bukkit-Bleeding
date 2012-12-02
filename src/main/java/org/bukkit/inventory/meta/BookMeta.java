@@ -3,15 +3,18 @@ package org.bukkit.inventory.meta;
 import java.util.List;
 
 public interface BookMeta extends ItemMeta {
+    boolean hasTitle();
     String getTitle();
 
     // Between 0->16 characters
     boolean setTitle(String title);
 
+    boolean hasAuthor();
     String getAuthor();
 
     void setAuthor(String author);
 
+    boolean hasPages();
     String getPage(int page);
 
     boolean setPage(int page, String data);

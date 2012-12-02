@@ -1,5 +1,6 @@
 package org.bukkit.inventory.meta;
 
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -12,6 +13,18 @@ import org.bukkit.enchantments.Enchantment;
  */
 public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     ItemMeta clone();
+
+    boolean hasDisplayName();
+    String getDisplayName();
+    void setDisplayName(String name);
+
+    boolean hasLore();
+    List<String> getLore();
+    void setLore(List<String> lore);
+
+    boolean hasRepairCost();
+    int getRepairCost();
+    void setRepairCost(int cost);
 
     /**
      * Checks for existence of the specified enchantment
