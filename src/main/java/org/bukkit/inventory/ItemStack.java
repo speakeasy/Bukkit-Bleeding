@@ -280,8 +280,8 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     @Override
     public String toString() {
         StringBuilder toString = new StringBuilder("ItemStack{").append(getType().name()).append(" x ").append(getAmount());
-        if (meta != null) {
-            toString.append(", ").append(meta);
+        if (hasItemMeta()) {
+            toString.append(", ").append(getItemMeta());
         }
         return toString.append('}').toString();
     }
