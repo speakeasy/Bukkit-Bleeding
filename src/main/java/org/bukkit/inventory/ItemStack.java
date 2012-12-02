@@ -313,7 +313,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         if (stack == this) {
             return true;
         }
-        return getTypeId() == stack.getTypeId() && getDurability() == stack.getDurability() && hasItemMeta() == stack.hasItemMeta() && Bukkit.getItemFactory().equals(meta, stack.getItemMeta());
+        return getTypeId() == stack.getTypeId() && getDurability() == stack.getDurability() && hasItemMeta() == stack.hasItemMeta() && (hasItemMeta() ? Bukkit.getItemFactory().equals(getItemMeta(), stack.getItemMeta()) : true);
     }
 
     @Override
