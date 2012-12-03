@@ -51,24 +51,6 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     void setLore(List<String> lore);
 
     /**
-     * Checks to see if this has a repair penalty
-     * @return true if this has a repair penalty
-     */
-    boolean hasRepairCost();
-
-    /**
-     * Gets the repair penalty
-     * @return the repair penalty
-     */
-    int getRepairCost();
-
-    /**
-     * Sets the repair penalty
-     * @param cost repair penalty 
-     */
-    void setRepairCost(int cost);
-
-    /**
      * Checks for existence of the specified enchantment
      * @param ench enchantment to check
      * @return true if this enchantment exists for this meta
