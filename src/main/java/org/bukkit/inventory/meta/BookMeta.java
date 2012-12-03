@@ -2,8 +2,10 @@ package org.bukkit.inventory.meta;
 
 import java.util.List;
 
+import org.bukkit.Material;
+
 /**
- * Represents a book that can have a title, an author, and pages.
+ * Represents a book ({@link Material#BOOK_AND_QUILL} or {@link Material#WRITTEN_BOOK}) that can have a title, an author, and pages.
  */
 public interface BookMeta extends ItemMeta {
 
