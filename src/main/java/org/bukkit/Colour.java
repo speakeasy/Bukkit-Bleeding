@@ -12,88 +12,88 @@ import com.google.common.collect.ImmutableMap;
  * A container for a color palette. This class is immutable; the set methods return a new color.
  */
 @SerializableAs("Color")
-public final class Color implements ConfigurationSerializable {
+public final class Colour implements ConfigurationSerializable {
     private static final int BIT_MASK = 0xff;
 
     /**
      * White, or (0xFF,0xFF,0xFF) in (R,G,B)
      */
-    public static final Color WHITE = fromRGB(0xFFFFFF);
+    public static final Colour WHITE = fromRGB(0xFFFFFF);
 
     /**
      * Silver, or (0xC0,0xC0,0xC0) in (R,G,B)
      */
-    public static final Color SILVER = fromRGB(0xC0C0C0);
+    public static final Colour SILVER = fromRGB(0xC0C0C0);
 
     /**
      * Gray, or (0x80,0x80,0x80) in (R,G,B)
      */
-    public static final Color GRAY = fromRGB(0x808080);
+    public static final Colour GRAY = fromRGB(0x808080);
 
     /**
      * Black, or (0x00,0x00,0x00) in (R,G,B)
      */
-    public static final Color BLACK = fromRGB(0x000000);
+    public static final Colour BLACK = fromRGB(0x000000);
 
     /**
      * Red, or (0xFF,0x00,0x00) in (R,G,B)
      */
-    public static final Color RED = fromRGB(0xFF0000);
+    public static final Colour RED = fromRGB(0xFF0000);
 
     /**
      * Maroon, or (0x80,0x00,0x00) in (R,G,B)
      */
-    public static final Color MAROON = fromRGB(0x800000);
+    public static final Colour MAROON = fromRGB(0x800000);
 
     /**
      * Yellow, or (0xFF,0xFF,0x00) in (R,G,B)
      */
-    public static final Color YELLOW = fromRGB(0xFFFF00);
+    public static final Colour YELLOW = fromRGB(0xFFFF00);
 
     /**
      * Olive, or (0x80,0x80,0x00) in (R,G,B)
      */
-    public static final Color OLIVE = fromRGB(0x808000);
+    public static final Colour OLIVE = fromRGB(0x808000);
 
     /**
      * Lime, or (0x00,0xFF,0x00) in (R,G,B)
      */
-    public static final Color LIME = fromRGB(0x00FF00);
+    public static final Colour LIME = fromRGB(0x00FF00);
 
     /**
      * Green, or (0x00,0x80,0x00) in (R,G,B)
      */
-    public static final Color GREEN = fromRGB(0x008000);
+    public static final Colour GREEN = fromRGB(0x008000);
 
     /**
      * Aqua, or (0x00,0xFF,0xFF) in (R,G,B)
      */
-    public static final Color AQUA = fromRGB(0x00FFFF);
+    public static final Colour AQUA = fromRGB(0x00FFFF);
 
     /**
      * Teal, or (0x00,0x80,0x80) in (R,G,B)
      */
-    public static final Color TEAL = fromRGB(0x008080);
+    public static final Colour TEAL = fromRGB(0x008080);
 
     /**
      * Blue, or (0x00,0x00,0xFF) in (R,G,B)
      */
-    public static final Color BLUE = fromRGB(0x0000FF);
+    public static final Colour BLUE = fromRGB(0x0000FF);
 
     /**
      * Navy, or (0x00,0x00,0x80) in (R,G,B)
      */
-    public static final Color NAVY = fromRGB(0x000080);
+    public static final Colour NAVY = fromRGB(0x000080);
 
     /**
      * Fuchsia, or (0xFF,0x00,0xFF) in (R,G,B)
      */
-    public static final Color FUCHSIA = fromRGB(0xFF00FF);
+    public static final Colour FUCHSIA = fromRGB(0xFF00FF);
 
     /**
      * Purple, or (0x80,0x00,0x80) in (R,G,B)
      */
-    public static final Color PURPLE = fromRGB(0x800080);
+    public static final Colour PURPLE = fromRGB(0x800080);
 
     private final byte red;
     private final byte green;
@@ -108,8 +108,8 @@ public final class Color implements ConfigurationSerializable {
      * @return a new Color object for the red, green, blue
      * @throws IllegalArgumentException if any value is strictly >255 or <0
      */
-    public static Color fromRGB(int red, int green, int blue) throws IllegalArgumentException {
-        return new Color(red, green, blue);
+    public static Colour fromRGB(int red, int green, int blue) throws IllegalArgumentException {
+        return new Colour(red, green, blue);
     }
 
     /**
@@ -121,8 +121,8 @@ public final class Color implements ConfigurationSerializable {
      * @return a new Color object for the red, green, blue
      * @throws IllegalArgumentException if any value is strictly >255 or <0
      */
-    public static Color fromBGR(int blue, int green, int red) throws IllegalArgumentException {
-        return new Color(red, green, blue);
+    public static Colour fromBGR(int blue, int green, int red) throws IllegalArgumentException {
+        return new Colour(red, green, blue);
     }
 
     /**
@@ -132,7 +132,7 @@ public final class Color implements ConfigurationSerializable {
      * @return a new color object for specified values
      * @throws IllegalArgumentException if any data is in the highest order 8 bits
      */
-    public static Color fromRGB(int rgb) throws IllegalArgumentException {
+    public static Colour fromRGB(int rgb) throws IllegalArgumentException {
         Validate.isTrue((rgb >> 12) == 0, "Extrenuous data in: ", rgb);
         return fromRGB(rgb >> 8 & BIT_MASK, rgb >> 4 & BIT_MASK, rgb >> 0 & BIT_MASK);
     }
@@ -144,12 +144,12 @@ public final class Color implements ConfigurationSerializable {
      * @return a new color object for specified values
      * @throws IllegalArgumentException if any data is in the highest order 8 bits
      */
-    public static Color fromBGR(int bgr) throws IllegalArgumentException {
+    public static Colour fromBGR(int bgr) throws IllegalArgumentException {
         Validate.isTrue((bgr >> 12) == 0, "Extrenuous data in: ", bgr);
         return fromBGR(bgr >> 8 & BIT_MASK, bgr >> 4 & BIT_MASK, bgr >> 0 & BIT_MASK);
     }
 
-    private Color(int red, int green, int blue) {
+    private Colour(int red, int green, int blue) {
         Validate.isTrue(red >= 0 && red <= BIT_MASK, "Red is not between 0-255: ", red);
         Validate.isTrue(green >= 0 && green <= BIT_MASK, "Red is not between 0-255: ", green);
         Validate.isTrue(blue >= 0 && blue <= BIT_MASK, "Red is not between 0-255: ", blue);
@@ -174,7 +174,7 @@ public final class Color implements ConfigurationSerializable {
      * @param red the red component, from 0 to 255
      * @return a new color object with the red component
      */
-    public Color setRed(int red) {
+    public Colour setRed(int red) {
         return fromRGB(red, getGreen(), getBlue());
     }
 
@@ -193,7 +193,7 @@ public final class Color implements ConfigurationSerializable {
      * @param green the red component, from 0 to 255
      * @return a new color object with the red component
      */
-    public Color setGreen(int green) {
+    public Colour setGreen(int green) {
         return fromRGB(getRed(), green, getBlue());
     }
 
@@ -212,7 +212,7 @@ public final class Color implements ConfigurationSerializable {
      * @param blue the red component, from 0 to 255
      * @return a new color object with the red component
      */
-    public Color setBlue(int blue) {
+    public Colour setBlue(int blue) {
         return fromRGB(getRed(), getGreen(), blue);
     }
 
@@ -234,16 +234,16 @@ public final class Color implements ConfigurationSerializable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Color)) {
+        if (!(o instanceof Colour)) {
             return false;
         }
-        final Color that = (Color) o;
+        final Colour that = (Colour) o;
         return this.blue == that.blue && this.green == that.green && this.red == that.red;
     }
 
     @Override
     public int hashCode() {
-        return asRGB() ^ Color.class.hashCode();
+        return asRGB() ^ Colour.class.hashCode();
     }
 
     public Map<String, Object> serialize() {
@@ -255,7 +255,7 @@ public final class Color implements ConfigurationSerializable {
     }
 
     @SuppressWarnings("javadoc")
-    public static Color deserialize(Map<String, Object> map) {
+    public static Colour deserialize(Map<String, Object> map) {
         return fromRGB(
             asInt("RED", map),
             asInt("GREEN", map),
