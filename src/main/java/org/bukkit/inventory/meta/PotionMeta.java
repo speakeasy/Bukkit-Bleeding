@@ -5,6 +5,9 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
+/**
+ * Represents a potion that can have custom effects.
+ */
 public interface PotionMeta extends ItemMeta {
 
     /**

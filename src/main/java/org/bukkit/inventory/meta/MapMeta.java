@@ -1,5 +1,8 @@
 package org.bukkit.inventory.meta;
 
+/**
+ * Represents a map that can be scalable.
+ */
 public interface MapMeta extends ItemMeta {
 
     /**

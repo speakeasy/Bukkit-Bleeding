@@ -2,6 +2,9 @@ package org.bukkit.inventory.meta;
 
 import java.util.List;
 
+/**
+ * Represents a book that can have a title, an author, and pages.
+ */
 public interface BookMeta extends ItemMeta {
 
     /**

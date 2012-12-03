@@ -2,6 +2,9 @@ package org.bukkit.inventory.meta;
 
 import org.bukkit.Color;
 
+/**
+ * Represents leather armor that can be colored.
+ */
 public interface LeatherArmorMeta extends ItemMeta {
 
     /**
