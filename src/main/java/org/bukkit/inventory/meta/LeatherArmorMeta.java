@@ -1,8 +1,8 @@
 package org.bukkit.inventory.meta;
 
-import org.bukkit.Colour;
+import org.bukkit.Color;
 
 public interface LeatherArmorMeta extends ItemMeta {
-    Colour getColour();
-    void setColour(Colour colour);
+    Color getColor();
+    void setColor(Color color);
 }

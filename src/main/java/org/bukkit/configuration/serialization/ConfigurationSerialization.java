@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.Validate;
-import org.bukkit.Colour;
+import org.bukkit.Color;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BlockVector;
@@ -28,7 +28,7 @@ public class ConfigurationSerialization {
         registerClass(Vector.class);
         registerClass(BlockVector.class);
         registerClass(ItemStack.class);
-        registerClass(Colour.class);
+        registerClass(Color.class);
     }
 
     protected ConfigurationSerialization(Class<? extends ConfigurationSerializable> clazz) {
