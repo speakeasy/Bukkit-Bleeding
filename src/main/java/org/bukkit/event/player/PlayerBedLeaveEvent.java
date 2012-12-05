@@ -10,10 +10,12 @@ import org.bukkit.event.HandlerList;
 public class PlayerBedLeaveEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final Block bed;
+    private final boolean spawnChange;
 
-    public PlayerBedLeaveEvent(final Player who, final Block bed) {
+    public PlayerBedLeaveEvent(final Player who, final Block bed, final boolean spawnChange) {
         super(who);
         this.bed = bed;
+        this.spawnChange = spawnChange;
     }
 
     /**
@@ -23,6 +25,15 @@ public class PlayerBedLeaveEvent extends PlayerEvent {
      */
     public Block getBed() {
         return bed;
+    }
+
+    /**
+     * Indicates if the player spawn location will change to {@link #getBed()} after this event is processed.
+     *
+     * @return true if player spawn location will change; otherwise false
+     */
+    public boolean isSpawnChange() {
+        return spawnChange;
     }
 
     @Override
