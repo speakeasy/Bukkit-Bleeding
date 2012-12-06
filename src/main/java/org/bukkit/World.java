@@ -50,7 +50,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param z Z-coordinate of the block
      * @return Type ID of the block at the given coordinates
      * @see #getBlockAt(int, int, int) Returns a live Block object at the given location
+     * @deprecated use {@link #getBlockType(org.bukkit.Location)}
      */
+    @Deprecated
     public int getBlockTypeIdAt(int x, int y, int z);
 
     /**
@@ -59,8 +61,54 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param location Location of the block
      * @return Type ID of the block at the given location
      * @see #getBlockAt(org.bukkit.Location) Returns a live Block object at the given location
+     * @deprecated use {@link #getBlockType(org.bukkit.Location)}
      */
+    @Deprecated
     public int getBlockTypeIdAt(Location location);
+
+    /**
+     * Gets the block type ID at the given {@link Location}
+     *
+     * @param location Location of the block
+     * @return type id of the block at the given location
+     */
+    public int getBlockType(Location location);
+
+    /**
+     * Gets the block data byte at the given {@link Location}
+     *
+     * @param location Location of the block
+     * @return Data byte of the block at the given location
+     */
+    public byte getBlockDataAt(Location location);
+
+    /**
+     * Sets the data byte at the given {@link Location}
+     *
+     * @param location Location of the block
+     * @param data value to set the data byte to
+     * @param update whether to update the block
+     */
+    public void setBlockData(Location location, byte data, boolean update);
+
+    /**
+     * Sets the block type ID at the given location.
+     *
+     * @param location Location of the block
+     * @param type the type ID to set
+     * @param update whether to update the block
+     */
+    public void setBlockTypeId(Location location, int type, boolean update);
+
+    /**
+     * Sets both the block ID and data byte for the block at the given location.
+     *
+     * @param location Location of the block
+     * @param type the type ID to set
+     * @param data the data byte to set
+     * @param update whether to update the block
+     */
+    public void setBlockTypeIdAndData(Location location, int type, byte data, boolean update);
 
     /**
      * Gets the highest non-air coordinate at the given coordinates
