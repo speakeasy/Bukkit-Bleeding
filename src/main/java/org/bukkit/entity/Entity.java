@@ -25,6 +25,48 @@ public interface Entity extends Metadatable {
     public Location getLocation();
 
     /**
+     * Gets the entity's current x coordinate.
+     *
+     * @return the current x coordinate of the entity
+     */
+    public double getX();
+
+    /**
+     * Sets the entity's current x coordinate.
+     *
+     * @param x coordinate to set
+     */
+    public void setX(double x);
+
+    /**
+     * Gets the entity's current y coordinate.
+     *
+     * @return the current y coordinate of the entity
+     */
+    public double getY();
+
+    /**
+     * Sets the entity's current y coordinate.
+     *
+     * @param y coordinate to set
+     */
+    public void setY(double y);
+
+    /**
+     * Gets the entity's current z coordinate.
+     *
+     * @return the current z coordinate of the entity
+     */
+    public double getZ();
+
+    /**
+     * Sets the entity's current z coordinate.
+     *
+     * @param z coordinate to set
+     */
+    public void setZ(double z);
+
+    /**
      * Sets this entity's velocity
      *
      * @param velocity New velocity to travel with
