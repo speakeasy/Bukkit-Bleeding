@@ -132,6 +132,13 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
      * @return slumber ticks
      */
     public int getSleepTicks();
+    
+    /**
+     * If player {@link #isSleeping}, remove player from bed. This will not set a Player's spawn location.
+     * 
+     * @see Player#setBedSpawnLocation(Location)
+     */
+    public void wakeUp();
 
     /**
      * Gets this humans current {@link GameMode}
