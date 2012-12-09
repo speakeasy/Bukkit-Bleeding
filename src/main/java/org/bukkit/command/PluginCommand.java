@@ -61,6 +61,7 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
      * @param executor New executor to run
      */
     public void setExecutor(CommandExecutor executor) {
+        Validate.notNull(executor, "Cannot set command executor to null!");
         this.executor = executor;
     }
 
