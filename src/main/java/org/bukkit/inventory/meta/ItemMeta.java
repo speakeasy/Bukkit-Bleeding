@@ -57,6 +57,13 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     void setLore(List<String> lore);
 
     /**
+     * Checks for the existence of any enchantments
+     *
+     * @return true if an enchantment exists on this meta
+     */
+    boolean hasEnchants();
+
+    /**
      * Checks for existence of the specified enchantment
      *
      * @param ench enchantment to check
