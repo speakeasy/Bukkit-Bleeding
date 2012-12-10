@@ -290,9 +290,12 @@ public class SimpleCommandMap implements CommandMap {
         for (String alias : values.keySet()) {
             String[] targetNames = values.get(alias);
             List<Command> targets = new ArrayList<Command>();
+            List<String[]> prepend = new ArrayList<String[]>();
             StringBuilder bad = new StringBuilder();
 
-            for (String name : targetNames) {
+            for (String entry : targetNames) {
+                String[] components = PATTERN_ON_SPACE.split(entry, 2);
+                String name = components[0];
                 Command command = getCommand(name);
 
                 if (command == null) {
@@ -302,13 +305,14 @@ public class SimpleCommandMap implements CommandMap {
                     bad.append(name);
                 } else {
                     targets.add(command);
+                    prepend.add((components.length == 2 ? PATTERN_ON_SPACE.split(components[1]) : new String[0]));
                 }
             }
 
             // We register these as commands so they have absolute priority.
 
             if (targets.size() > 0) {
-                knownCommands.put(alias.toLowerCase(), new MultipleCommandAlias(alias.toLowerCase(), targets.toArray(new Command[0])));
+                knownCommands.put(alias.toLowerCase(), new MultipleCommandAlias(alias.toLowerCase(), targets.toArray(new Command[0]), prepend.toArray(new String[0][0])));
             } else {
                 knownCommands.remove(alias.toLowerCase());
             }
