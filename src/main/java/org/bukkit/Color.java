@@ -133,8 +133,8 @@ public final class Color implements ConfigurationSerializable {
      * @throws IllegalArgumentException if any data is in the highest order 8 bits
      */
     public static Color fromRGB(int rgb) throws IllegalArgumentException {
-        Validate.isTrue((rgb >> 12) == 0, "Extrenuous data in: ", rgb);
-        return fromRGB(rgb >> 8 & BIT_MASK, rgb >> 4 & BIT_MASK, rgb >> 0 & BIT_MASK);
+        Validate.isTrue((rgb >> 24) == 0, "Extrenuous data in: ", rgb);
+        return fromRGB(rgb >> 16 & BIT_MASK, rgb >> 8 & BIT_MASK, rgb >> 0 & BIT_MASK);
     }
 
     /**
@@ -145,8 +145,8 @@ public final class Color implements ConfigurationSerializable {
      * @throws IllegalArgumentException if any data is in the highest order 8 bits
      */
     public static Color fromBGR(int bgr) throws IllegalArgumentException {
-        Validate.isTrue((bgr >> 12) == 0, "Extrenuous data in: ", bgr);
-        return fromBGR(bgr >> 8 & BIT_MASK, bgr >> 4 & BIT_MASK, bgr >> 0 & BIT_MASK);
+        Validate.isTrue((bgr >> 24) == 0, "Extrenuous data in: ", bgr);
+        return fromBGR(bgr >> 16 & BIT_MASK, bgr >> 8 & BIT_MASK, bgr >> 0 & BIT_MASK);
     }
 
     private Color(int red, int green, int blue) {
