@@ -132,4 +132,8 @@ public class ShapedRecipe implements Recipe {
     public ItemStack getResult() {
         return output.clone();
     }
+
+    public RecipeType getType() {
+        return RecipeType.SHAPED;
+    }
 }

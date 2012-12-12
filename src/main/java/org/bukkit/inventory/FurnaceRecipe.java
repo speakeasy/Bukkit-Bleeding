@@ -91,4 +91,8 @@ public class FurnaceRecipe implements Recipe {
     public ItemStack getResult() {
         return output.clone();
     }
+
+    public RecipeType getType() {
+        return RecipeType.FURNACE;
+    }
 }

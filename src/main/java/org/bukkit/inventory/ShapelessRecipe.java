@@ -209,4 +209,8 @@ public class ShapelessRecipe implements Recipe {
         }
         return result;
     }
+
+    public RecipeType getType() {
+        return RecipeType.SHAPELESS;
+    }
 }
