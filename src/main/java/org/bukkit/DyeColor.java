@@ -16,15 +16,15 @@ public enum DyeColor {
     /**
      * Represents orange dye
      */
-    ORANGE(0x1, Color.fromRGB(0xF2B233)),
+    ORANGE(0x1, Color.fromRGB(0xD87f33)),
     /**
      * Represents magenta dye
      */
-    MAGENTA(0x2, Color.fromRGB(0xE57FD8)),
+    MAGENTA(0x2, Color.fromRGB(0xB24CD8)),
     /**
      * Represents light blue dye
      */
-    LIGHT_BLUE(0x3,Color.fromRGB(0x99B2F2)),
+    LIGHT_BLUE(0x3,Color.fromRGB(0x6699D8)),
     /**
      * Represents yellow dye
      */
@@ -36,7 +36,7 @@ public enum DyeColor {
     /**
      * Represents pink dye
      */
-    PINK(0x6, Color.fromRGB(0xF2B2CC)),
+    PINK(0x6, Color.fromRGB(0xF27FA5)),
     /**
      * Represents gray dye
      */
@@ -48,19 +48,19 @@ public enum DyeColor {
     /**
      * Represents cyan dye
      */
-    CYAN(0x9, Color.fromRGB(0x4C99B2)),
+    CYAN(0x9, Color.fromRGB(0x4C7F99)),
     /**
      * Represents purple dye
      */
-    PURPLE(0xA, Color.fromRGB(0xB266E5)),
+    PURPLE(0xA, Color.fromRGB(0x7F3FB2)),
     /**
      * Represents blue dye
      */
-    BLUE(0xB, Color.fromRGB(0x3366CC)),
+    BLUE(0xB, Color.fromRGB(0x334CB2)),
     /**
      * Represents brown dye
      */
-    BROWN(0xC, Color.fromRGB(0x7F664C)),
+    BROWN(0xC, Color.fromRGB(0x664C33)),
     /**
      * Represents green dye
      */
@@ -68,7 +68,7 @@ public enum DyeColor {
     /**
      * Represents red dye
      */
-    RED(0xE, Color.fromRGB(0xCC4C4C)),
+    RED(0xE, Color.fromRGB(0x993333)),
     /**
      * Represents black dye
      */
