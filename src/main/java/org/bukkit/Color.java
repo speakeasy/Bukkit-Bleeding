@@ -323,4 +323,9 @@ public final class Color implements ConfigurationSerializable {
         }
         return ((Number) value).intValue();
     }
+
+    @Override
+    public String toString() {
+        return "Color:[rgb0x" + Integer.toHexString(getRed()).toUpperCase() + Integer.toHexString(getGreen()).toUpperCase() + Integer.toHexString(getBlue()).toUpperCase() + "]";
+    }
 }
