@@ -21,4 +21,6 @@ public interface LeatherArmorMeta extends ItemMeta {
      * @param color the color to set
      */
     void setColor(Color color);
+
+    LeatherArmorMeta clone();
 }

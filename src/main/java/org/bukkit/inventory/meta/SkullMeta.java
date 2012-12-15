@@ -28,4 +28,6 @@ public interface SkullMeta extends ItemMeta {
      * @return true if the owner was successfully set
      */
     boolean setOwner(String owner);
+
+    SkullMeta clone();
 }

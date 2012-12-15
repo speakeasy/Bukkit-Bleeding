@@ -12,7 +12,6 @@ import org.bukkit.enchantments.Enchantment;
  * This class should not be implemented by a plugin in a live environment.
  */
 public interface ItemMeta extends Cloneable, ConfigurationSerializable {
-    ItemMeta clone();
 
     /**
      * Checks for existence of a display name
@@ -103,4 +102,7 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
      * @return true if the item meta changed as a result of this call, false otherwise
      */
     boolean removeEnchant(Enchantment ench);
+
+    @SuppressWarnings("javadoc")
+    ItemMeta clone();
 }

@@ -109,4 +109,6 @@ public interface BookMeta extends ItemMeta {
      * @return the number of pages in the book
      */
     int getPageCount();
+
+    BookMeta clone();
 }

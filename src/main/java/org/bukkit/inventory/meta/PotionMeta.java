@@ -64,4 +64,6 @@ public interface PotionMeta extends ItemMeta {
      * @return true if the potion meta changed as a result of this call
      */
     boolean clearCustomEffects();
+
+    PotionMeta clone();
 }

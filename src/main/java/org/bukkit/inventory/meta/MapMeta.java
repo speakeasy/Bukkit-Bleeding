@@ -18,4 +18,6 @@ public interface MapMeta extends ItemMeta {
      * @param value true to scale
      */
     void setScaling(boolean value);
+
+    MapMeta clone();
 }
