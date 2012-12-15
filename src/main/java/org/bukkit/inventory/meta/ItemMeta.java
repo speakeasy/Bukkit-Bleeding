@@ -91,10 +91,10 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
      *
      * @param ench Enchantment to add
      * @param level Level for the enchantment
-     * @param ignoreRestrictions this indicates the enchantment should be applied, ignoring level limits and item type
+     * @param ignoreLevelRestriction this indicates the enchantment should be applied, ignoring the level limit
      * @return true if the item meta changed as a result of this call, false otherwise
      */
-    boolean addEnchant(Enchantment ench, int level, boolean ignoreRestrictions);
+    boolean addEnchant(Enchantment ench, int level, boolean ignoreLevelRestriction);
 
     /**
      * This method removes the specified enchantment from this item meta
