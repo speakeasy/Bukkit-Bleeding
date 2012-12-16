@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableMap;
 
 /**
  * A container for a color palette. This class is immutable; the set methods return a new color.
+ * The color names listed as fields are HTML4 standards, but subject to change.
  */
 @SerializableAs("Color")
 public final class Color implements ConfigurationSerializable {
@@ -94,6 +95,11 @@ public final class Color implements ConfigurationSerializable {
      * Purple, or (0x80,0x00,0x80) in (R,G,B)
      */
     public static final Color PURPLE = fromRGB(0x800080);
+
+    /**
+     * Orange, or (0xFF,0xA5,0x00) in (R,G,B)
+     */
+    public static final Color ORANGE = fromRGB(0xFFA500);
 
     private final byte red;
     private final byte green;
