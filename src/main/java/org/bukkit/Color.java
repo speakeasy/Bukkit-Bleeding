@@ -221,7 +221,7 @@ public final class Color implements ConfigurationSerializable {
      * @return An integer representation of this color, as 0xRRGGBB
      */
     public int asRGB() {
-        return getRed() << 8 | getGreen() << 4 | getBlue() << 0;
+        return getRed() << 16 | getGreen() << 8 | getBlue() << 0;
     }
 
     /**
@@ -229,7 +229,7 @@ public final class Color implements ConfigurationSerializable {
      * @return An integer representation of this color, as 0xBBGGRR
      */
     public int asBGR() {
-        return getBlue() << 8 | getGreen() << 4 | getRed() << 0;
+        return getBlue() << 16 | getGreen() << 8 | getRed() << 0;
     }
 
     /**
@@ -257,6 +257,7 @@ public final class Color implements ConfigurationSerializable {
      * @param colors The colors to dye with
      * @return A new color with the changed rgb components
      */
+    // TODO: Javadoc what this method does, not what it mimics. API != Implementation
     public Color dyeColor(Color... colors) {
         Validate.noNullElements(colors, "Colors cannot be null");
 
