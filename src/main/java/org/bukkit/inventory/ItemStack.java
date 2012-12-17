@@ -278,6 +278,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     @Override
+    @Utility
     public String toString() {
         StringBuilder toString = new StringBuilder("ItemStack{").append(getType().name()).append(" x ").append(getAmount());
         if (hasItemMeta()) {
@@ -306,6 +307,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param stack the item stack to compare to
      * @return true if the two stacks are equal, ignoring the amount
      */
+    @Utility
     public boolean isSimilar(ItemStack stack) {
         if (stack == null) {
             return false;
