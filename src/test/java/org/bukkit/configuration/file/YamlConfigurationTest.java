@@ -4,9 +4,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class YamlConfigurationTest extends FileConfigurationTest {
-    static {
-        TestEnchantment.registerEnchantments();
-    }
 
     @Override
     public YamlConfiguration getConfig() {

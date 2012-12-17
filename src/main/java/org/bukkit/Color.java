@@ -119,7 +119,7 @@ public final class Color implements ConfigurationSerializable {
     }
 
     /**
-     * Creates a new Color object from a red, green, and blue
+     * Creates a new Color object from a blue, green, and red
      *
      * @param blue integer from 0-255
      * @param green integer from 0-255
@@ -245,7 +245,8 @@ public final class Color implements ConfigurationSerializable {
      * @param colors The DyeColors to dye with
      * @return A new color with the changed rgb components
      */
-    public Color dyeColor(DyeColor... colors) {
+    // TODO: Javadoc what this method does, not what it mimics. API != Implementation
+    public Color mixDyes(DyeColor... colors) {
         Validate.noNullElements(colors, "Colors cannot be null");
 
         Color[] toPass = new Color[colors.length];
@@ -253,7 +254,7 @@ public final class Color implements ConfigurationSerializable {
             toPass[i] = colors[i].getColor();
         }
 
-        return dyeColor(toPass);
+        return mixColors(toPass);
     }
 
     /**
@@ -264,7 +265,7 @@ public final class Color implements ConfigurationSerializable {
      * @return A new color with the changed rgb components
      */
     // TODO: Javadoc what this method does, not what it mimics. API != Implementation
-    public Color dyeColor(Color... colors) {
+    public Color mixColors(Color... colors) {
         Validate.noNullElements(colors, "Colors cannot be null");
 
         int totalRed = this.getRed();

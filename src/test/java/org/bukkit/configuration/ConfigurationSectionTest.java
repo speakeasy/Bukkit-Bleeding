@@ -482,7 +482,7 @@ public abstract class ConfigurationSectionTest {
         assertFalse(section.isVector("doesntExist"));
     }
 
-    @Test // TODO: Move to CraftBukkit. In the meantime, serves as a reminder that Bukkit is broken and should not compile
+    @Test
     public void testGetItemStack_String() {
         ConfigurationSection section = getConfigurationSection();
         String key = "exists";
@@ -494,7 +494,7 @@ public abstract class ConfigurationSectionTest {
         assertNull(section.getString("doesntExist"));
     }
 
-    @Test // TODO: Move to CraftBukkit. In the meantime, serves as a reminder that Bukkit is broken and should not compile
+    @Test
     public void testGetItemStack_String_ItemStack() {
         ConfigurationSection section = getConfigurationSection();
         String key = "exists";

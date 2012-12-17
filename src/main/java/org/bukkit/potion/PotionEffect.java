@@ -27,6 +27,14 @@ public class PotionEffect implements ConfigurationSerializable {
     private final PotionEffectType type;
     private final boolean ambient;
 
+    /**
+     * Creates a potion effect.
+     *
+     * @param type effect type
+     * @param duration measured in ticks, see {@link PotionEffect#getDuration()}
+     * @param amplifier the amplifier, see {@link PotionEffect#getAmplifier()}
+     * @param ambient the ambient status, see {@link PotionEffect#isAmbient()}
+     */
     public PotionEffect(PotionEffectType type, int duration, int amplifier, boolean ambient) {
         Validate.notNull(type, "effect type cannot be null");
         this.type = type;
@@ -35,10 +43,23 @@ public class PotionEffect implements ConfigurationSerializable {
         this.ambient = ambient;
     }
 
+    /**
+     * Creates a potion affect. Assumes ambient is true.
+     *
+     * @param type Effect type
+     * @param duration measured in ticks
+     * @param amplifier the amplifier for the affect
+     * @see PotionEffect#PotionEffect(PotionEffectType, int, int, boolean)
+     */
     public PotionEffect(PotionEffectType type, int duration, int amplifier) {
         this(type, duration, amplifier, true);
     }
 
+    /**
+     * Constructor for deserialization.
+     *
+     * @param map the map to deserialize from
+     */
     public PotionEffect(Map<String, Object> map) {
         this(getEffectType(map), getInt(map, DURATION), getInt(map, AMPLIFIER), getBool(map, AMBIENT));
     }
@@ -129,7 +150,11 @@ public class PotionEffect implements ConfigurationSerializable {
         return type;
     }
 
-    // TODO find out what this actually means
+    /**
+     * Makes potion effect produce more, translucent, particles.
+     *
+     * @return if this effect is ambient
+     */
     public boolean isAmbient() {
         return ambient;
     }
