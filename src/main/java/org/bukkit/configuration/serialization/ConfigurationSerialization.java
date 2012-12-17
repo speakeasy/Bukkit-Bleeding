@@ -13,6 +13,7 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Color;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.util.BlockVector;
 import org.bukkit.util.Vector;
 
@@ -29,6 +30,7 @@ public class ConfigurationSerialization {
         registerClass(BlockVector.class);
         registerClass(ItemStack.class);
         registerClass(Color.class);
+        registerClass(PotionEffect.class);
     }
 
     protected ConfigurationSerialization(Class<? extends ConfigurationSerializable> clazz) {

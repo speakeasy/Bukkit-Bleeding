@@ -1,7 +1,14 @@
 package org.bukkit.potion;
 
+import java.util.Map;
+import java.util.NoSuchElementException;
+
 import org.apache.commons.lang.Validate;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.LivingEntity;
+
+import com.google.common.collect.ImmutableMap;
 
 /**
  * Represents a potion effect, that can be added to a {@link LivingEntity}. A
@@ -9,7 +16,12 @@ import org.bukkit.entity.LivingEntity;
  * enhance its effects, and a {@link PotionEffectType}, that represents its
  * effect on an entity.
  */
-public class PotionEffect {
+@SerializableAs("PotionEffect")
+public class PotionEffect implements ConfigurationSerializable {
+    private static final String AMPLIFIER = "amplifier";
+    private static final String DURATION = "duration";
+    private static final String TYPE = "effect";
+    private static final String AMBIENT = "ambient";
     private final int amplifier;
     private final int duration;
     private final PotionEffectType type;
@@ -25,6 +37,44 @@ public class PotionEffect {
 
     public PotionEffect(PotionEffectType type, int duration, int amplifier) {
         this(type, duration, amplifier, true);
+    }
+
+    public PotionEffect(Map<String, Object> map) {
+        this(getEffectType(map), getInt(map, DURATION), getInt(map, AMPLIFIER), getBool(map, AMBIENT));
+    }
+
+    private static PotionEffectType getEffectType(Map<?,?> map) {
+        int type = getInt(map, TYPE);
+        PotionEffectType effect = PotionEffectType.getById(type);
+        if (effect != null) {
+            return effect;
+        }
+        throw new NoSuchElementException(map + " does not contain " + TYPE);
+    }
+
+    private static int getInt(Map<?,?> map, Object key) {
+        Object num = map.get(key);
+        if (num instanceof Integer) {
+            return (Integer) num;
+        }
+        throw new NoSuchElementException(map + " does not contain " + key);
+    }
+
+    private static boolean getBool(Map<?,?> map, Object key) {
+        Object bool = map.get(key);
+        if (bool instanceof Boolean) {
+            return (Boolean) bool;
+        }
+        throw new NoSuchElementException(map + " does not contain " + key);
+    }
+
+    public Map<String, Object> serialize() {
+        return ImmutableMap.<String, Object>of(
+            TYPE, type.getId(),
+            DURATION, duration,
+            AMPLIFIER, amplifier,
+            AMBIENT, ambient
+        );
     }
 
     /**
@@ -44,18 +94,11 @@ public class PotionEffect {
         if (this == obj) {
             return true;
         }
-        if (obj == null || getClass() != obj.getClass()) {
+        if (!(obj instanceof PotionEffect)) {
             return false;
         }
-        PotionEffect other = (PotionEffect) obj;
-        if (type == null) {
-            if (other.type != null) {
-                return false;
-            }
-        } else if (!type.equals(other.type)) {
-            return false;
-        }
-        return true;
+        PotionEffect that = (PotionEffect) obj;
+        return this.type.equals(that.type) && this.ambient == that.ambient && this.amplifier == that.amplifier && this.duration == that.duration;
     }
 
     /**
@@ -93,6 +136,16 @@ public class PotionEffect {
 
     @Override
     public int hashCode() {
-        return 31 + ((type == null) ? 0 : type.hashCode());
-    };
+        int hash = 1;
+        hash = hash * 31 + type.hashCode();
+        hash = hash * 31 + amplifier;
+        hash = hash * 31 + duration;
+        hash ^= 0x22222222 >> (ambient ? 1 : -1);
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        return type.getName() + (ambient ? ":(" : ":") + duration + "t-x" + amplifier + (ambient ? ")" : "");
+    }
 }
