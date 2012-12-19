@@ -21,7 +21,8 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     boolean hasDisplayName();
 
     /**
-     * Gets the display name that is set
+     * Gets the display name that is set.
+     * Plugins should check that hasDisplayName() returns <code>true</code> before calling this method.
      *
      * @return the display name that is set
      */
@@ -42,14 +43,15 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     boolean hasLore();
 
     /**
-     * Gets the lore that is set
-     *
+     * Gets the lore that is set.
+     * Plugins should check if hasLore() returns <code>true</code> before calling this method.
+     * 
      * @return a list of lore that is set
      */
     List<String> getLore();
 
     /**
-     * Sets the lore for this item
+     * Sets the lore for this item. Removes lore when given null.
      *
      * @param lore the lore that will be set
      */
@@ -79,14 +81,14 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     int getEnchantLevel(Enchantment ench);
 
     /**
-     * This method gets a copy the enchantments in this ItemMeta
+     * Gets a copy the enchantments in this ItemMeta. Returns an empty map if none.
      *
      * @return An immutable copy of the enchantments
      */
     Map<Enchantment, Integer> getEnchants();
 
     /**
-     * This method adds the specified enchantment to this item meta
+     * Adds the specified enchantment to this item meta
      *
      * @param ench Enchantment to add
      * @param level Level for the enchantment
@@ -96,7 +98,7 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     boolean addEnchant(Enchantment ench, int level, boolean ignoreLevelRestriction);
 
     /**
-     * This method removes the specified enchantment from this item meta
+     * Removes the specified enchantment from this item meta
      *
      * @param ench Enchantment to remove
      * @return true if the item meta changed as a result of this call, false otherwise
