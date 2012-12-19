@@ -29,7 +29,7 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     String getDisplayName();
 
     /**
-     * Sets the display name.
+     * Sets the display name. Removes the display name when given null.
      *
      * @param name the name to set
      */
@@ -51,8 +51,7 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     List<String> getLore();
 
     /**
-     * Sets the lore for this item. 
-     * Removes lore when given null.
+     * Sets the lore for this item. Removes lore when given null.
      *
      * @param lore the lore that will be set
      */

@@ -14,7 +14,7 @@ import org.bukkit.event.inventory.InventoryType;
 public interface Inventory extends Iterable<ItemStack> {
 
     /**
-     * Returns the size of the inventory
+     * Returns the size of the inventory.
      *
      * @return The size of the inventory
      */
@@ -50,7 +50,7 @@ public interface Inventory extends Iterable<ItemStack> {
     public String getName();
 
     /**
-     * Returns the ItemStack found in the slot at the given index
+     * Returns the ItemStack found in the slot at the given index.
      *
      * @param index The index of the Slot's ItemStack to return
      * @return The ItemStack in the slot
@@ -114,7 +114,7 @@ public interface Inventory extends Iterable<ItemStack> {
     public void setContents(ItemStack[] items) throws IllegalArgumentException;
 
     /**
-     * Checks if the inventory contains any ItemStacks with the given materialId
+     * Checks if the inventory contains any ItemStacks with the given materialId.
      *
      * @param materialId The materialId to check for
      * @return true if an ItemStack in this inventory contains the materialId
@@ -135,7 +135,7 @@ public interface Inventory extends Iterable<ItemStack> {
      * This will only return true if both the type and the amount of the stack match.
      *
      * @param item The ItemStack to match against
-     * @return false if item is null, true if any exactly matching ItemStacks were found
+     * @return true if any exactly matching ItemStacks were found
      */
     public boolean contains(ItemStack item);
 
@@ -164,7 +164,7 @@ public interface Inventory extends Iterable<ItemStack> {
      *
      * @param item The ItemStack to match against
      * @param amount The amount of stacks to find
-     * @return false if item is null, true if amount less than 1, true if amount of exactly matching ItemStacks were found.
+     * @return true if amount less than 1, true if enough ItemStacks were found to add to the given amount
      */
     public boolean contains(ItemStack item, int amount);
 
@@ -311,7 +311,7 @@ public interface Inventory extends Iterable<ItemStack> {
     public InventoryType getType();
 
     /**
-     * Gets the block or entity belonging to the open inventory
+     * Gets the block or entity belonging to the open inventory.
      *
      * @return The holder of the inventory; null if it has no holder.
      */
