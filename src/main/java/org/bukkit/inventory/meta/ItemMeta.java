@@ -14,7 +14,7 @@ import org.bukkit.enchantments.Enchantment;
 public interface ItemMeta extends Cloneable, ConfigurationSerializable {
 
     /**
-     * Checks for existence of a display name
+     * Checks for existence of a display name.
      *
      * @return true if this has a display name
      */
@@ -29,14 +29,14 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     String getDisplayName();
 
     /**
-     * Sets the display name
+     * Sets the display name.
      *
      * @param name the name to set
      */
     void setDisplayName(String name);
 
     /**
-     * Checks for existence of lore
+     * Checks for existence of lore.
      *
      * @return true if this has lore
      */
@@ -51,21 +51,22 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     List<String> getLore();
 
     /**
-     * Sets the lore for this item. Removes lore when given null.
+     * Sets the lore for this item. 
+     * Removes lore when given null.
      *
      * @param lore the lore that will be set
      */
     void setLore(List<String> lore);
 
     /**
-     * Checks for the existence of any enchantments
+     * Checks for the existence of any enchantments.
      *
      * @return true if an enchantment exists on this meta
      */
     boolean hasEnchants();
 
     /**
-     * Checks for existence of the specified enchantment
+     * Checks for existence of the specified enchantment.
      *
      * @param ench enchantment to check
      * @return true if this enchantment exists for this meta
@@ -73,7 +74,7 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     boolean hasEnchant(Enchantment ench);
 
     /**
-     * Checks for the level of the specified enchantment
+     * Checks for the level of the specified enchantment.
      *
      * @param ench enchantment to check
      * @return The level that the specified enchantment has, or 0 if none
@@ -81,14 +82,15 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     int getEnchantLevel(Enchantment ench);
 
     /**
-     * Gets a copy the enchantments in this ItemMeta. Returns an empty map if none.
+     * Returns a copy the enchantments in this ItemMeta. 
+     * Returns an empty map if none.
      *
      * @return An immutable copy of the enchantments
      */
     Map<Enchantment, Integer> getEnchants();
 
     /**
-     * Adds the specified enchantment to this item meta
+     * Adds the specified enchantment to this item meta.
      *
      * @param ench Enchantment to add
      * @param level Level for the enchantment
@@ -98,7 +100,7 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     boolean addEnchant(Enchantment ench, int level, boolean ignoreLevelRestriction);
 
     /**
-     * Removes the specified enchantment from this item meta
+     * Removes the specified enchantment from this item meta.
      *
      * @param ench Enchantment to remove
      * @return true if the item meta changed as a result of this call, false otherwise
