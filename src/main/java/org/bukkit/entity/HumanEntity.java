@@ -134,6 +134,20 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
     public int getSleepTicks();
 
     /**
+     * Set whether this player can enter deep sleep while in bed. If a player can not enter deep sleep, they will not be factored in when calculating if night should be changed to morning.
+     *
+     * @param insomnia true to prevent player from entering deep sleep; false to allow player to enter deep sleep
+     */
+    public void setInsomniac(boolean insomnia);
+
+    /**
+     * Gets whether this player can enter deep sleep while in bed. If a player can not enter deep sleep, they will not be factored in when calculating if night should be changed to morning.
+     *
+     * @return true if player can not enter deep sleep; false if player can enter deep sleep
+     */
+    public boolean isInsomniac();
+
+    /**
      * Gets this humans current {@link GameMode}
      *
      * @return Current game mode
