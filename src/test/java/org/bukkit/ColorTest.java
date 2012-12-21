@@ -3,6 +3,9 @@ package org.bukkit;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.junit.Test;
 
@@ -361,5 +364,15 @@ public class ColorTest {
     @Test(expected=IllegalArgumentException.class)
     public void testInvalidG12() {
         Color.WHITE.setGreen(0x100);
+    }
+
+    @Test
+    public void testPresetsMap() throws IllegalArgumentException, IllegalAccessException {
+        Field[] fields = Color.class.getDeclaredFields();
+        for(Field field : fields) {
+            if(field.getType().equals(Color.class) && Modifier.isStatic(field.getModifiers())) {
+                assertEquals(field.get(null), Color.fromName(field.getName()));
+            }
+        }
     }
 }

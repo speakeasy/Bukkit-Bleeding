@@ -1,5 +1,7 @@
 package org.bukkit;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
@@ -101,9 +103,47 @@ public final class Color implements ConfigurationSerializable {
      */
     public static final Color ORANGE = fromRGB(0xFFA500);
 
+    private static final Map<String,Color> presets = new HashMap<String,Color>();
+
+    static {
+        presets.put("WHITE", WHITE);
+        presets.put("SILVER", SILVER);
+        presets.put("GRAY", GRAY);
+        presets.put("GREY", GRAY);
+        presets.put("BLACK", BLACK);
+        presets.put("RED", RED);
+        presets.put("MAROON", MAROON);
+        presets.put("YELLOW", YELLOW);
+        presets.put("OLIVE", OLIVE);
+        presets.put("LIME", LIME);
+        presets.put("GREEN", GREEN);
+        presets.put("AQUA", AQUA);
+        presets.put("TEAL", TEAL);
+        presets.put("BLUE", BLUE);
+        presets.put("NAVY", NAVY);
+        presets.put("FUCHSIA", FUCHSIA);
+        presets.put("PURPLE", PURPLE);
+        presets.put("ORANGE", ORANGE);
+    }
+
     private final byte red;
     private final byte green;
     private final byte blue;
+
+    public static Collection<Color> getPresets() {
+        return presets.values();
+    }
+
+    /**
+     * Fetches the preset (HTML4) color named by the input string.
+     * It ignores case in the input.
+     *
+     * @param name
+     * @return
+     */
+    public static Color fromName(String name) {
+        return presets.get(name.toUpperCase());
+    }
 
     /**
      * Creates a new Color object from a red, green, and blue
