@@ -1,7 +1,9 @@
 package org.bukkit;
 
 import java.lang.reflect.Constructor;
+import java.util.EnumSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.map.MapView;
@@ -61,169 +63,169 @@ import com.google.common.collect.Maps;
  * An enum of all material ids accepted by the official server + client
  */
 public enum Material {
-    AIR(0, 0),
-    STONE(1),
-    GRASS(2),
-    DIRT(3),
-    COBBLESTONE(4),
-    WOOD(5, Tree.class),
-    SAPLING(6, Tree.class),
-    BEDROCK(7),
+    AIR(0, 0, MaterialProperty.TRANSPARENT),
+    STONE(1, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    GRASS(2, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    DIRT(3, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    COBBLESTONE(4, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    WOOD(5, Tree.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE, MaterialProperty.OCCLUDING, MaterialProperty.FUEL),
+    SAPLING(6, Tree.class, MaterialProperty.TRANSPARENT, MaterialProperty.FUEL),
+    BEDROCK(7, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
     WATER(8, MaterialData.class),
     STATIONARY_WATER(9, MaterialData.class),
     LAVA(10, MaterialData.class),
     STATIONARY_LAVA(11, MaterialData.class),
-    SAND(12),
-    GRAVEL(13),
-    GOLD_ORE(14),
-    IRON_ORE(15),
-    COAL_ORE(16),
-    LOG(17, Tree.class),
-    LEAVES(18, Tree.class),
-    SPONGE(19),
-    GLASS(20),
-    LAPIS_ORE(21),
-    LAPIS_BLOCK(22),
-    DISPENSER(23, Dispenser.class),
-    SANDSTONE(24, Sandstone.class),
-    NOTE_BLOCK(25),
-    BED_BLOCK(26, Bed.class),
-    POWERED_RAIL(27, PoweredRail.class),
-    DETECTOR_RAIL(28, DetectorRail.class),
-    PISTON_STICKY_BASE(29, PistonBaseMaterial.class),
+    SAND(12, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    GRAVEL(13, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    GOLD_ORE(14, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    IRON_ORE(15, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    COAL_ORE(16, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    LOG(17, Tree.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE, MaterialProperty.OCCLUDING, MaterialProperty.FUEL),
+    LEAVES(18, Tree.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE),
+    SPONGE(19, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    GLASS(20, MaterialProperty.SOLID),
+    LAPIS_ORE(21, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    LAPIS_BLOCK(22, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    DISPENSER(23, Dispenser.class, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    SANDSTONE(24, Sandstone.class, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    NOTE_BLOCK(25, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.OCCLUDING, MaterialProperty.FUEL),
+    BED_BLOCK(26, Bed.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE),
+    POWERED_RAIL(27, PoweredRail.class, MaterialProperty.TRANSPARENT),
+    DETECTOR_RAIL(28, DetectorRail.class, MaterialProperty.TRANSPARENT),
+    PISTON_STICKY_BASE(29, PistonBaseMaterial.class, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
     WEB(30),
-    LONG_GRASS(31, LongGrass.class),
-    DEAD_BUSH(32),
-    PISTON_BASE(33, PistonBaseMaterial.class),
-    PISTON_EXTENSION(34, PistonExtensionMaterial.class),
-    WOOL(35, Wool.class),
-    PISTON_MOVING_PIECE(36),
-    YELLOW_FLOWER(37),
-    RED_ROSE(38),
-    BROWN_MUSHROOM(39),
-    RED_MUSHROOM(40),
-    GOLD_BLOCK(41),
-    IRON_BLOCK(42),
-    DOUBLE_STEP(43, Step.class),
-    STEP(44, Step.class),
-    BRICK(45),
-    TNT(46),
-    BOOKSHELF(47),
-    MOSSY_COBBLESTONE(48),
-    OBSIDIAN(49),
-    TORCH(50, Torch.class),
-    FIRE(51),
-    MOB_SPAWNER(52),
-    WOOD_STAIRS(53, Stairs.class),
-    CHEST(54, Chest.class),
-    REDSTONE_WIRE(55, RedstoneWire.class),
-    DIAMOND_ORE(56),
-    DIAMOND_BLOCK(57),
-    WORKBENCH(58),
-    CROPS(59, Crops.class),
-    SOIL(60, MaterialData.class),
-    FURNACE(61, Furnace.class),
-    BURNING_FURNACE(62, Furnace.class),
-    SIGN_POST(63, 64, Sign.class),
-    WOODEN_DOOR(64, Door.class),
-    LADDER(65, Ladder.class),
-    RAILS(66, Rails.class),
-    COBBLESTONE_STAIRS(67, Stairs.class),
-    WALL_SIGN(68, 64, Sign.class),
-    LEVER(69, Lever.class),
-    STONE_PLATE(70, PressurePlate.class),
-    IRON_DOOR_BLOCK(71, Door.class),
-    WOOD_PLATE(72, PressurePlate.class),
-    REDSTONE_ORE(73),
-    GLOWING_REDSTONE_ORE(74),
-    REDSTONE_TORCH_OFF(75, RedstoneTorch.class),
-    REDSTONE_TORCH_ON(76, RedstoneTorch.class),
-    STONE_BUTTON(77, Button.class),
-    SNOW(78),
-    ICE(79),
-    SNOW_BLOCK(80),
-    CACTUS(81, MaterialData.class),
-    CLAY(82),
-    SUGAR_CANE_BLOCK(83, MaterialData.class),
-    JUKEBOX(84),
-    FENCE(85),
-    PUMPKIN(86, Pumpkin.class),
-    NETHERRACK(87),
-    SOUL_SAND(88),
-    GLOWSTONE(89),
-    PORTAL(90),
-    JACK_O_LANTERN(91, Pumpkin.class),
-    CAKE_BLOCK(92, 64, Cake.class),
-    DIODE_BLOCK_OFF(93, Diode.class),
-    DIODE_BLOCK_ON(94, Diode.class),
-    LOCKED_CHEST(95),
-    TRAP_DOOR(96, TrapDoor.class),
-    MONSTER_EGGS(97, MonsterEggs.class),
-    SMOOTH_BRICK(98, SmoothBrick.class),
-    HUGE_MUSHROOM_1(99, Mushroom.class),
-    HUGE_MUSHROOM_2(100, Mushroom.class),
-    IRON_FENCE(101),
-    THIN_GLASS(102),
-    MELON_BLOCK(103),
-    PUMPKIN_STEM(104, MaterialData.class),
-    MELON_STEM(105, MaterialData.class),
-    VINE(106, Vine.class),
-    FENCE_GATE(107, Gate.class),
-    BRICK_STAIRS(108, Stairs.class),
-    SMOOTH_STAIRS(109, Stairs.class),
-    MYCEL(110),
-    WATER_LILY(111),
-    NETHER_BRICK(112),
-    NETHER_FENCE(113),
-    NETHER_BRICK_STAIRS(114, Stairs.class),
-    NETHER_WARTS(115, MaterialData.class),
-    ENCHANTMENT_TABLE(116),
-    BREWING_STAND(117, MaterialData.class),
-    CAULDRON(118, Cauldron.class),
-    ENDER_PORTAL(119),
-    ENDER_PORTAL_FRAME(120),
-    ENDER_STONE(121),
-    DRAGON_EGG(122),
-    REDSTONE_LAMP_OFF(123),
-    REDSTONE_LAMP_ON(124),
-    WOOD_DOUBLE_STEP(125, WoodenStep.class),
-    WOOD_STEP(126, WoodenStep.class),
-    COCOA(127, CocoaPlant.class),
-    SANDSTONE_STAIRS(128, Stairs.class),
-    EMERALD_ORE(129),
-    ENDER_CHEST(130, EnderChest.class),
-    TRIPWIRE_HOOK(131, TripwireHook.class),
-    TRIPWIRE(132, Tripwire.class),
-    EMERALD_BLOCK(133),
-    SPRUCE_WOOD_STAIRS(134, Stairs.class),
-    BIRCH_WOOD_STAIRS(135, Stairs.class),
-    JUNGLE_WOOD_STAIRS(136, Stairs.class),
-    COMMAND(137, Command.class),
-    BEACON(138),
-    COBBLE_WALL(139),
-    FLOWER_POT(140, FlowerPot.class),
-    CARROT(141),
-    POTATO(142),
-    WOOD_BUTTON(143, Button.class),
-    SKULL(144, Skull.class),
-    ANVIL(145),
+    LONG_GRASS(31, LongGrass.class, MaterialProperty.TRANSPARENT, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE),
+    DEAD_BUSH(32, MaterialProperty.TRANSPARENT, MaterialProperty.FLAMMABLE), // should this be burnable??? or maybe it's not even flammable...
+    PISTON_BASE(33, PistonBaseMaterial.class, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    PISTON_EXTENSION(34, PistonExtensionMaterial.class, MaterialProperty.SOLID),
+    WOOL(35, Wool.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE, MaterialProperty.OCCLUDING),
+    PISTON_MOVING_PIECE(36, MaterialProperty.SOLID),
+    YELLOW_FLOWER(37, MaterialProperty.TRANSPARENT),
+    RED_ROSE(38, MaterialProperty.TRANSPARENT),
+    BROWN_MUSHROOM(39, MaterialProperty.TRANSPARENT),
+    RED_MUSHROOM(40, MaterialProperty.TRANSPARENT),
+    GOLD_BLOCK(41, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    IRON_BLOCK(42, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    DOUBLE_STEP(43, Step.class, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    STEP(44, Step.class, MaterialProperty.SOLID),
+    BRICK(45, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    TNT(46, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE, MaterialProperty.OCCLUDING),
+    BOOKSHELF(47, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE, MaterialProperty.OCCLUDING),
+    MOSSY_COBBLESTONE(48, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    OBSIDIAN(49, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    TORCH(50, Torch.class, MaterialProperty.TRANSPARENT),
+    FIRE(51, MaterialProperty.TRANSPARENT),
+    MOB_SPAWNER(52, MaterialProperty.SOLID),
+    WOOD_STAIRS(53, Stairs.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE, MaterialProperty.FUEL),
+    CHEST(54, Chest.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.FUEL),
+    REDSTONE_WIRE(55, RedstoneWire.class, MaterialProperty.TRANSPARENT),
+    DIAMOND_ORE(56, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    DIAMOND_BLOCK(57, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    WORKBENCH(58, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.OCCLUDING, MaterialProperty.FUEL),
+    CROPS(59, Crops.class, MaterialProperty.TRANSPARENT),
+    SOIL(60, MaterialData.class, MaterialProperty.SOLID),
+    FURNACE(61, Furnace.class, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    BURNING_FURNACE(62, Furnace.class, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    SIGN_POST(63, 64, Sign.class, MaterialProperty.FLAMMABLE), // should this be transparent???
+    WOODEN_DOOR(64, Door.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE),
+    LADDER(65, Ladder.class, MaterialProperty.TRANSPARENT),
+    RAILS(66, Rails.class, MaterialProperty.TRANSPARENT),
+    COBBLESTONE_STAIRS(67, Stairs.class, MaterialProperty.SOLID),
+    WALL_SIGN(68, 64, Sign.class, MaterialProperty.FLAMMABLE), // should this be transparent???
+    LEVER(69, Lever.class, MaterialProperty.TRANSPARENT),
+    STONE_PLATE(70, PressurePlate.class, MaterialProperty.SOLID), // is this really solid???
+    IRON_DOOR_BLOCK(71, Door.class, MaterialProperty.SOLID),
+    WOOD_PLATE(72, PressurePlate.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.FUEL), // is this really solid???
+    REDSTONE_ORE(73, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    GLOWING_REDSTONE_ORE(74, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    REDSTONE_TORCH_OFF(75, RedstoneTorch.class, MaterialProperty.TRANSPARENT),
+    REDSTONE_TORCH_ON(76, RedstoneTorch.class, MaterialProperty.TRANSPARENT),
+    STONE_BUTTON(77, Button.class, MaterialProperty.TRANSPARENT),
+    SNOW(78, MaterialProperty.TRANSPARENT),
+    ICE(79, MaterialProperty.SOLID),
+    SNOW_BLOCK(80, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    CACTUS(81, MaterialData.class, MaterialProperty.SOLID),
+    CLAY(82, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    SUGAR_CANE_BLOCK(83, MaterialData.class, MaterialProperty.TRANSPARENT),
+    JUKEBOX(84, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.OCCLUDING, MaterialProperty.FUEL),
+    FENCE(85, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE, MaterialProperty.FUEL),
+    PUMPKIN(86, Pumpkin.class, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    NETHERRACK(87, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.OCCLUDING),
+    SOUL_SAND(88, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    GLOWSTONE(89, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    PORTAL(90, MaterialProperty.TRANSPARENT),
+    JACK_O_LANTERN(91, Pumpkin.class, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    CAKE_BLOCK(92, 64, Cake.class, MaterialProperty.SOLID),
+    DIODE_BLOCK_OFF(93, Diode.class, MaterialProperty.TRANSPARENT),
+    DIODE_BLOCK_ON(94, Diode.class, MaterialProperty.TRANSPARENT),
+    LOCKED_CHEST(95, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.OCCLUDING),
+    TRAP_DOOR(96, TrapDoor.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.FUEL),
+    MONSTER_EGGS(97, MonsterEggs.class, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    SMOOTH_BRICK(98, SmoothBrick.class, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    HUGE_MUSHROOM_1(99, Mushroom.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.OCCLUDING, MaterialProperty.FUEL),
+    HUGE_MUSHROOM_2(100, Mushroom.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.OCCLUDING, MaterialProperty.FUEL),
+    IRON_FENCE(101, MaterialProperty.SOLID),
+    THIN_GLASS(102, MaterialProperty.SOLID),
+    MELON_BLOCK(103, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    PUMPKIN_STEM(104, MaterialData.class, MaterialProperty.TRANSPARENT), // should this be flammable???
+    MELON_STEM(105, MaterialData.class, MaterialProperty.TRANSPARENT), // should this be flammable???
+    VINE(106, Vine.class, MaterialProperty.TRANSPARENT, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE),
+    FENCE_GATE(107, Gate.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE),
+    BRICK_STAIRS(108, Stairs.class, MaterialProperty.SOLID),
+    SMOOTH_STAIRS(109, Stairs.class, MaterialProperty.SOLID),
+    MYCEL(110, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    WATER_LILY(111, MaterialProperty.TRANSPARENT), // shouldn't this be solid??? is it really transparent???
+    NETHER_BRICK(112, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    NETHER_FENCE(113, MaterialProperty.SOLID),
+    NETHER_BRICK_STAIRS(114, Stairs.class, MaterialProperty.SOLID),
+    NETHER_WARTS(115, MaterialData.class, MaterialProperty.TRANSPARENT),
+    ENCHANTMENT_TABLE(116, MaterialProperty.SOLID),
+    BREWING_STAND(117, MaterialData.class, MaterialProperty.SOLID),
+    CAULDRON(118, Cauldron.class, MaterialProperty.SOLID),
+    ENDER_PORTAL(119, MaterialProperty.TRANSPARENT),
+    ENDER_PORTAL_FRAME(120, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    ENDER_STONE(121, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    DRAGON_EGG(122, MaterialProperty.SOLID),
+    REDSTONE_LAMP_OFF(123, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    REDSTONE_LAMP_ON(124, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    WOOD_DOUBLE_STEP(125, WoodenStep.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE, MaterialProperty.OCCLUDING),
+    WOOD_STEP(126, WoodenStep.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE, MaterialProperty.FUEL),
+    COCOA(127, CocoaPlant.class, MaterialProperty.TRANSPARENT), // shouldn't this be solid??? is it really transparent??? should it be flammable???
+    SANDSTONE_STAIRS(128, Stairs.class, MaterialProperty.SOLID),
+    EMERALD_ORE(129, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    ENDER_CHEST(130, EnderChest.class, MaterialProperty.SOLID),
+    TRIPWIRE_HOOK(131, TripwireHook.class, MaterialProperty.TRANSPARENT),
+    TRIPWIRE(132, Tripwire.class, MaterialProperty.TRANSPARENT),
+    EMERALD_BLOCK(133, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    SPRUCE_WOOD_STAIRS(134, Stairs.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE, MaterialProperty.FUEL),
+    BIRCH_WOOD_STAIRS(135, Stairs.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE, MaterialProperty.FUEL),
+    JUNGLE_WOOD_STAIRS(136, Stairs.class, MaterialProperty.SOLID, MaterialProperty.FLAMMABLE, MaterialProperty.BURNABLE, MaterialProperty.FUEL),
+    COMMAND(137, Command.class, MaterialProperty.SOLID, MaterialProperty.OCCLUDING),
+    BEACON(138, MaterialProperty.SOLID),
+    COBBLE_WALL(139, MaterialProperty.SOLID),
+    FLOWER_POT(140, FlowerPot.class, MaterialProperty.TRANSPARENT), // shouldn't this be solid??? is it really transparent???
+    CARROT(141, MaterialProperty.TRANSPARENT),
+    POTATO(142, MaterialProperty.TRANSPARENT),
+    WOOD_BUTTON(143, Button.class, MaterialProperty.TRANSPARENT),
+    SKULL(144, Skull.class, MaterialProperty.TRANSPARENT), // shouldn't this be solid??? is it really transparent???
+    ANVIL(145, MaterialProperty.SOLID),
     // ----- Item Separator -----
     IRON_SPADE(256, 1, 250),
     IRON_PICKAXE(257, 1, 250),
     IRON_AXE(258, 1, 250),
     FLINT_AND_STEEL(259, 1, 64),
-    APPLE(260),
+    APPLE(260, MaterialProperty.EDIBLE),
     BOW(261, 1, 384),
     ARROW(262),
-    COAL(263, Coal.class),
+    COAL(263, Coal.class, MaterialProperty.FUEL),
     DIAMOND(264),
     IRON_INGOT(265),
     GOLD_INGOT(266),
     IRON_SWORD(267, 1, 250),
-    WOOD_SWORD(268, 1, 59),
-    WOOD_SPADE(269, 1, 59),
-    WOOD_PICKAXE(270, 1, 59),
-    WOOD_AXE(271, 1, 59),
+    WOOD_SWORD(268, 1, 59, MaterialProperty.FUEL),
+    WOOD_SPADE(269, 1, 59, MaterialProperty.FUEL),
+    WOOD_PICKAXE(270, 1, 59, MaterialProperty.FUEL),
+    WOOD_AXE(271, 1, 59, MaterialProperty.FUEL),
     STONE_SWORD(272, 1, 131),
     STONE_SPADE(273, 1, 131),
     STONE_PICKAXE(274, 1, 131),
@@ -232,9 +234,9 @@ public enum Material {
     DIAMOND_SPADE(277, 1, 1561),
     DIAMOND_PICKAXE(278, 1, 1561),
     DIAMOND_AXE(279, 1, 1561),
-    STICK(280),
+    STICK(280, MaterialProperty.FUEL),
     BOWL(281),
-    MUSHROOM_SOUP(282, 1),
+    MUSHROOM_SOUP(282, 1, MaterialProperty.EDIBLE),
     GOLD_SWORD(283, 1, 32),
     GOLD_SPADE(284, 1, 32),
     GOLD_PICKAXE(285, 1, 32),
@@ -242,14 +244,14 @@ public enum Material {
     STRING(287),
     FEATHER(288),
     SULPHUR(289),
-    WOOD_HOE(290, 1, 59),
+    WOOD_HOE(290, 1, 59, MaterialProperty.FUEL),
     STONE_HOE(291, 1, 131),
     IRON_HOE(292, 1, 250),
     DIAMOND_HOE(293, 1, 1561),
     GOLD_HOE(294, 1, 32),
     SEEDS(295),
     WHEAT(296),
-    BREAD(297),
+    BREAD(297, MaterialProperty.EDIBLE),
     LEATHER_HELMET(298, 1, 55),
     LEATHER_CHESTPLATE(299, 1, 80),
     LEATHER_LEGGINGS(300, 1, 75),
@@ -271,15 +273,15 @@ public enum Material {
     GOLD_LEGGINGS(316, 1, 105),
     GOLD_BOOTS(317, 1, 91),
     FLINT(318),
-    PORK(319),
-    GRILLED_PORK(320),
+    PORK(319, MaterialProperty.EDIBLE),
+    GRILLED_PORK(320, MaterialProperty.EDIBLE),
     PAINTING(321),
-    GOLDEN_APPLE(322),
+    GOLDEN_APPLE(322, MaterialProperty.EDIBLE),
     SIGN(323, 16),
     WOOD_DOOR(324, 1),
     BUCKET(325, 16),
     WATER_BUCKET(326, 1),
-    LAVA_BUCKET(327, 1),
+    LAVA_BUCKET(327, 1, MaterialProperty.FUEL),
     MINECART(328, 1),
     SADDLE(329, 1),
     IRON_DOOR(330, 1),
@@ -287,7 +289,7 @@ public enum Material {
     SNOW_BALL(332, 16),
     BOAT(333, 1),
     LEATHER(334),
-    MILK_BUCKET(335, 1),
+    MILK_BUCKET(335, 1, MaterialProperty.DRINKABLE),
     CLAY_BRICK(336),
     CLAY_BALL(337),
     SUGAR_CANE(338),
@@ -301,39 +303,39 @@ public enum Material {
     FISHING_ROD(346, 1, 64),
     WATCH(347),
     GLOWSTONE_DUST(348),
-    RAW_FISH(349),
-    COOKED_FISH(350),
+    RAW_FISH(349, MaterialProperty.EDIBLE),
+    COOKED_FISH(350, MaterialProperty.EDIBLE),
     INK_SACK(351, Dye.class),
     BONE(352),
     SUGAR(353),
     CAKE(354, 1),
     BED(355, 1),
     DIODE(356),
-    COOKIE(357),
+    COOKIE(357, MaterialProperty.EDIBLE),
     /**
      * @see MapView
      */
     MAP(358, MaterialData.class),
     SHEARS(359, 1, 238),
-    MELON(360),
+    MELON(360, MaterialProperty.EDIBLE),
     PUMPKIN_SEEDS(361),
     MELON_SEEDS(362),
-    RAW_BEEF(363),
-    COOKED_BEEF(364),
-    RAW_CHICKEN(365),
-    COOKED_CHICKEN(366),
-    ROTTEN_FLESH(367),
+    RAW_BEEF(363, MaterialProperty.EDIBLE),
+    COOKED_BEEF(364, MaterialProperty.EDIBLE),
+    RAW_CHICKEN(365, MaterialProperty.EDIBLE),
+    COOKED_CHICKEN(366, MaterialProperty.EDIBLE),
+    ROTTEN_FLESH(367, MaterialProperty.EDIBLE),
     ENDER_PEARL(368, 16),
-    BLAZE_ROD(369),
+    BLAZE_ROD(369, MaterialProperty.FUEL),
     GHAST_TEAR(370),
     GOLD_NUGGET(371),
     NETHER_STALK(372),
     /**
      * @see Potion
      */
-    POTION(373, 1, MaterialData.class),
+    POTION(373, 1, MaterialData.class, MaterialProperty.DRINKABLE),
     GLASS_BOTTLE(374),
-    SPIDER_EYE(375),
+    SPIDER_EYE(375, MaterialProperty.EDIBLE),
     FERMENTED_SPIDER_EYE(376),
     BLAZE_POWDER(377),
     MAGMA_CREAM(378),
@@ -349,64 +351,70 @@ public enum Material {
     EMERALD(388, 64),
     ITEM_FRAME(389),
     FLOWER_POT_ITEM(390),
-    CARROT_ITEM(391),
-    POTATO_ITEM(392),
-    BAKED_POTATO(393),
-    POISONOUS_POTATO(394),
+    CARROT_ITEM(391, MaterialProperty.EDIBLE),
+    POTATO_ITEM(392, MaterialProperty.EDIBLE),
+    BAKED_POTATO(393, MaterialProperty.EDIBLE),
+    POISONOUS_POTATO(394, MaterialProperty.EDIBLE),
     EMPTY_MAP(395),
-    GOLDEN_CARROT(396),
+    GOLDEN_CARROT(396, MaterialProperty.EDIBLE),
     SKULL_ITEM(397),
     CARROT_STICK(398, 1, 25),
     NETHER_STAR(399),
-    PUMPKIN_PIE(400),
+    PUMPKIN_PIE(400, MaterialProperty.EDIBLE),
     FIREWORK(401),
     FIREWORK_CHARGE(402),
     ENCHANTED_BOOK(403, 1),
-    GOLD_RECORD(2256, 1),
-    GREEN_RECORD(2257, 1),
-    RECORD_3(2258, 1),
-    RECORD_4(2259, 1),
-    RECORD_5(2260, 1),
-    RECORD_6(2261, 1),
-    RECORD_7(2262, 1),
-    RECORD_8(2263, 1),
-    RECORD_9(2264, 1),
-    RECORD_10(2265, 1),
-    RECORD_11(2266, 1),
-    RECORD_12(2267, 1),
+    GOLD_RECORD(2256, 1, MaterialProperty.RECORD),
+    GREEN_RECORD(2257, 1, MaterialProperty.RECORD),
+    RECORD_3(2258, 1, MaterialProperty.RECORD),
+    RECORD_4(2259, 1, MaterialProperty.RECORD),
+    RECORD_5(2260, 1, MaterialProperty.RECORD),
+    RECORD_6(2261, 1, MaterialProperty.RECORD),
+    RECORD_7(2262, 1, MaterialProperty.RECORD),
+    RECORD_8(2263, 1, MaterialProperty.RECORD),
+    RECORD_9(2264, 1, MaterialProperty.RECORD),
+    RECORD_10(2265, 1, MaterialProperty.RECORD),
+    RECORD_11(2266, 1, MaterialProperty.RECORD),
+    RECORD_12(2267, 1, MaterialProperty.RECORD),
     ;
 
     private final int id;
     private final Constructor<? extends MaterialData> ctor;
     private static Material[] byId = new Material[383];
     private final static Map<String, Material> BY_NAME = Maps.newHashMap();
+    private final Set<MaterialProperty> properties;
     private final int maxStack;
     private final short durability;
 
-    private Material(final int id) {
-        this(id, 64);
+    private Material(final int id, final MaterialProperty... props) {
+        this(id, 64, props);
     }
 
-    private Material(final int id, final int stack) {
-        this(id, stack, MaterialData.class);
+    private Material(final int id, final int stack, final MaterialProperty... props) {
+        this(id, stack, MaterialData.class, props);
     }
 
-    private Material(final int id, final int stack, final int durability) {
-        this(id, stack, durability, MaterialData.class);
+    private Material(final int id, final int stack, final int durability, final MaterialProperty... props) {
+        this(id, stack, durability, MaterialData.class, props);
     }
 
-    private Material(final int id, final Class<? extends MaterialData> data) {
-        this(id, 64, data);
+    private Material(final int id, final Class<? extends MaterialData> data, final MaterialProperty... props) {
+        this(id, 64, data, props);
     }
 
-    private Material(final int id, final int stack, final Class<? extends MaterialData> data) {
-        this(id, stack, 0, data);
+    private Material(final int id, final int stack, final Class<? extends MaterialData> data, final MaterialProperty... props) {
+        this(id, stack, 0, data, props);
     }
 
-    private Material(final int id, final int stack, final int durability, final Class<? extends MaterialData> data) {
+    private Material(final int id, final int stack, final int durability, final Class<? extends MaterialData> data, final MaterialProperty... props) {
         this.id = id;
         this.durability = (short) durability;
         this.maxStack = stack;
+        if(id < 256) {
+            this.properties = EnumSet.of(MaterialProperty.BLOCK, props);
+        } else {
+            this.properties = EnumSet.of(MaterialProperty.ITEM, props);
+        }
         // try to cache the constructor for this material
         try {
             this.ctor = data.getConstructor(int.class, byte.class);
@@ -492,33 +500,7 @@ public enum Material {
      * @return true if this Material is edible.
      */
     public boolean isEdible() {
-        switch (this) {
-            case BREAD:
-            case CARROT_ITEM:
-            case BAKED_POTATO:
-            case POTATO_ITEM:
-            case POISONOUS_POTATO:
-            case GOLDEN_CARROT:
-            case PUMPKIN_PIE:
-            case COOKIE:
-            case MELON:
-            case MUSHROOM_SOUP:
-            case RAW_CHICKEN:
-            case COOKED_CHICKEN:
-            case RAW_BEEF:
-            case COOKED_BEEF:
-            case RAW_FISH:
-            case COOKED_FISH:
-            case PORK:
-            case GRILLED_PORK:
-            case APPLE:
-            case GOLDEN_APPLE:
-            case ROTTEN_FLESH:
-            case SPIDER_EYE:
-                return true;
-            default:
-                return false;
-        }
+    	return hasProperty(MaterialProperty.EDIBLE);
     }
 
     /**
@@ -590,7 +572,7 @@ public enum Material {
      * @return True if this material represents a playable music disk.
      */
     public boolean isRecord() {
-        return id >= GOLD_RECORD.id && id <= RECORD_12.id;
+        return hasProperty(MaterialProperty.RECORD);
     }
 
     /**
@@ -599,116 +581,7 @@ public enum Material {
      * @return True if this material is a block and solid
      */
     public boolean isSolid() {
-        if (!isBlock() || id == 0) {
-            return false;
-        }
-        switch (this) {
-            case STONE:
-            case GRASS:
-            case DIRT:
-            case COBBLESTONE:
-            case WOOD:
-            case BEDROCK:
-            case SAND:
-            case GRAVEL:
-            case GOLD_ORE:
-            case IRON_ORE:
-            case COAL_ORE:
-            case LOG:
-            case LEAVES:
-            case SPONGE:
-            case GLASS:
-            case LAPIS_ORE:
-            case LAPIS_BLOCK:
-            case DISPENSER:
-            case SANDSTONE:
-            case NOTE_BLOCK:
-            case BED_BLOCK:
-            case PISTON_STICKY_BASE:
-            case PISTON_BASE:
-            case PISTON_EXTENSION:
-            case WOOL:
-            case PISTON_MOVING_PIECE:
-            case GOLD_BLOCK:
-            case IRON_BLOCK:
-            case DOUBLE_STEP:
-            case STEP:
-            case BRICK:
-            case TNT:
-            case BOOKSHELF:
-            case MOSSY_COBBLESTONE:
-            case OBSIDIAN:
-            case MOB_SPAWNER:
-            case WOOD_STAIRS:
-            case CHEST:
-            case DIAMOND_ORE:
-            case DIAMOND_BLOCK:
-            case WORKBENCH:
-            case SOIL:
-            case FURNACE:
-            case BURNING_FURNACE:
-            case SIGN_POST:
-            case WOODEN_DOOR:
-            case COBBLESTONE_STAIRS:
-            case WALL_SIGN:
-            case STONE_PLATE:
-            case IRON_DOOR_BLOCK:
-            case WOOD_PLATE:
-            case REDSTONE_ORE:
-            case GLOWING_REDSTONE_ORE:
-            case ICE:
-            case SNOW_BLOCK:
-            case CACTUS:
-            case CLAY:
-            case JUKEBOX:
-            case FENCE:
-            case PUMPKIN:
-            case NETHERRACK:
-            case SOUL_SAND:
-            case GLOWSTONE:
-            case JACK_O_LANTERN:
-            case CAKE_BLOCK:
-            case LOCKED_CHEST:
-            case TRAP_DOOR:
-            case MONSTER_EGGS:
-            case SMOOTH_BRICK:
-            case HUGE_MUSHROOM_1:
-            case HUGE_MUSHROOM_2:
-            case IRON_FENCE:
-            case THIN_GLASS:
-            case MELON_BLOCK:
-            case FENCE_GATE:
-            case BRICK_STAIRS:
-            case SMOOTH_STAIRS:
-            case MYCEL:
-            case NETHER_BRICK:
-            case NETHER_FENCE:
-            case NETHER_BRICK_STAIRS:
-            case ENCHANTMENT_TABLE:
-            case BREWING_STAND:
-            case CAULDRON:
-            case ENDER_PORTAL_FRAME:
-            case ENDER_STONE:
-            case DRAGON_EGG:
-            case REDSTONE_LAMP_OFF:
-            case REDSTONE_LAMP_ON:
-            case WOOD_DOUBLE_STEP:
-            case WOOD_STEP:
-            case SANDSTONE_STAIRS:
-            case EMERALD_ORE:
-            case ENDER_CHEST:
-            case EMERALD_BLOCK:
-            case SPRUCE_WOOD_STAIRS:
-            case BIRCH_WOOD_STAIRS:
-            case JUNGLE_WOOD_STAIRS:
-            case COMMAND:
-            case BEACON:
-            case COBBLE_WALL:
-            case ANVIL:
-                return true;
-            default:
-                return false;
-        }
+    	return hasProperty(MaterialProperty.SOLID);
     }
 
     /**
@@ -717,53 +590,7 @@ public enum Material {
      * @return True if this material is a block and does not block any light
      */
     public boolean isTransparent() {
-        if (!isBlock()) {
-            return false;
-        }
-        switch (this) {
-            case AIR:
-            case SAPLING:
-            case POWERED_RAIL:
-            case DETECTOR_RAIL:
-            case LONG_GRASS:
-            case DEAD_BUSH:
-            case YELLOW_FLOWER:
-            case RED_ROSE:
-            case BROWN_MUSHROOM:
-            case RED_MUSHROOM:
-            case TORCH:
-            case FIRE:
-            case REDSTONE_WIRE:
-            case CROPS:
-            case LADDER:
-            case RAILS:
-            case LEVER:
-            case REDSTONE_TORCH_OFF:
-            case REDSTONE_TORCH_ON:
-            case STONE_BUTTON:
-            case SNOW:
-            case SUGAR_CANE_BLOCK:
-            case PORTAL:
-            case DIODE_BLOCK_OFF:
-            case DIODE_BLOCK_ON:
-            case PUMPKIN_STEM:
-            case MELON_STEM:
-            case VINE:
-            case WATER_LILY:
-            case NETHER_WARTS:
-            case ENDER_PORTAL:
-            case COCOA:
-            case TRIPWIRE_HOOK:
-            case TRIPWIRE:
-            case FLOWER_POT:
-            case CARROT:
-            case POTATO:
-            case WOOD_BUTTON:
-            case SKULL:
-                return true;
-            default:
-                return false;
-        }
+    	return hasProperty(MaterialProperty.TRANSPARENT);
     }
 
     /**
@@ -772,44 +599,7 @@ public enum Material {
      * @return True if this material is a block and can catch fire
      */
     public boolean isFlammable() {
-        if (!isBlock()) {
-            return false;
-        }
-        switch (this) {
-            case WOOD:
-            case LOG:
-            case LEAVES:
-            case NOTE_BLOCK:
-            case BED_BLOCK:
-            case LONG_GRASS:
-            case DEAD_BUSH:
-            case WOOL:
-            case TNT:
-            case BOOKSHELF:
-            case WOOD_STAIRS:
-            case CHEST:
-            case WORKBENCH:
-            case SIGN_POST:
-            case WOODEN_DOOR:
-            case WALL_SIGN:
-            case WOOD_PLATE:
-            case JUKEBOX:
-            case FENCE:
-            case LOCKED_CHEST:
-            case TRAP_DOOR:
-            case HUGE_MUSHROOM_1:
-            case HUGE_MUSHROOM_2:
-            case VINE:
-            case FENCE_GATE:
-            case WOOD_DOUBLE_STEP:
-            case WOOD_STEP:
-            case SPRUCE_WOOD_STAIRS:
-            case BIRCH_WOOD_STAIRS:
-            case JUNGLE_WOOD_STAIRS:
-                return true;
-            default:
-                return false;
-        }
+    	return hasProperty(MaterialProperty.FLAMMABLE);
     }
 
     /**
@@ -818,29 +608,7 @@ public enum Material {
      * @return True if this material is a block and can burn away
      */
     public boolean isBurnable() {
-        if (!isBlock()) {
-            return false;
-        }
-        switch (this) {
-            case WOOD:
-            case LOG:
-            case LEAVES:
-            case LONG_GRASS:
-            case WOOL:
-            case TNT:
-            case BOOKSHELF:
-            case WOOD_STAIRS:
-            case FENCE:
-            case VINE:
-            case WOOD_DOUBLE_STEP:
-            case WOOD_STEP:
-            case SPRUCE_WOOD_STAIRS:
-            case BIRCH_WOOD_STAIRS:
-            case JUNGLE_WOOD_STAIRS:
-                return true;
-            default:
-                return false;
-        }
+        return hasProperty(MaterialProperty.BURNABLE);
     }
 
     /**
@@ -849,70 +617,10 @@ public enum Material {
      * @return True if this material is a block and completely blocks vision
      */
     public boolean isOccluding() {
-        if (!isBlock()) {
-            return false;
-        }
-        switch (this) {
-            case STONE:
-            case GRASS:
-            case DIRT:
-            case COBBLESTONE:
-            case WOOD:
-            case BEDROCK:
-            case SAND:
-            case GRAVEL:
-            case GOLD_ORE:
-            case IRON_ORE:
-            case COAL_ORE:
-            case LOG:
-            case SPONGE:
-            case LAPIS_ORE:
-            case LAPIS_BLOCK:
-            case DISPENSER:
-            case SANDSTONE:
-            case NOTE_BLOCK:
-            case WOOL:
-            case GOLD_BLOCK:
-            case IRON_BLOCK:
-            case DOUBLE_STEP:
-            case BRICK:
-            case BOOKSHELF:
-            case MOSSY_COBBLESTONE:
-            case OBSIDIAN:
-            case MOB_SPAWNER:
-            case DIAMOND_ORE:
-            case DIAMOND_BLOCK:
-            case WORKBENCH:
-            case FURNACE:
-            case BURNING_FURNACE:
-            case REDSTONE_ORE:
-            case GLOWING_REDSTONE_ORE:
-            case SNOW_BLOCK:
-            case CLAY:
-            case JUKEBOX:
-            case PUMPKIN:
-            case NETHERRACK:
-            case SOUL_SAND:
-            case JACK_O_LANTERN:
-            case LOCKED_CHEST:
-            case MONSTER_EGGS:
-            case SMOOTH_BRICK:
-            case HUGE_MUSHROOM_1:
-            case HUGE_MUSHROOM_2:
-            case MELON_BLOCK:
-            case MYCEL:
-            case NETHER_BRICK:
-            case ENDER_PORTAL_FRAME:
-            case ENDER_STONE:
-            case REDSTONE_LAMP_OFF:
-            case REDSTONE_LAMP_ON:
-            case WOOD_DOUBLE_STEP:
-            case EMERALD_ORE:
-            case EMERALD_BLOCK:
-            case COMMAND:
-                return true;
-            default:
-                return false;
-        }
+        return hasProperty(MaterialProperty.OCCLUDING);
+    }
+
+    private boolean hasProperty(MaterialProperty prop) {
+        return properties.contains(prop);
     }
 }
