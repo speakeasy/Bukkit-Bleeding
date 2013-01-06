@@ -19,7 +19,6 @@ import org.bukkit.material.MaterialData;
 public class ItemStack implements Cloneable, ConfigurationSerializable {
     private int type = 0;
     private int amount = 0;
-    private MaterialData data = null;
     private short durability = 0;
     private ItemMeta meta;
 
@@ -95,10 +94,10 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     public ItemStack(final int type, final int amount, final short damage, final Byte data) {
         this.type = type;
         this.amount = amount;
-        this.durability = damage;
-        if (data != null) {
-            createData(data);
-            this.durability = data;
+        if (data == null) {
+            this.durability = damage;
+        } else {
+            this.durability = (short) (data & 0xff);
         }
     }
 
@@ -121,7 +120,6 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         this.type = stack.getTypeId();
         this.amount = stack.getAmount();
         this.durability = stack.getDurability();
-        this.data = stack.getData();
         if (stack.hasItemMeta()) {
             setItemMeta0(stack.getItemMeta(), getType0());
         }
@@ -180,7 +178,6 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         if (this.meta != null) {
             this.meta = Bukkit.getItemFactory().asMetaFor(meta, getType0());
         }
-        createData((byte) 0);
     }
 
     /**
@@ -202,35 +199,34 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Gets the MaterialData for this stack of items
+     * Gets a MaterialData for this stack of items.
      *
-     * @return MaterialData for this item
+     * @return MaterialData for this item, or null if one cannot be created
      */
+    @Utility
     public MaterialData getData() {
         Material mat = getType();
-        if (data == null && mat != null && mat.getData() != null) {
-            data = mat.getNewData((byte) this.getDurability());
+        if (mat != null && mat.getData() != null) {
+            return mat.getNewData((byte) getDurability());
         }
-
-        return data;
+        return null;
     }
 
     /**
-     * Sets the MaterialData for this stack of items
+     * Sets the durability based on the provided data for this stack of items.
      *
      * @param data New MaterialData for this item
      */
+    @Utility
     public void setData(MaterialData data) {
         Material mat = getType();
 
-        if (data == null || mat == null || mat.getData() == null) {
-            this.data = data;
+        if (data == null || mat == null) {
+            setDurability((short) 0);
+        } else if ((data.getClass() == mat.getData()) || (data.getClass() == MaterialData.class)) {
+            setDurability((short) (data.getData() & 0xff));
         } else {
-            if ((data.getClass() == mat.getData()) || (data.getClass() == MaterialData.class)) {
-                this.data = data;
-            } else {
-                throw new IllegalArgumentException("Provided data is not of type " + mat.getData().getName() + ", found " + data.getClass().getName());
-            }
+            throw new IllegalArgumentException("Provided data is not of type " + mat.getData().getName() + ", found " + data.getClass().getName());
         }
     }
 
@@ -265,16 +261,6 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             return material.getMaxStackSize();
         }
         return -1;
-    }
-
-    private void createData(final byte data) {
-        Material mat = Material.getMaterial(type);
-
-        if (mat == null) {
-            this.data = new MaterialData(type, data);
-        } else {
-            this.data = mat.getNewData(data);
-        }
     }
 
     @Override
@@ -325,10 +311,6 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
             if (this.meta != null) {
                 itemStack.meta = this.meta.clone();
-            }
-
-            if (this.data != null) {
-                itemStack.data = this.data.clone();
             }
 
             return itemStack;
