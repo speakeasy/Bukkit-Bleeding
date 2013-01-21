@@ -6,20 +6,25 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 /**
- * Thrown when a non-player entity (such as an Enderman) tries to teleport from one
- * location to another.
+ * Called when a non-player entity (such as an Enderman, or Item) tries to teleport from one location to another.
  */
 public class EntityTeleportEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel;
     private Location from;
     private Location to;
+    private final TeleportCause cause;
 
     public EntityTeleportEvent(Entity what, Location from, Location to) {
+        this(what, from, to, TeleportCause.UNKNOWN);
+    }
+
+    public EntityTeleportEvent(Entity what, Location from, Location to, TeleportCause cause) {
         super(what);
         this.from = from;
         this.to = to;
         this.cancel = false;
+        this.cause = cause;
     }
 
     public boolean isCancelled() {
@@ -66,6 +71,15 @@ public class EntityTeleportEvent extends EntityEvent implements Cancellable {
         this.to = to;
     }
 
+    /**
+     * Gets the cause of this teleportation event
+     *
+     * @return Cause of the event
+     */
+    public TeleportCause getCause() {
+        return cause;
+    }
+
     @Override
     public HandlerList getHandlers() {
         return handlers;
@@ -73,5 +87,24 @@ public class EntityTeleportEvent extends EntityEvent implements Cancellable {
 
     public static HandlerList getHandlerList() {
         return handlers;
+    }
+
+    public enum TeleportCause {
+        /**
+         * Indicates the teleportation was caused by a Nether portal
+         */
+        NETHER_PORTAL,
+        /**
+         * Indicates the teleportation was caused by an End portal
+         */
+        END_PORTAL,
+        /**
+         * Indicates the teleportation was caused by the position and/or velocity of an entity being adjusted upon exit at a portal
+         */
+        PORTAL_EXIT,
+        /**
+         * Indicates the teleportation was caused by an event not covered by this enum
+         */
+        UNKNOWN;
     }
 }

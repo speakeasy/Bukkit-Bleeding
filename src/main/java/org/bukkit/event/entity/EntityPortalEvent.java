@@ -16,7 +16,11 @@ public class EntityPortalEvent extends EntityTeleportEvent {
     protected TravelAgent travelAgent;
 
     public EntityPortalEvent(final Entity entity, final Location from, final Location to, final TravelAgent pta) {
-        super(entity, from, to);
+        this(entity, from, to, pta, TeleportCause.UNKNOWN);
+    }
+
+    public EntityPortalEvent(final Entity entity, final Location from, final Location to, final TravelAgent pta, TeleportCause cause) {
+        super(entity, from, to, cause);
         this.travelAgent = pta;
     }
 
