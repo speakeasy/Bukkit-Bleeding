@@ -7,6 +7,7 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -100,6 +101,17 @@ public interface LivingEntity extends Entity, Damageable {
      * @return The launched projectile.
      */
     public <T extends Projectile> T launchProjectile(Class<? extends T> projectile);
+
+    /**
+     * Launches a {@link Projectile} from the entity<br />
+     * where the projectile carries an itemstack's data
+     *
+     * @param projectile Class of the projectile to launch
+     * @param item Item to attach to the projectile
+     *
+     * @return The launched projectile.
+     */
+    public <T extends Projectile> T launchProjectile(Class<? extends T> projectile, ItemStack item);
 
     /**
      * Returns the amount of air that this entity has remaining, in ticks
