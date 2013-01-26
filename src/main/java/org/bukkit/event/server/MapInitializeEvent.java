@@ -9,9 +9,15 @@ import org.bukkit.map.MapView;
 public class MapInitializeEvent extends ServerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final MapView mapView;
+    private final InitializeCause cause;
 
     public MapInitializeEvent(final MapView mapView) {
+        this(mapView, InitializeCause.CUSTOM);
+    }
+
+    public MapInitializeEvent(final MapView mapView, final InitializeCause cause) {
         this.mapView = mapView;
+        this.cause = cause;
     }
 
     /**
@@ -23,6 +29,15 @@ public class MapInitializeEvent extends ServerEvent {
         return mapView;
     }
 
+    /**
+     * Get the cause of the event.
+     *
+     * @return The InitializeCause of the event.
+     */
+    public InitializeCause getCause() {
+        return cause;
+    }
+
     @Override
     public HandlerList getHandlers() {
         return handlers;
@@ -30,5 +45,30 @@ public class MapInitializeEvent extends ServerEvent {
 
     public static HandlerList getHandlerList() {
         return handlers;
+    }
+
+    /**
+     * An enum to specify the cause of the map initialization.
+     */
+    public static enum InitializeCause {
+        /**
+         * A new map was created using an Empty Map.
+         */
+        CREATE,
+
+        /**
+         * A map was crafted with paper to zoom out.
+         */
+        EXPAND,
+
+        /**
+         * An existing map was loaded.
+         */
+        LOAD,
+
+        /**
+         * Other reason.
+         */
+        CUSTOM
     }
 }

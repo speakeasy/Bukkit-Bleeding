@@ -43,18 +43,38 @@ public class MapFont {
      * Get the width of the given text as it would be rendered using this font.
      *
      * @param text The text.
+     * @param allowSpecial Whether to take into account color codes and newlines.
      * @return The width in pixels.
      */
-    public int getWidth(String text) {
-        if (!isValid(text)) {
+    public int getWidth(String text, boolean allowSpecial) {
+        if (!isValid(text, allowSpecial)) {
             throw new IllegalArgumentException("text contains invalid characters");
         }
 
         int result = 0;
         for (int i = 0; i < text.length(); ++i) {
-            result += chars.get(text.charAt(i)).getWidth();
+            char ch = text.charAt(i);
+            if (allowSpecial) {
+                if (ch == '\n') {
+                    continue;
+                } else if (ch == '\u00A7') {
+                    i = text.indexOf(';', i);
+                    continue;
+                }
+            }
+            result += chars.get(ch).getWidth();
         }
         return result;
+    }
+
+    /**
+     * Get the width of the given text as it would be rendered using this font, not counting special characters.
+     *
+     * @param text The text.
+     * @return The width in pixels.
+     */
+    public int getWidth(String text) {
+        return getWidth(text, false);
     }
 
     /**
@@ -70,15 +90,26 @@ public class MapFont {
      * Check whether the given text is valid.
      *
      * @param text The text.
+     * @param allowSpecial Whether to take into account color codes and newlines.
      * @return True if the string contains only defined characters, false otherwise.
      */
-    public boolean isValid(String text) {
+    public boolean isValid(String text, boolean allowSpecial) {
         for (int i = 0; i < text.length(); ++i) {
             char ch = text.charAt(i);
-            if (ch == '\u00A7' || ch == '\n') continue;
+            if (allowSpecial && (ch == '\u00A7' || ch == '\n')) continue;
             if (chars.get(ch) == null) return false;
         }
         return true;
+    }
+
+    /**
+     * Check whether the given text is valid, allowing special characters.
+     *
+     * @param text The text.
+     * @return True if the string contains only defined characters, false otherwise.
+     */
+    public boolean isValid(String text) {
+        return isValid(text, true);
     }
 
     /**

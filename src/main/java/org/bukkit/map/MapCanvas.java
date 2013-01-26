@@ -59,13 +59,23 @@ public interface MapCanvas {
     public byte getBasePixel(int x, int y);
 
     /**
-     * Draw an image to the map. The image will be clipped if necessary.
+     * Draw an image to the map, without transparency. The image will be clipped if necessary.
      *
      * @param x The x coordinate of the image.
      * @param y The y coordinate of the image.
      * @param image The Image to draw.
      */
     public void drawImage(int x, int y, Image image);
+
+    /**
+     * Draw an image to the map. The image will be clipped if necessary.
+     *
+     * @param x The x coordinate of the image.
+     * @param y The y coordinate of the image.
+     * @param alpha Whether to mask transparent areas of the source image.
+     * @param image The Image to draw.
+     */
+    public void drawImage(int x, int y, Image image, boolean alpha);
 
     /**
      * Render text to the map using fancy formatting. Newline (\n) characters
