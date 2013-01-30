@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.BanEntry;
+import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
@@ -29,7 +30,7 @@ public class PardonCommand extends VanillaCommand {
             return false;
         }
 
-        Bukkit.getOfflinePlayer(args[0]).setBanned(false);
+        Bukkit.getBanList(BanList.Type.PLAYER).unban(args[0]);
         Command.broadcastCommandMessage(sender, "Pardoned " + args[0]);
         return true;
     }
@@ -42,8 +43,8 @@ public class PardonCommand extends VanillaCommand {
 
         if (args.length == 1) {
             List<String> completions = new ArrayList<String>();
-            for (OfflinePlayer player : Bukkit.getBannedPlayers()) {
-                String name = player.getName();
+            for (BanEntry entry : Bukkit.getBanList(BanList.Type.PLAYER).getBanEntries()) {
+                String name = entry.getName();
                 if (StringUtil.startsWithIgnoreCase(name, args[0])) {
                     completions.add(name);
                 }

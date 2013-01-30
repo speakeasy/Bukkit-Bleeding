@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.BanEntry;
+import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -29,7 +31,7 @@ public class PardonIpCommand extends VanillaCommand {
         }
 
         if (BanIpCommand.ipValidity.matcher(args[0]).matches()) {
-            Bukkit.unbanIP(args[0]);
+            Bukkit.getBanList(BanList.Type.IP).unban(args[0]);
             Command.broadcastCommandMessage(sender, "Pardoned ip " + args[0]);
         } else {
             sender.sendMessage("Invalid ip");
@@ -45,7 +47,14 @@ public class PardonIpCommand extends VanillaCommand {
         Validate.notNull(alias, "Alias cannot be null");
 
         if (args.length == 1) {
-            return StringUtil.copyPartialMatches(args[0], Bukkit.getIPBans(), new ArrayList<String>());
+            List<String> completions = new ArrayList<String>();
+            for (BanEntry entry : Bukkit.getBanList(BanList.Type.IP).getBanEntries()) {
+                String name = entry.getName();
+                if (StringUtil.startsWithIgnoreCase(name, args[0])) {
+                    completions.add(name);
+                }
+            }
+            return completions;
         }
         return ImmutableList.of();
     }

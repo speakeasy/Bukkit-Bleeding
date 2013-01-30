@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -30,9 +31,9 @@ public class BanIpCommand extends VanillaCommand {
             return false;
         }
 
-        // TODO: Ban Reason support
+        String ip;
         if (ipValidity.matcher(args[0]).matches()) {
-            processIPBan(args[0], sender);
+            ip = args[0];
         } else {
             Player player = Bukkit.getPlayer(args[0]);
 
@@ -41,17 +42,13 @@ public class BanIpCommand extends VanillaCommand {
                 return false;
             }
 
-            processIPBan(player.getAddress().getAddress().getHostAddress(), sender);
+            ip = player.getAddress().getAddress().getHostAddress();
         }
+        String reason = this.createString(args, 1);
+        Bukkit.getBanList(BanList.Type.IP).addBan(ip, sender.getName(), null, reason.length() == 0 ? null : reason);
+        Command.broadcastCommandMessage(sender, "Banned IP Address " + ip);
 
         return true;
-    }
-
-    private void processIPBan(String ip, CommandSender sender) {
-        // TODO: Kick on ban
-        Bukkit.banIP(ip);
-
-        Command.broadcastCommandMessage(sender, "Banned IP Address " + ip);
     }
 
     @Override

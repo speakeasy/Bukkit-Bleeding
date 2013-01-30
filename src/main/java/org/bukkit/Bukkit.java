@@ -264,20 +264,28 @@ public final class Bukkit {
         return server.getPlayerExact(name);
     }
 
+    @Deprecated
     public static Set<String> getIPBans() {
         return server.getIPBans();
     }
 
+    @Deprecated
     public static void banIP(String address) {
         server.banIP(address);
     }
 
+    @Deprecated
     public static void unbanIP(String address) {
         server.unbanIP(address);
     }
 
+    @Deprecated
     public static Set<OfflinePlayer> getBannedPlayers() {
         return server.getBannedPlayers();
+    }
+
+    public static BanList getBanList(BanList.Type type) {
+        return server.getBanList(type);
     }
 
     public static void setWhitelist(boolean value) {

@@ -522,29 +522,45 @@ public interface Server extends PluginMessageRecipient {
      * Gets a set containing all current IPs that are banned
      *
      * @return Set containing banned IP addresses
+     * @deprecated Use {@link BanList#getBanEntries()}
      */
+    @Deprecated
     public Set<String> getIPBans();
 
     /**
      * Bans the specified address from the server
      *
      * @param address IP address to ban
+     * @deprecated Use {@link BanList#addBan(String, String, Date, String)}
      */
+    @Deprecated
     public void banIP(String address);
 
     /**
      * Unbans the specified address from the server
      *
      * @param address IP address to unban
+     * @deprecated Use {@link BanList#unban(String)}
      */
+    @Deprecated
     public void unbanIP(String address);
 
     /**
      * Gets a set containing all banned players
      *
      * @return Set containing banned players
+     * @deprecated Use {@link BanList#getBanEntries()}
      */
+    @Deprecated
     public Set<OfflinePlayer> getBannedPlayers();
+
+    /**
+     * Gets the {@link BanList} for the named {@link BanList.Type type}
+     *
+     * @param type
+     * @return the BanList for the named type
+     */
+    public BanList getBanList(BanList.Type type);
 
     /**
      * Gets a set containing all player operators

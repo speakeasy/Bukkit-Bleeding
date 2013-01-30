@@ -24,14 +24,18 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
      * Checks if this player is banned or not
      *
      * @return true if banned, otherwise false
+     * @deprecated Use {@link org.bukkit.BanList#isBanned(String)}
      */
+    @Deprecated
     public boolean isBanned();
 
     /**
      * Bans or unbans this player
      *
      * @param banned true if banned
+     * @deprecated Use {@link org.bukkit.BanList#addBan(String, String, java.util.Date, String)} or {@link org.bukkit.BanList#unban(String)}
      */
+    @Deprecated
     public void setBanned(boolean banned);
 
     /**
