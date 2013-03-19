@@ -68,6 +68,7 @@ public interface Inventory extends Iterable<ItemStack> {
     /**
      * Stores the given ItemStacks in the inventory.
      * This will try to fill existing stacks and empty slots as well as it can.
+     * Stacks will be split by Inventory.getMaxItemStack().
      * <p />
      * The returned HashMap contains what it couldn't store, where the key is the
      * index of the parameter, and the value is the ItemStack at that index
@@ -79,6 +80,22 @@ public interface Inventory extends Iterable<ItemStack> {
      * @throws IllegalArgumentException if items or any element in it is null
      */
     public HashMap<Integer, ItemStack> addItem(ItemStack... items) throws IllegalArgumentException;
+
+    /**
+     * Stores the given ItemStacks in the inventory.
+     * This will try to fill existing stacks and empty slots as well as it can.
+     * Stacks will be split by ItemStack.getMaxStackSize().
+     * <p />
+     * The returned HashMap contains what it couldn't store, where the key is the
+     * index of the parameter, and the value is the ItemStack at that index
+     * of the variadic parameter. If all items are stored, it will return an
+     * empty HashMap.
+     *
+     * @param items The ItemStacks to add
+     * @return A HashMap containing items that didn't fit.
+     * @throws IllegalArgumentException if items or any element in it is null
+     */
+	public HashMap<Integer, ItemStack> addItemSplit(ItemStack... items) throws IllegalArgumentException;
 
     /**
      * Removes the given ItemStacks from the inventory.
