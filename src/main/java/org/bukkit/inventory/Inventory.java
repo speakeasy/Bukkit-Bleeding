@@ -95,7 +95,7 @@ public interface Inventory extends Iterable<ItemStack> {
      * @return A HashMap containing items that didn't fit.
      * @throws IllegalArgumentException if items or any element in it is null
      */
-	public HashMap<Integer, ItemStack> addItemSplit(ItemStack... items) throws IllegalArgumentException;
+    public HashMap<Integer, ItemStack> addItemSplit(ItemStack... items) throws IllegalArgumentException;
 
     /**
      * Removes the given ItemStacks from the inventory.
