@@ -10,22 +10,16 @@ import org.bukkit.OfflinePlayer;
 public interface Scoreboard {
 
     /**
-     * Locations for displaying objectives to the player
-     */
-    enum DisplaySlot {
-        BELOW_NAME,
-        PLAYER_LIST,
-        SIDEBAR;
-    }
-
-    /**
      * Registers an Objective on this Scoreboard
      *
      * @param name Name of the Objective
      * @param criteria Criteria for the Objective
      * @return The registered Objective
+     * @throws IllegalArgumentException if name is null
+     * @throws IllegalArgumentException if criteria is null
+     * @throws IllegalArgumentException if an objective by that name already exists
      */
-    Objective registerObjective(String name, String criteria);
+    Objective registerNewObjective(String name, String criteria) throws IllegalArgumentException;
 
     /**
      * Gets an Objective on this Scoreboard by name
@@ -51,51 +45,30 @@ public interface Scoreboard {
     Set<Objective> getObjectives();
 
     /**
-     * Unregisters an Objective from this Scoreboard
-     *
-     * @param objective Objective to unregister
-     */
-    void unregisterObjective(Objective objective);
-
-    /**
-     * Sets which Objective is displayed in a DisplaySlot on this Scoreboard
-     *
-     * @param slot DisplaySlot to change
-     * @param objective Objective to display or null to display nothing in the specified DisplaySlot
-     */
-    void setDisplaySlot(DisplaySlot slot, Objective objective);
-
-    /**
      * Gets the Objective currently displayed in a DisplaySlot on this Scoreboard
      *
      * @param slot The DisplaySlot
      * @return The Objective currently displayed or null if nothing is displayed in that DisplaySlot
+     * @throws IllegalArgumentException if slot is null
      */
-    Objective getDisplaySlot(DisplaySlot slot);
-
-    /**
-     * Gets a player's Score for an Objective on this Scoreboard
-     *
-     * @param objective Objective for the Score
-     * @param player Player for the Score
-     * @return Score tracking the Objective and player specified
-     */
-    Score getScore(Objective objective, OfflinePlayer player);
+    Objective getObjective(DisplaySlot slot) throws IllegalArgumentException;
 
     /**
      * Gets all scores for a player on this Scoreboard
      *
      * @param player Player whose scores are being retrieved
      * @return immutable set of all scores tracked for the player
+     * @throws IllegalArgumentException if player is null
      */
-    Set<Score> getScores(OfflinePlayer player);
+    Set<Score> getScores(OfflinePlayer player) throws IllegalArgumentException;
 
     /**
      * Removes all scores for a player on this Scoreboard
      *
      * @param player Player who loses all scores
+     * @throws IllegalArgumentException if player is null
      */
-    void resetScores(OfflinePlayer player);
+    void resetScores(OfflinePlayer player) throws IllegalArgumentException;
 
     /**
      * Gets a player's Team on this Scoreboard
@@ -104,14 +77,6 @@ public interface Scoreboard {
      * @return The player's Team or null if the player is not on a team
      */
     Team getPlayerTeam(OfflinePlayer player);
-
-    /**
-     * Sets a player's Team on this Scoreboard
-     *
-     * @param player Player to change Team membership
-     * @param team Team for the player to join, null for no team
-     */
-    void setPlayerTeam(OfflinePlayer player, Team team);
 
     /**
      * Gets a Team by name on this Scoreboard
@@ -130,19 +95,13 @@ public interface Scoreboard {
 
     /**
      * Registers a Team on this Scoreboard
-     * If the name already exists on this board, an IllegalArgumentException is thrown
      *
      * @param name Team name
      * @return registered Team
+     * @throws IllegalArgumentException if name is null
+     * @throws IllegalArgumentException if team by that name already exists
      */
-    Team registerTeam(String name);
-
-    /**
-     * Unregisters a Team from this Scoreboard
-     *
-     * @param team Team to unregister
-     */
-    void unregisterTeam(Team team);
+    Team registerNewTeam(String name) throws IllegalArgumentException;
 
     /**
      * Gets all players tracked by this Scoreboard
@@ -150,4 +109,12 @@ public interface Scoreboard {
      * @return immutable set of all tracked players
      */
     Set<OfflinePlayer> getPlayers();
+
+    /**
+     * Clears any objective in the specified slot.
+     *
+     * @param slot the slot to remove objectives
+     * @throws IllegalArgumentException if slot is null
+     */
+    void clearSlot(DisplaySlot slot) throws IllegalArgumentException;
 }

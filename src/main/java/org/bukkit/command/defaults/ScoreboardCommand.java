@@ -14,6 +14,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
@@ -28,7 +29,7 @@ public class ScoreboardCommand extends VanillaCommand {
     private static final List<String> MAIN_CHOICES = ImmutableList.of("objectives", "players", "teams");
     private static final List<String> OBJECTIVES_CHOICES = ImmutableList.of("list", "add", "remove", "setdisplay");
     private static final List<String> OBJECTIVES_CRITERIA = ImmutableList.of("health", "playerKillCount", "totalKillCount", "deathCount", "dummy");
-    private static final ImmutableMap<String, Scoreboard.DisplaySlot> OBJECTIVES_DISPLAYSLOT = ImmutableMap.of("belowName", Scoreboard.DisplaySlot.BELOW_NAME, "list", Scoreboard.DisplaySlot.PLAYER_LIST, "sidebar", Scoreboard.DisplaySlot.SIDEBAR);
+    private static final ImmutableMap<String, DisplaySlot> OBJECTIVES_DISPLAYSLOT = ImmutableMap.of("belowName", DisplaySlot.BELOW_NAME, "list", DisplaySlot.PLAYER_LIST, "sidebar", DisplaySlot.SIDEBAR);
     private static final List<String> PLAYERS_CHOICES = ImmutableList.of("set", "add", "remove", "reset", "list");
     private static final List<String> TEAMS_CHOICES = ImmutableList.of("add", "remove", "join", "leave", "empty", "list", "option");
     private static final List<String> TEAMS_OPTION_CHOICES = ImmutableList.of("color", "friendlyfire", "seeFriendlyInvisibles");
@@ -62,13 +63,15 @@ public class ScoreboardCommand extends VanillaCommand {
             return false;
         }
 
+        final Scoreboard mainScoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+
         if (args[0].equalsIgnoreCase("objectives")) {
             if (args.length == 1) {
                 sender.sendMessage(ChatColor.RED + "Usage: /scoreboard objectives <list|add|remove|setdisplay>");
                 return false;
             }
             if (args[1].equalsIgnoreCase("list")) {
-                Set<Objective> objectives = Bukkit.getScoreboardManager().getMainScoreboard().getObjectives();
+                Set<Objective> objectives = mainScoreboard.getObjectives();
                 if (objectives.isEmpty()) {
                     sender.sendMessage(ChatColor.RED + "There are no objectives on the scoreboard");
                     return false;
@@ -89,7 +92,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "Invalid objective criteria type. Valid types are: " + stringCollectionToString(OBJECTIVES_CRITERIA));
                 } else if (name.length() > 16) {
                     sender.sendMessage(ChatColor.RED + "The name '" + name + "' is too long for an objective, it can be at most 16 characters long");
-                } else if (Bukkit.getScoreboardManager().getMainScoreboard().getObjective(name) != null) {
+                } else if (mainScoreboard.getObjective(name) != null) {
                     sender.sendMessage(ChatColor.RED + "An objective with the name '" + name + "' already exists");
                 } else {
                     String displayName = null;
@@ -100,7 +103,7 @@ public class ScoreboardCommand extends VanillaCommand {
                             return false;
                         }
                     }
-                    Objective objective = Bukkit.getScoreboardManager().getMainScoreboard().registerObjective(name, criteria);
+                    Objective objective = mainScoreboard.registerNewObjective(name, criteria);
                     if (displayName != null && displayName.length() > 0) {
                         objective.setDisplayName(displayName);
                     }
@@ -112,11 +115,11 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
                 String name = args[2];
-                Objective objective = Bukkit.getScoreboardManager().getMainScoreboard().getObjective(name);
+                Objective objective = mainScoreboard.getObjective(name);
                 if (objective == null) {
                     sender.sendMessage(ChatColor.RED + "No objective was found by the name '" + name + "'");
                 } else {
-                    Bukkit.getScoreboardManager().getMainScoreboard().unregisterObjective(objective);
+                    objective.unregister();
                     sender.sendMessage("Removed objective '" + name + "' successfully");
                 }
             } else if (args[1].equalsIgnoreCase("setdisplay")) {
@@ -125,24 +128,24 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
                 String slotName = args[2];
-                Scoreboard.DisplaySlot slot = OBJECTIVES_DISPLAYSLOT.get(slotName);
+                DisplaySlot slot = OBJECTIVES_DISPLAYSLOT.get(slotName);
                 if (slot == null) {
                     sender.sendMessage(ChatColor.RED + "No such display slot '" + slotName + "'");
                 } else {
-                    Objective objective = null;
                     if (args.length == 4) {
                         String objectiveName = args[3];
-                        objective = Bukkit.getScoreboardManager().getMainScoreboard().getObjective(objectiveName);
+                        Objective objective = mainScoreboard.getObjective(objectiveName);
                         if (objective == null) {
                             sender.sendMessage(ChatColor.RED + "No objective was found by the name '" + objectiveName + "'");
                             return false;
                         }
-                    }
-                    Bukkit.getScoreboardManager().getMainScoreboard().setDisplaySlot(slot, objective);
-                    if (objective == null) {
-                        sender.sendMessage("Cleared objective display slot '" + slotName + "'");
-                    } else {
+
+                        objective.setDisplaySlot(slot);
                         sender.sendMessage("Set the display objective in slot '" + slotName + "' to '" + objective.getName() + "'");
+                    } else {
+                        Objective objective = mainScoreboard.getObjective(slot);
+                        objective.setDisplaySlot(null);
+                        sender.sendMessage("Cleared objective display slot '" + slotName + "'");
                     }
                 }
             }
@@ -163,7 +166,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
                 String objectiveName = args[3];
-                Objective objective = Bukkit.getScoreboardManager().getMainScoreboard().getObjective(objectiveName);
+                Objective objective = mainScoreboard.getObjective(objectiveName);
                 if (objective == null) {
                     sender.sendMessage(ChatColor.RED + "No objective was found by the name '" + objectiveName + "'");
                     return false;
@@ -190,7 +193,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "'" + playerName + "' is too long for a player name");
                     return false;
                 }
-                Score score = Bukkit.getScoreboardManager().getMainScoreboard().getScore(objective, Bukkit.getOfflinePlayer(playerName));
+                Score score = objective.getScore(Bukkit.getOfflinePlayer(playerName));
                 int newScore;
                 if (args[1].equalsIgnoreCase("set")) {
                     newScore = value;
@@ -211,7 +214,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "'" + playerName + "' is too long for a player name");
                     return false;
                 }
-                Bukkit.getScoreboardManager().getMainScoreboard().resetScores(Bukkit.getOfflinePlayer(playerName));
+                mainScoreboard.resetScores(Bukkit.getOfflinePlayer(playerName));
                 sender.sendMessage("Reset all scores of player " + playerName);
             } else if (args[1].equalsIgnoreCase("list")) {
                 if (args.length > 3) {
@@ -219,7 +222,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
                 if (args.length == 2) {
-                    Set<OfflinePlayer> players = Bukkit.getScoreboardManager().getMainScoreboard().getPlayers();
+                    Set<OfflinePlayer> players = mainScoreboard.getPlayers();
                     if (players.isEmpty()) {
                         sender.sendMessage(ChatColor.RED + "There are no tracked players on the scoreboard");
                     } else {
@@ -232,7 +235,7 @@ public class ScoreboardCommand extends VanillaCommand {
                         sender.sendMessage(ChatColor.RED + "'" + playerName + "' is too long for a player name");
                         return false;
                     }
-                    Set<Score> scores = Bukkit.getScoreboardManager().getMainScoreboard().getScores(Bukkit.getOfflinePlayer(playerName));
+                    Set<Score> scores = mainScoreboard.getScores(Bukkit.getOfflinePlayer(playerName));
                     if (scores.isEmpty()) {
                         sender.sendMessage(ChatColor.RED + "Player " + playerName + " has no scores recorded");
                     } else {
@@ -250,7 +253,7 @@ public class ScoreboardCommand extends VanillaCommand {
             }
             if (args[1].equalsIgnoreCase("list")) {
                 if (args.length == 2) {
-                    Set<Team> teams = Bukkit.getScoreboardManager().getMainScoreboard().getTeams();
+                    Set<Team> teams = mainScoreboard.getTeams();
                     if (teams.isEmpty()) {
                         sender.sendMessage(ChatColor.RED + "There are no teams registered on the scoreboard");
                     } else {
@@ -261,7 +264,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     }
                 } else if (args.length == 3) {
                     String teamName = args[2];
-                    Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(teamName);
+                    Team team = mainScoreboard.getTeam(teamName);
                     if (team == null) {
                         sender.sendMessage(ChatColor.RED + "No team was found by the name '" + teamName + "'");
                     } else {
@@ -285,7 +288,7 @@ public class ScoreboardCommand extends VanillaCommand {
                 String name = args[2];
                 if (name.length() > 16) {
                     sender.sendMessage(ChatColor.RED + "The name '" + name + "' is too long for a team, it can be at most 16 characters long");
-                } else if (Bukkit.getScoreboardManager().getMainScoreboard().getTeam(name) != null) {
+                } else if (mainScoreboard.getTeam(name) != null) {
                     sender.sendMessage(ChatColor.RED + "A team with the name '" + name + "' already exists");
                 } else {
                     String displayName = null;
@@ -296,7 +299,7 @@ public class ScoreboardCommand extends VanillaCommand {
                             return false;
                         }
                     }
-                    Team team = Bukkit.getScoreboardManager().getMainScoreboard().registerTeam(name);
+                    Team team = mainScoreboard.registerNewTeam(name);
                     if (displayName != null && displayName.length() > 0) {
                         team.setDisplayName(displayName);
                     }
@@ -308,11 +311,11 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
                 String name = args[2];
-                Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(name);
+                Team team = mainScoreboard.getTeam(name);
                 if (team == null) {
                     sender.sendMessage(ChatColor.RED + "No team was found by the name '" + name + "'");
                 } else {
-                    Bukkit.getScoreboardManager().getMainScoreboard().unregisterTeam(team);
+                    team.unregister();
                     sender.sendMessage("Removed team " + team.getName());
                 }
             } else if (args[1].equalsIgnoreCase("empty")) {
@@ -321,7 +324,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
                 String name = args[2];
-                Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(name);
+                Team team = mainScoreboard.getTeam(name);
                 if (team == null) {
                     sender.sendMessage(ChatColor.RED + "No team was found by the name '" + name + "'");
                 } else {
@@ -330,7 +333,7 @@ public class ScoreboardCommand extends VanillaCommand {
                         sender.sendMessage(ChatColor.RED + "Team " + team.getName() + " is already empty, cannot remove nonexistant players");
                     } else {
                         for (OfflinePlayer player : players) {
-                            Bukkit.getScoreboardManager().getMainScoreboard().setPlayerTeam(player, null);
+                            team.removePlayer(player);
                         }
                         sender.sendMessage("Removed all " + players.size() + " player(s) from team " + team.getName());
                     }
@@ -341,13 +344,13 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
                 String teamName = args[2];
-                Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(teamName);
+                Team team = mainScoreboard.getTeam(teamName);
                 if (team == null) {
                     sender.sendMessage(ChatColor.RED + "No team was found by the name '" + teamName + "'");
                 } else {
                     Set<String> addedPlayers = new HashSet<String>();
                     if ((sender instanceof Player) && args.length == 3) {
-                        Bukkit.getScoreboardManager().getMainScoreboard().setPlayerTeam((Player) sender, team);
+                        team.addPlayer((Player) sender);
                         addedPlayers.add(sender.getName());
                     } else {
                         for (int i = 3; i < args.length; i++) {
@@ -359,7 +362,7 @@ public class ScoreboardCommand extends VanillaCommand {
                             } else {
                                 offlinePlayer = Bukkit.getOfflinePlayer(playerName);
                             }
-                            Bukkit.getScoreboardManager().getMainScoreboard().setPlayerTeam(offlinePlayer, team);
+                            team.addPlayer(offlinePlayer);
                             addedPlayers.add(offlinePlayer.getName());
                         }
                     }
@@ -383,8 +386,9 @@ public class ScoreboardCommand extends VanillaCommand {
                 Set<String> left = new HashSet<String>();
                 Set<String> noTeam = new HashSet<String>();
                 if ((sender instanceof Player) && args.length == 3) {
-                    if (Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam((Player) sender) != null) {
-                        Bukkit.getScoreboardManager().getMainScoreboard().setPlayerTeam((Player) sender, null);
+                    Team team = mainScoreboard.getPlayerTeam((Player) sender);
+                    if (team != null) {
+                        team.removePlayer((Player) sender);
                         left.add(sender.getName());
                     } else {
                         noTeam.add(sender.getName());
@@ -399,8 +403,9 @@ public class ScoreboardCommand extends VanillaCommand {
                         } else {
                             offlinePlayer = Bukkit.getOfflinePlayer(playerName);
                         }
-                        if (Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(offlinePlayer) != null) {
-                            Bukkit.getScoreboardManager().getMainScoreboard().setPlayerTeam(offlinePlayer, null);
+                        Team team = mainScoreboard.getPlayerTeam(offlinePlayer);
+                        if (team != null) {
+                            team.removePlayer(offlinePlayer);
                             left.add(offlinePlayer.getName());
                         } else {
                             noTeam.add(offlinePlayer.getName());
@@ -419,7 +424,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
                 String teamName = args[2];
-                Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(teamName);
+                Team team = mainScoreboard.getTeam(teamName);
                 if (team == null) {
                     sender.sendMessage(ChatColor.RED + "No team was found by the name '" + teamName + "'");
                     return false;

@@ -1,39 +1,29 @@
 package org.bukkit.scoreboard;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Manager of Scoreboards
  */
 public interface ScoreboardManager {
 
     /**
-     * Gets the primary Scoreboard controlled by the server
+     * Gets the primary Scoreboard controlled by the server.
+     * <p \>
+     * This Scoreboard is saved by the server, is affected by the /scoreboard
+     * command, and is the scoreboard shown by default to players.
      *
-     * This Scoreboard is saved by the server
-     *
-     * The main Scoreboard is affected by the /scoreboard command
-     *
-     * @return
+     * @return the default sever scoreboard
      */
     Scoreboard getMainScoreboard();
 
     /**
-     * Registers a new Scoreboard to be tracked by the server
+     * Gets a new Scoreboard to be tracked by the server. This scoreboard will
+     * be tracked as long as a reference is kept, either by a player or by a
+     * plugin.
      *
      * @return the registered Scoreboard
+     * @see WeakReference
      */
-    Scoreboard registerScoreboard();
-
-    /**
-     * Register a Scoreboard to be tracked by the server
-     *
-     * @param scoreboard Scoreboard to register
-     */
-    void registerScoreboard(Scoreboard scoreboard);
-
-    /**
-     * Stops tracking a scoreboard. Any players viewing this scoreboard will switch to the main scoreboard.
-     *
-     * @param scoreboard Scoreboard to unregister
-     */
-    void unregisterScoreboard(Scoreboard scoreboard);
+    Scoreboard getNewScoreboard();
 }
