@@ -144,7 +144,9 @@ public class ScoreboardCommand extends VanillaCommand {
                         sender.sendMessage("Set the display objective in slot '" + slotName + "' to '" + objective.getName() + "'");
                     } else {
                         Objective objective = mainScoreboard.getObjective(slot);
-                        objective.setDisplaySlot(null);
+                        if (objective != null) {
+                            objective.setDisplaySlot(null);
+                        }
                         sender.sendMessage("Cleared objective display slot '" + slotName + "'");
                     }
                 }
