@@ -21,13 +21,14 @@ import org.bukkit.scoreboard.Team;
 import org.bukkit.util.StringUtil;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 public class ScoreboardCommand extends VanillaCommand {
 
     private static final List<String> MAIN_CHOICES = ImmutableList.of("objectives", "players", "teams");
     private static final List<String> OBJECTIVES_CHOICES = ImmutableList.of("list", "add", "remove", "setdisplay");
     private static final List<String> OBJECTIVES_CRITERIA = ImmutableList.of("health", "playerKillCount", "totalKillCount", "deathCount", "dummy");
-    private static final List<String> OBJECTIVES_DISPLAYSLOT;
+    private static final ImmutableMap<String, Scoreboard.DisplaySlot> OBJECTIVES_DISPLAYSLOT = ImmutableMap.of("belowName", Scoreboard.DisplaySlot.BELOW_NAME, "list", Scoreboard.DisplaySlot.PLAYER_LIST, "sidebar", Scoreboard.DisplaySlot.SIDEBAR);
     private static final List<String> PLAYERS_CHOICES = ImmutableList.of("set", "add", "remove", "reset", "list");
     private static final List<String> TEAMS_CHOICES = ImmutableList.of("add", "remove", "join", "leave", "empty", "list", "option");
     private static final List<String> TEAMS_OPTION_CHOICES = ImmutableList.of("color", "friendlyfire", "seeFriendlyInvisibles");
@@ -43,11 +44,6 @@ public class ScoreboardCommand extends VanillaCommand {
         }
         colors.add(ChatColor.RESET.name().toLowerCase()); // Mimic vanilla
         TEAMS_OPTION_COLOR = ImmutableList.copyOf(colors);
-        List<String> displayslot = new ArrayList<String>();
-        for (Scoreboard.DisplaySlot slot : Scoreboard.DisplaySlot.values()) {
-            displayslot.add(slot.getCommandName());
-        }
-        OBJECTIVES_DISPLAYSLOT = ImmutableList.copyOf(displayslot);
     }
 
     public ScoreboardCommand() {
@@ -129,7 +125,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
                 String slotName = args[2];
-                Scoreboard.DisplaySlot slot = Scoreboard.DisplaySlot.getDisplaySlot(slotName);
+                Scoreboard.DisplaySlot slot = OBJECTIVES_DISPLAYSLOT.get(slotName);
                 if (slot == null) {
                     sender.sendMessage(ChatColor.RED + "No such display slot '" + slotName + "'");
                 } else {
@@ -494,7 +490,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     }
                 } else if (args[1].equalsIgnoreCase("setdisplay")) {
                     if (args.length == 3) {
-                        return StringUtil.copyPartialMatches(args[2], OBJECTIVES_DISPLAYSLOT, new ArrayList<String>());
+                        return StringUtil.copyPartialMatches(args[2], OBJECTIVES_DISPLAYSLOT.keySet(), new ArrayList<String>());
                     }
                     if (args.length == 4) {
                         return StringUtil.copyPartialMatches(args[3], this.getCurrentObjectives(), new ArrayList<String>());

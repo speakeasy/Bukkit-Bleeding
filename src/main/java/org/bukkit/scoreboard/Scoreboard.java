@@ -1,11 +1,8 @@
 package org.bukkit.scoreboard;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.OfflinePlayer;
-
-import com.google.common.collect.Maps;
 
 /**
  * A scoreboard
@@ -16,41 +13,9 @@ public interface Scoreboard {
      * Locations for displaying objectives to the player
      */
     enum DisplaySlot {
-        BELOW_NAME("belowName"),
-        PLAYER_LIST("list"),
-        SIDEBAR("sidebar");
-
-        private final String commandString;
-        private final static Map<String, DisplaySlot> BY_NAME = Maps.newHashMap();
-
-        private DisplaySlot(String commandString) {
-            this.commandString = commandString;
-        }
-
-        static {
-            for (DisplaySlot displaySlot : DisplaySlot.values()) {
-                DisplaySlot.BY_NAME.put(displaySlot.getCommandName(), displaySlot);
-            }
-        }
-
-        /**
-         * Gets a DisplaySlot by name used in the scoreboard command
-         *
-         * @param commandName Command name
-         * @return DisplaySlot matching the name, or null if no match
-         */
-        public static DisplaySlot getDisplaySlot(String commandName) {
-            return DisplaySlot.BY_NAME.get(commandName);
-        }
-
-        /**
-         * Gets the name of this DisplaySlot as used by the scoreboard command
-         *
-         * @return command name
-         */
-        public String getCommandName() {
-            return this.commandString;
-        }
+        BELOW_NAME,
+        PLAYER_LIST,
+        SIDEBAR;
     }
 
     /**
