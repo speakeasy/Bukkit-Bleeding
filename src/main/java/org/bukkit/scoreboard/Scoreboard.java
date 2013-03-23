@@ -60,7 +60,7 @@ public interface Scoreboard {
      * @param criteria Criteria for the Objective
      * @return The registered Objective
      */
-    Objective registerObjective(String name, Objective.Criteria criteria);
+    Objective registerObjective(String name, String criteria);
 
     /**
      * Gets an Objective on this Scoreboard by name
@@ -74,14 +74,14 @@ public interface Scoreboard {
      * Gets all Objectives of a Criteria on the Scoreboard
      *
      * @param criteria Criteria to search by
-     * @return an ImmutableSet of Objectives using the specified Criteria
+     * @return an immutable set of Objectives using the specified Criteria
      */
-    Set<Objective> getObjectivesByCriteria(Objective.Criteria criteria);
+    Set<Objective> getObjectivesByCriteria(String criteria);
 
     /**
      * Gets all Objectives on this Scoreboard
      *
-     * @return An ImmutableSet of all Objectives on this Scoreboard
+     * @return An immutable set of all Objectives on this Scoreboard
      */
     Set<Objective> getObjectives();
 
@@ -121,7 +121,7 @@ public interface Scoreboard {
      * Gets all scores for a player on this Scoreboard
      *
      * @param player Player whose scores are being retrieved
-     * @return ImmutableSet of all scores tracked for the player
+     * @return immutable set of all scores tracked for the player
      */
     Set<Score> getScores(OfflinePlayer player);
 
@@ -159,7 +159,7 @@ public interface Scoreboard {
     /**
      * Gets all teams on this Scoreboard
      *
-     * @return an ImmutableSet of Teams
+     * @return an immutable set of Teams
      */
     Set<Team> getTeams();
 
@@ -182,7 +182,7 @@ public interface Scoreboard {
     /**
      * Gets all players tracked by this Scoreboard
      *
-     * @return ImmutableSet of all tracked players
+     * @return immutable set of all tracked players
      */
     Set<OfflinePlayer> getPlayers();
 }

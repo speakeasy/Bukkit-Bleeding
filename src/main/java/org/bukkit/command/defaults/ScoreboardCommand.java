@@ -15,7 +15,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Objective.Criteria;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -27,7 +26,7 @@ public class ScoreboardCommand extends VanillaCommand {
 
     private static final List<String> MAIN_CHOICES = ImmutableList.of("objectives", "players", "teams");
     private static final List<String> OBJECTIVES_CHOICES = ImmutableList.of("list", "add", "remove", "setdisplay");
-    private static final List<String> OBJECTIVES_CRITERIA;
+    private static final List<String> OBJECTIVES_CRITERIA = ImmutableList.of("health", "playerKillCount", "totalKillCount", "deathCount", "dummy");
     private static final List<String> OBJECTIVES_DISPLAYSLOT;
     private static final List<String> PLAYERS_CHOICES = ImmutableList.of("set", "add", "remove", "reset", "list");
     private static final List<String> TEAMS_CHOICES = ImmutableList.of("add", "remove", "join", "leave", "empty", "list", "option");
@@ -44,11 +43,6 @@ public class ScoreboardCommand extends VanillaCommand {
         }
         colors.add(ChatColor.RESET.name().toLowerCase()); // Mimic vanilla
         TEAMS_OPTION_COLOR = ImmutableList.copyOf(colors);
-        List<String> criteria = new ArrayList<String>();
-        for (Criteria c : Criteria.values()) {
-            criteria.add(c.getCommandName());
-        }
-        OBJECTIVES_CRITERIA = ImmutableList.copyOf(criteria);
         List<String> displayslot = new ArrayList<String>();
         for (Scoreboard.DisplaySlot slot : Scoreboard.DisplaySlot.values()) {
             displayslot.add(slot.getCommandName());
@@ -85,7 +79,7 @@ public class ScoreboardCommand extends VanillaCommand {
                 }
                 sender.sendMessage(ChatColor.DARK_GREEN + "Showing " + objectives.size() + " objective(s) on scoreboard");
                 for (Objective objective : objectives) {
-                    sender.sendMessage("- " + objective.getName() + ": displays as '" + objective.getDisplayName() + "' and is type '" + objective.getCriteria().getCommandName() + "'");
+                    sender.sendMessage("- " + objective.getName() + ": displays as '" + objective.getDisplayName() + "' and is type '" + objective.getCriteria() + "'");
                 }
             } else if (args[1].equalsIgnoreCase("add")) {
                 if (args.length < 4) {
@@ -93,8 +87,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
                 String name = args[2];
-                String criteriaString = args[3];
-                Criteria criteria = Criteria.getCriteria(criteriaString);
+                String criteria = args[3];
 
                 if (criteria == null) {
                     sender.sendMessage(ChatColor.RED + "Invalid objective criteria type. Valid types are: " + stringCollectionToString(OBJECTIVES_CRITERIA));
@@ -178,7 +171,7 @@ public class ScoreboardCommand extends VanillaCommand {
                 if (objective == null) {
                     sender.sendMessage(ChatColor.RED + "No objective was found by the name '" + objectiveName + "'");
                     return false;
-                } else if (objective.getCriteria().isReadOnly()) {
+                } else if (!objective.isModifiable()) {
                     sender.sendMessage(ChatColor.RED + "The objective '" + objectiveName + "' is read-only and cannot be set");
                     return false;
                 }
