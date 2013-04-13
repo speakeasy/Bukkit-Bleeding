@@ -121,7 +121,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     if (displayName != null && displayName.length() > 0) {
                         objective.setDisplayName(displayName);
                     }
-                    sender.sendMessage("Added new objective '" + name + "' successfully");
+                    broadcastCommandMessage(sender, "Added new objective '" + name + "' successfully");
                 }
             } else if (args[1].equalsIgnoreCase("remove")) {
                 if (args.length != 3) {
@@ -134,7 +134,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "No objective was found by the name '" + name + "'");
                 } else {
                     objective.unregister();
-                    sender.sendMessage("Removed objective '" + name + "' successfully");
+                    broadcastCommandMessage(sender, "Removed objective '" + name + "' successfully");
                 }
             } else if (args[1].equalsIgnoreCase("setdisplay")) {
                 if (args.length != 3 && args.length != 4) {
@@ -155,13 +155,13 @@ public class ScoreboardCommand extends VanillaCommand {
                         }
 
                         objective.setDisplaySlot(slot);
-                        sender.sendMessage("Set the display objective in slot '" + slotName + "' to '" + objective.getName() + "'");
+                        broadcastCommandMessage(sender, "Set the display objective in slot '" + slotName + "' to '" + objective.getName() + "'");
                     } else {
                         Objective objective = mainScoreboard.getObjective(slot);
                         if (objective != null) {
                             objective.setDisplaySlot(null);
                         }
-                        sender.sendMessage("Cleared objective display slot '" + slotName + "'");
+                        broadcastCommandMessage(sender, "Cleared objective display slot '" + slotName + "'");
                     }
                 }
             }
@@ -219,7 +219,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     newScore = score.getScore() - value;
                 }
                 score.setScore(newScore);
-                sender.sendMessage("Set score of " + objectiveName + " for player " + playerName + " to " + newScore);
+                broadcastCommandMessage(sender, "Set score of " + objectiveName + " for player " + playerName + " to " + newScore);
             } else if (args[1].equalsIgnoreCase("reset")) {
                 if (args.length != 3) {
                     sender.sendMessage(ChatColor.RED + "/scoreboard players reset <player>");
@@ -231,7 +231,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
                 mainScoreboard.resetScores(Bukkit.getOfflinePlayer(playerName));
-                sender.sendMessage("Reset all scores of player " + playerName);
+                broadcastCommandMessage(sender, "Reset all scores of player " + playerName);
             } else if (args[1].equalsIgnoreCase("list")) {
                 if (args.length > 3) {
                     sender.sendMessage(ChatColor.RED + "/scoreboard players list <player>");
@@ -319,7 +319,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     if (displayName != null && displayName.length() > 0) {
                         team.setDisplayName(displayName);
                     }
-                    sender.sendMessage("Added new team '" + team.getName() + "' successfully");
+                    broadcastCommandMessage(sender, "Added new team '" + team.getName() + "' successfully");
                 }
             } else if (args[1].equalsIgnoreCase("remove")) {
                 if (args.length != 3) {
@@ -332,7 +332,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "No team was found by the name '" + name + "'");
                 } else {
                     team.unregister();
-                    sender.sendMessage("Removed team " + name);
+                    broadcastCommandMessage(sender, "Removed team " + name);
                 }
             } else if (args[1].equalsIgnoreCase("empty")) {
                 if (args.length != 3) {
@@ -351,7 +351,7 @@ public class ScoreboardCommand extends VanillaCommand {
                         for (OfflinePlayer player : players) {
                             team.removePlayer(player);
                         }
-                        sender.sendMessage("Removed all " + players.size() + " player(s) from team " + team.getName());
+                        broadcastCommandMessage(sender, "Removed all " + players.size() + " player(s) from team " + team.getName());
                     }
                 }
             } else if (args[1].equalsIgnoreCase("join")) {
@@ -382,7 +382,7 @@ public class ScoreboardCommand extends VanillaCommand {
                             addedPlayers.add(offlinePlayer.getName());
                         }
                     }
-                    sender.sendMessage("Added " + addedPlayers.size() + " player(s) to team " + team.getName() + ": " + stringCollectionToString(addedPlayers));
+                    broadcastCommandMessage(sender, "Added " + addedPlayers.size() + " player(s) to team " + team.getName() + ": " + stringCollectionToString(addedPlayers));
                 }
             } else if (args[1].equalsIgnoreCase("leave")) {
                 if (!(sender instanceof Player) && args.length < 3) {
@@ -419,10 +419,10 @@ public class ScoreboardCommand extends VanillaCommand {
                     }
                 }
                 if (!left.isEmpty()) {
-                    sender.sendMessage("Removed " + left.size() + " player(s) from their teams: " + stringCollectionToString(left));
+                    broadcastCommandMessage(sender, "Removed " + left.size() + " player(s) from their teams: " + stringCollectionToString(left));
                 }
                 if (!noTeam.isEmpty()) {
-                    sender.sendMessage("Could not remove " + noTeam.size() + " player(s) from their teams: " + stringCollectionToString(noTeam));
+                    broadcastCommandMessage(sender, "Could not remove " + noTeam.size() + " player(s) from their teams: " + stringCollectionToString(noTeam));
                 }
             } else if (args[1].equalsIgnoreCase("option")) {
                 if (args.length != 4 && args.length != 5) {
@@ -467,7 +467,7 @@ public class ScoreboardCommand extends VanillaCommand {
                             team.setCanSeeFriendlyInvisibles(value.equals("true"));
                         }
                     }
-                    sender.sendMessage("Set option " + option + " for team " + team.getName() + " to " + value);
+                    broadcastCommandMessage(sender, "Set option " + option + " for team " + team.getName() + " to " + value);
                 }
             }
         } else {
