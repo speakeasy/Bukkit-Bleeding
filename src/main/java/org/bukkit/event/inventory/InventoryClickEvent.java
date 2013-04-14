@@ -5,6 +5,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.inventory.InventoryActionEvent.ClickAction;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.ItemStack;
 
@@ -28,6 +29,7 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
     private int whichSlot;
     private int rawSlot;
     private ItemStack current = null;
+    private int hotbarKey = -1;
 
     public InventoryClickEvent(InventoryView what, SlotType type, int slot, ClickAction action) {
         super(what, action);
@@ -35,6 +37,11 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
         this.result = Result.DEFAULT;
         this.rawSlot = slot;
         this.whichSlot = what.convertSlot(slot);
+    }
+
+    public InventoryClickEvent(InventoryView what, SlotType type, int slot, int key) {
+        this(what, type, slot, ClickAction.NUMBER_KEY);
+        this.hotbarKey = key;
     }
 
     /**
@@ -130,6 +137,27 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
      */
     public int getRawSlot() {
         return rawSlot;
+    }
+
+    /**
+     * If the ClickAction is NUMBER_KEY, this method will return the offset
+     * into the InventoryView of the appropriate slot on the hotbar.
+     * @return a raw slot index
+     */
+    // TODO test
+    public int getHotbarSlot() {
+        if (hotbarKey == -1) return -1;
+        return hotbarKey + getView().getTopInventory().getSize() + 27;
+    }
+
+    /**
+     * If the ClickAction is NUMBER_KEY, this method will return the index
+     * of the pressed key (0-8).
+     * @return the number on the key minus 1 (range 0-8); or -1 if not
+     *     NUMBER_KEY
+     */
+    public int getHotbarButton() {
+        return hotbarKey;
     }
 
     @Override
