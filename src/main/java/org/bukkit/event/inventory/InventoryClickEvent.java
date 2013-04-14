@@ -3,7 +3,6 @@ package org.bukkit.event.inventory;
 import org.bukkit.GameMode;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryType.SlotType;
@@ -18,83 +17,18 @@ import org.bukkit.inventory.ItemStack;
  * click on an inventory, including an OTHER value for methods not yet
  * recognized by Bukkit.
  */
-public class InventoryClickEvent extends InventoryEvent implements Cancellable {
+public class InventoryClickEvent extends InventoryActionEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private SlotType slot_type;
     private Result result;
     private int whichSlot;
     private int rawSlot;
     private ItemStack current = null;
-    private ClickAction action;
     private int hotbarKey = -1;
 
-    public enum ClickAction {
-        /**
-         * The left (or primary) mouse button.
-         */
-        LEFT,
-        /**
-         * Holding shift while pressing the left mouse button.
-         */
-        SHIFT_LEFT,
-        /**
-         * The right mouse button.
-         */
-        RIGHT,
-        /**
-         * Holding shift while pressing the right mouse button.
-         */
-        SHIFT_RIGHT,
-        /**
-         * The middle mouse button, or a "scrollwheel click".
-         */
-        MIDDLE,
-        /**
-         * @see InventoryPaintEvent
-         * Selecting slots for a left-click paint event.
-         * If cancelled, this slot will be dropped from the subsequent event.
-         */
-        DRAG_LEFT,
-        /**
-         * @see InventoryPaintEvent
-         * Selecting slots for a right-click paint event.
-         * If cancelled, this slot will be dropped from the subsequent event.
-         */
-        DRAG_RIGHT,
-        /**
-         * One of the number keys 1-9, correspond to slots on the hotbar.
-         */
-        NUMBER_KEY,
-        /**
-         * Pressing the left mouse button twice in quick succession.
-         */
-        DOUBLE_CLICK,
-        /**
-         * The "Drop" key (defaults to Q).
-         */
-        DROP,
-        /**
-         * Holding Ctrl while pressing the "Drop" key (defaults to Q).
-         */
-        CONTROL_DROP,
-        /**
-         * Any action done with the Creative inventory open.
-         */
-        CREATIVE,
-        /**
-         * A type of inventory manipulation not yet recognized by Bukkit.
-         * This is only for transitional purposes on a new Minecraft update.
-         * <p>
-         * Any ClickAction.OTHER is called on a best-effort basis.
-         */
-        OTHER,
-        ;
-    }
-
     public InventoryClickEvent(InventoryView what, SlotType type, int slot, ClickAction action) {
-        super(what);
+        super(what, action);
         this.slot_type = type;
-        this.action = action;
         this.result = Result.DEFAULT;
         this.rawSlot = slot;
         this.whichSlot = what.convertSlot(slot);
@@ -114,14 +48,6 @@ public class InventoryClickEvent extends InventoryEvent implements Cancellable {
     }
 
     /**
-     * Get the current item on the cursor.
-     * @return The cursor item
-     */
-    public ItemStack getCursor() {
-        return getView().getCursor();
-    }
-
-    /**
      * Get the current item in the clicked slot.
      * @return The slot item.
      */
@@ -130,20 +56,6 @@ public class InventoryClickEvent extends InventoryEvent implements Cancellable {
             return current;
         }
         return getView().getItem(rawSlot);
-    }
-
-    /**
-     * @return True if the click action is with the right mouse button.
-     */
-    public boolean isRightClick() {
-        return (action == ClickAction.RIGHT) || (action == ClickAction.SHIFT_RIGHT) || (action == ClickAction.DRAG_RIGHT);
-    }
-
-    /**
-     * @return True if the click action is with the left mouse button.
-     */
-    public boolean isLeftClick() {
-        return (action == ClickAction.LEFT) || (action == ClickAction.SHIFT_LEFT) || (action == ClickAction.DRAG_LEFT) || (action == ClickAction.DOUBLE_CLICK) || (action == ClickAction.CREATIVE);
     }
 
     /**
@@ -180,22 +92,6 @@ public class InventoryClickEvent extends InventoryEvent implements Cancellable {
      */
     public Result getResult() {
         return result;
-    }
-
-    /**
-     * Get the player who performed the click.
-     * @return The clicking player.
-     */
-    public HumanEntity getWhoClicked() {
-        return getView().getPlayer();
-    }
-
-    /**
-     * Set the item on the cursor.
-     * @param what The new cursor item.
-     */
-    public void setCursor(ItemStack what) {
-        getView().setCursor(what);
     }
 
     /**
