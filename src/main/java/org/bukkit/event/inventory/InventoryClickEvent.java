@@ -28,7 +28,6 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
     private int whichSlot;
     private int rawSlot;
     private ItemStack current = null;
-    private int hotbarKey = -1;
 
     public InventoryClickEvent(InventoryView what, SlotType type, int slot, ClickAction action) {
         super(what, action);
@@ -36,11 +35,6 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
         this.result = Result.DEFAULT;
         this.rawSlot = slot;
         this.whichSlot = what.convertSlot(slot);
-    }
-
-    public InventoryClickEvent(InventoryView what, SlotType type, int slot, int key) {
-        this(what, type, slot, ClickAction.NUMBER_KEY);
-        this.hotbarKey = key;
     }
 
     /**
@@ -136,27 +130,6 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
      */
     public int getRawSlot() {
         return rawSlot;
-    }
-
-    /**
-     * If the ClickAction is NUMBER_KEY, this method will return the offset
-     * into the InventoryView of the appropriate hotbar slot.
-     * @return a raw slot index, or -1 if action is not NUMBER_KEY
-     */
-    // TODO test
-    public int getHotbarSlot() {
-        if (hotbarKey == -1) return -1;
-        return hotbarKey + getView().getTopInventory().getSize() + 27;
-    }
-
-    /**
-     * If the ClickAction is NUMBER_KEY, this method will return the number
-     * of the pressed key (1-9).
-     * @return the hotbar key, 1-9; or -1 if action is not NUMBER_KEY
-     */
-    public int getHotbarKey() {
-        if (hotbarKey == -1) return -1;
-        return hotbarKey + 1;
     }
 
     @Override
