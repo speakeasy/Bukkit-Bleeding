@@ -43,7 +43,7 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
         }
 
         /**
-         * <p>Gets the item in the painted slot.</p>
+         * Gets the item in the painted slot.
          * @return The item
          */
         public ItemStack getItem() {
@@ -51,9 +51,10 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
         }
 
         /**
-         * <p>Gets the result item in the painted slot after the painting is done.</p>
-         *
-         * <p>Changes to this item stack will be reflected in the inventory.</p>
+         * Gets the result item in the painted slot after the painting is
+         * done.
+         * <p>
+         * Changes to this item stack will be reflected in the inventory.
          * @return The result item
          */
         public ItemStack getResult() {
@@ -61,7 +62,7 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
         }
 
         /**
-         * <p>Sets the result item in the painted slot.</p>
+         * Sets the result item in the painted slot.
          * @param result The result item
          */
         public void setResult(ItemStack result) {
@@ -69,7 +70,7 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
         }
 
         /**
-         * <p>Gets the painted slot's type.</p>
+         * Gets the SlotType of the painted slot.
          * @return The slot type
          */
         public SlotType getSlotType() {
@@ -77,9 +78,11 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
         }
 
         /**
-         * <p>The slot number that was clicked, ready for passing to {@link Inventory#getItem(int)}.</p>
-         *
-         * <p>Note that there may be two slots with the same slot number, since a view links two different inventories.</p>
+         * The slot number that was clicked, ready for passing to
+         * {@link Inventory#getItem(int)}.
+         * <p>
+         * Note that there may be two slots with the same slot number, since
+         * a view links two different inventories.
          * @return The slot number.
          */
         public int getSlot() {

@@ -100,7 +100,7 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
         } else if (result == Result.DENY) {
             return true;
         } else {
-            // Guess whether vanilla will deny it
+            // Guess whether vanilla will deny it (this only applies for middle clicks, because InventoryCreativeEvent overrides it)
             if (isCreativeAction()) {
                 return getView().getPlayer().getGameMode() != GameMode.CREATIVE;
             }
@@ -109,9 +109,9 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
     }
 
     /**
-     * Sets the result of this event in a manner consistent with isCancelled().
-     * It is preferred to use {@link InventoryClickEvent#setResult(Result)}
-     * instead, however.
+     * Sets the result of this event in a manner consistent with
+     * isCancelled(). It is preferred to use
+     * {@link InventoryClickEvent#setResult(Result)} instead, however.
      *
      * @param toCancel result is DENY if true, DEFAULT if false, and ALLOW if
      *    false and this ClickEvent requires creative
@@ -121,8 +121,9 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
     }
 
     /**
-     * The slot number that was clicked, ready for passing to {@link Inventory#getItem(int)}. Note
-     * that there may be two slots with the same slot number, since a view links two different inventories.
+     * The slot number that was clicked, ready for passing to
+     * {@link Inventory#getItem(int)}. Note that there may be two slots with
+     * the same slot number, since a view links two different inventories.
      * @return The slot number.
      */
     public int getSlot() {
@@ -130,7 +131,9 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
     }
 
     /**
-     * The raw slot number, which is unique for the view.
+     * The raw slot number clicked, ready for passing to
+     * {@link InventoryView#getItem(int)} This slot number is unique for the
+     * view.
      * @return The slot number.
      */
     public int getRawSlot() {
@@ -151,7 +154,7 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
      * If the ClickAction is NUMBER_KEY, this method will return the index
      * of the pressed key (0-8).
      * @return the number on the key minus 1 (range 0-8); or -1 if not
-     *     NUMBER_KEY
+     *     a NUMBER_KEY action
      */
     public int getHotbarButton() {
         return hotbarKey;
