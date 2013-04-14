@@ -29,7 +29,7 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
         private int whichSlot;
         private int rawSlot;
 
-        private PaintedSlot(int rawSlot, int amount) {
+        public PaintedSlot(int rawSlot, int amount) {
             InventoryView view = getView();
             item = view.getItem(rawSlot);
             result = view.getCursor();
