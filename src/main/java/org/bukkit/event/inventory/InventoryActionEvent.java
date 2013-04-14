@@ -62,7 +62,8 @@ public class InventoryActionEvent extends InventoryEvent {
         CREATIVE,
         /**
          * A type of inventory manipulation not yet recognized by Bukkit.
-         * This is only for transitional purposes on a new Minecraft update.
+         * This is only for transitional purposes on a new Minecraft update,
+         * and should never be relied upon.
          * <p>
          * Any ClickAction.OTHER is called on a best-effort basis.
          */
@@ -102,10 +103,33 @@ public class InventoryActionEvent extends InventoryEvent {
     }
 
     /**
+     * Shift and Ctrl can be combined with some actions as a modifier.
+     * @return True if the action uses Shift or Ctrl.
+     */
+    public boolean isShiftClick() {
+        return (action == ClickAction.SHIFT_LEFT) || (action == ClickAction.SHIFT_RIGHT) || (action == ClickAction.CONTROL_DROP);
+    }
+
+    /**
+     * Some click events are only permitted in Creative mode.
+     * @return True if this action normally requires Creative mode
+     */
+    public boolean isCreativeAction() {
+        return (action == ClickAction.MIDDLE) || (action == ClickAction.CREATIVE);
+    }
+
+    /**
      * Get the player who performed the click.
      * @return The clicking player.
      */
     public HumanEntity getWhoClicked() {
+        return getView().getPlayer();
+    }
+
+    /**
+     * Alias for {@link #getWhoClicked()}
+     */
+    public HumanEntity getPlayer() {
         return getView().getPlayer();
     }
 

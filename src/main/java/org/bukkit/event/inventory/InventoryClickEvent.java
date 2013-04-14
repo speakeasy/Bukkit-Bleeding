@@ -16,11 +16,15 @@ import org.bukkit.inventory.ItemStack;
  * The ClickAction enum describes the various types of ways a player can
  * click on an inventory, including an OTHER value for methods not yet
  * recognized by Bukkit.
+ * <p>
+ * This event is called with ClickAction.DRAG_* for the selection of
+ * Individual slots. To disallow the paint as a whole, listen to
+ * {@link InventoryDragEvent}.
  */
 public class InventoryClickEvent extends InventoryActionEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private SlotType slot_type;
-    private Result result;
+    protected Result result;
     private int whichSlot;
     private int rawSlot;
     private ItemStack current = null;
@@ -56,22 +60,6 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
             return current;
         }
         return getView().getItem(rawSlot);
-    }
-
-    /**
-     * Shift and Ctrl can be combined with some actions as a modifier.
-     * @return True if the action uses Shift or Ctrl.
-     */
-    public boolean isShiftClick() {
-        return (action == ClickAction.SHIFT_LEFT) || (action == ClickAction.SHIFT_RIGHT) || (action == ClickAction.CONTROL_DROP);
-    }
-
-    /**
-     * Some click events are only permitted in Creative mode.
-     * @return True if this action normally requires Creative mode
-     */
-    public boolean isCreativeAction() {
-        return (action == ClickAction.MIDDLE) || (action == ClickAction.CREATIVE);
     }
 
     /**
