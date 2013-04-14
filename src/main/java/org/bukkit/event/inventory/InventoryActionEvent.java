@@ -33,14 +33,14 @@ public abstract class InventoryActionEvent extends InventoryEvent {
          */
         MIDDLE,
         /**
-         * @see InventoryPaintEvent
-         * Selecting slots for a left-click paint event.
+         * @see InventoryDragEvent
+         * Selecting slots for a left-click drag event.
          * If cancelled, this slot will be dropped from the subsequent event.
          */
         DRAG_LEFT,
         /**
-         * @see InventoryPaintEvent
-         * Selecting slots for a right-click paint event.
+         * @see InventoryDragEvent
+         * Selecting slots for a right-click drag event.
          * If cancelled, this slot will be dropped from the subsequent event.
          */
         DRAG_RIGHT,

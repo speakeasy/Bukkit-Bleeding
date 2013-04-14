@@ -20,16 +20,19 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
     private ItemStack newCursor;
-    private List<PaintedSlot> slots;
+    private List<DraggingSlot> slots;
 
-    public class PaintedSlot {
+    /**
+     * A holder class for the slots contained in this InventoryDragEvent.
+     */
+    public class DraggingSlot {
         private ItemStack item;
         private ItemStack result;
         private SlotType slotType;
         private int whichSlot;
         private int rawSlot;
 
-        public PaintedSlot(int rawSlot, int amount) {
+        public DraggingSlot(int rawSlot, int amount) {
             InventoryView view = getView();
             item = view.getItem(rawSlot);
             result = view.getCursor();
@@ -43,7 +46,7 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
         }
 
         /**
-         * Gets the item in the painted slot.
+         * Gets the item in the dragged-over slot.
          * @return The item
          */
         public ItemStack getItem() {
@@ -51,8 +54,7 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
         }
 
         /**
-         * Gets the result item in the painted slot after the painting is
-         * done.
+         * Gets the result item in the dragged slot after the drag is done.
          * <p>
          * Changes to this item stack will be reflected in the inventory.
          * @return The result item
@@ -62,7 +64,7 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
         }
 
         /**
-         * Sets the result item in the painted slot.
+         * Sets the result item in the dragged slot.
          * @param result The result item
          */
         public void setResult(ItemStack result) {
@@ -70,7 +72,7 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
         }
 
         /**
-         * Gets the SlotType of the painted slot.
+         * Gets the SlotType of the dragged slot.
          * @return The slot type
          */
         public SlotType getSlotType() {
@@ -102,17 +104,17 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
         super(what, right ? InventoryAction.DRAG_RIGHT : InventoryAction.DRAG_LEFT);
         this.cancelled = false;
         this.newCursor = newCursor;
-        this.slots = new ArrayList<PaintedSlot>();
+        this.slots = new ArrayList<DraggingSlot>();
         for (Map.Entry<Integer, Integer> slot : slots.entrySet()) {
-            this.slots.add(new PaintedSlot(slot.getKey(), slot.getValue()));
+            this.slots.add(new DraggingSlot(slot.getKey(), slot.getValue()));
         }
     }
 
     /**
      * Get the slots to be changed in this InventoryDragEvent.
-     * @return list of PaintedSlots
+     * @return list of DraggingSlots
      */
-    public List<PaintedSlot> getSlots() {
+    public List<DraggingSlot> getSlots() {
         return Collections.unmodifiableList(slots);
     }
 
@@ -120,18 +122,18 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
      * Set the slots to be changed in this drag event.
      * @param newslots list of slots to use
      */
-    public void setSlots(List<PaintedSlot> newslots) {
-        this.slots = new ArrayList<PaintedSlot>(newslots);
+    public void setSlots(List<DraggingSlot> newslots) {
+        this.slots = new ArrayList<DraggingSlot>(newslots);
     }
 
     /**
-     * Get the result cursor after the painting is done.
+     * Get the result cursor after the drag is done.
      * <p>
      * Changing this item stack changes the cursor item. Note that changing
-     * the affected "painted" slots does not update this item stack to
+     * the affected "dragged" slots does not update this item stack to
      * reflect the changes you've made.
      * <p>
-     * To get the cursor item before the painting begins, use
+     * To get the cursor item before the drag begins, use
      * {@link #getView()} and then {@link InventoryView#getCursor()}.
      * @return the cursor ItemStack
      */
@@ -140,7 +142,7 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
     }
 
     /**
-     * Sets the result cursor after the painting is done.
+     * Sets the result cursor after the drag is done.
      * @param newCursor - the new cursor itemstack
      */
     public void setNewCursor(ItemStack newCursor) {

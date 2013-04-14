@@ -5,11 +5,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.inventory.InventoryActionEvent.InventoryAction;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * This event is fired when a player clicks in an inventory.
+ * This event is called when a player clicks in an inventory.
  * The Result enum is used to allow forcing something similar to vanilla
  * behavior in cases where vanilla would disallow the action.
  * <p>
@@ -18,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
  * recognized by Bukkit.
  * <p>
  * This event is called with ClickAction.DRAG_* for the selection of
- * Individual slots. To disallow the paint as a whole, listen to
+ * Individual slots. To disallow the drag as a whole, listen to
  * {@link InventoryDragEvent}.
  */
 public class InventoryClickEvent extends InventoryActionEvent implements Cancellable {
@@ -29,6 +30,11 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
     private int rawSlot;
     private ItemStack current = null;
     private int hotbarKey = -1;
+
+    @Deprecated
+    public InventoryClickEvent(InventoryView what, SlotType type, int slot, boolean right, boolean shift) {
+        this(what, type, slot, right ? (shift ? InventoryAction.SHIFT_RIGHT : InventoryAction.RIGHT) : (shift ? InventoryAction.SHIFT_LEFT : InventoryAction.LEFT));
+    }
 
     public InventoryClickEvent(InventoryView what, SlotType type, int slot, InventoryAction action) {
         super(what, action);
