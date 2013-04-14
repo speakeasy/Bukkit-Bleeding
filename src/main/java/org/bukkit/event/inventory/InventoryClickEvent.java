@@ -139,12 +139,24 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
     }
 
     /**
-     * If the ClickAction is NUMBER_KEY, this method will return which number
-     * key was pressed.
-     * @return the slot number, 0-8, or -1 if action is not NUMBER_KEY
+     * If the ClickAction is NUMBER_KEY, this method will return the offset
+     * into the InventoryView of the appropriate hotbar slot.
+     * @return a raw slot index, or -1 if action is not NUMBER_KEY
+     */
+    // TODO test
+    public int getHotbarSlot() {
+        if (hotbarKey == -1) return -1;
+        return hotbarKey + getView().getTopInventory().getSize() + 27;
+    }
+
+    /**
+     * If the ClickAction is NUMBER_KEY, this method will return the number
+     * of the pressed key (1-9).
+     * @return the hotbar key, 1-9; or -1 if action is not NUMBER_KEY
      */
     public int getHotbarKey() {
-        return hotbarKey;
+        if (hotbarKey == -1) return -1;
+        return hotbarKey + 1;
     }
 
     @Override
