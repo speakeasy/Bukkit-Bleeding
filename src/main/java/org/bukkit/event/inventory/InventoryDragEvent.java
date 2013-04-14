@@ -1,6 +1,7 @@
 package org.bukkit.event.inventory;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.event.Cancellable;
@@ -19,19 +20,27 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
     private ItemStack newCursor;
-    private Set<Integer> rawSlots;
+    private Map<Integer, ItemStack> addedItems;
     private Set<Integer> containerSlots;
 
-    public InventoryDragEvent(InventoryView what, ItemStack newCursor, boolean right, Set<Integer> slots) {
+    public InventoryDragEvent(InventoryView what, ItemStack newCursor, boolean right, Map<Integer, ItemStack> slots) {
         super(what, right ? InventoryAction.DRAG_RIGHT : InventoryAction.DRAG_LEFT);
         this.cancelled = false;
         this.newCursor = newCursor;
-        this.rawSlots = Collections.unmodifiableSet(slots);
+        this.addedItems = slots;
         ImmutableSet.Builder<Integer> b = ImmutableSet.builder();
-        for (Integer slot : slots) {
+        for (Integer slot : slots.keySet()) {
             b.add(what.convertSlot(slot));
         }
         this.containerSlots = b.build();
+    }
+
+    /**
+     * Get all items to be added to the inventory in this drag.
+     * @return map from raw slot id to new ItemStack
+     */
+    public Map<Integer, ItemStack> getNewItems() {
+        return Collections.unmodifiableMap(addedItems);
     }
 
     /**
@@ -39,7 +48,7 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
      * @return list of raw slot ids, suitable for InventoryView.getItem()
      */
     public Set<Integer> getRawSlots() {
-        return rawSlots;
+        return addedItems.keySet();
     }
 
     /**
