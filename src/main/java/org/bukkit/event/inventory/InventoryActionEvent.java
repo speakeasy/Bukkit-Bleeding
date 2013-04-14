@@ -9,9 +9,9 @@ import org.bukkit.inventory.ItemStack;
  * an Inventory.
  */
 public abstract class InventoryActionEvent extends InventoryEvent {
-    protected final ClickAction action;
+    protected final InventoryAction action;
 
-    public enum ClickAction {
+    public enum InventoryAction {
         /**
          * The left (or primary) mouse button.
          */
@@ -75,7 +75,7 @@ public abstract class InventoryActionEvent extends InventoryEvent {
         ;
     }
 
-    public InventoryActionEvent(InventoryView transaction, ClickAction action) {
+    public InventoryActionEvent(InventoryView transaction, InventoryAction action) {
         super(transaction);
         this.action = action;
     }
@@ -92,7 +92,7 @@ public abstract class InventoryActionEvent extends InventoryEvent {
      * Get the ClickAction this event is for.
      * @return the type of inventory action
      */
-    public ClickAction getAction() {
+    public InventoryAction getAction() {
         return action;
     }
 
@@ -100,14 +100,14 @@ public abstract class InventoryActionEvent extends InventoryEvent {
      * @return True if the click action is with the right mouse button.
      */
     public boolean isRightClick() {
-        return (action == ClickAction.RIGHT) || (action == ClickAction.SHIFT_RIGHT) || (action == ClickAction.DRAG_RIGHT);
+        return (action == InventoryAction.RIGHT) || (action == InventoryAction.SHIFT_RIGHT) || (action == InventoryAction.DRAG_RIGHT);
     }
 
     /**
      * @return True if the click action is with the left mouse button.
      */
     public boolean isLeftClick() {
-        return (action == ClickAction.LEFT) || (action == ClickAction.SHIFT_LEFT) || (action == ClickAction.DRAG_LEFT) || (action == ClickAction.DOUBLE_CLICK) || (action == ClickAction.CREATIVE);
+        return (action == InventoryAction.LEFT) || (action == InventoryAction.SHIFT_LEFT) || (action == InventoryAction.DRAG_LEFT) || (action == InventoryAction.DOUBLE_CLICK) || (action == InventoryAction.CREATIVE);
     }
 
     /**
@@ -115,11 +115,11 @@ public abstract class InventoryActionEvent extends InventoryEvent {
      * @return True if the action uses Shift or Ctrl.
      */
     public boolean isShiftClick() {
-        return (action == ClickAction.SHIFT_LEFT) || (action == ClickAction.SHIFT_RIGHT) || (action == ClickAction.CONTROL_DROP);
+        return (action == InventoryAction.SHIFT_LEFT) || (action == InventoryAction.SHIFT_RIGHT) || (action == InventoryAction.CONTROL_DROP);
     }
 
     public boolean isKeyboardClick() {
-        return (action == ClickAction.NUMBER_KEY) || (action == ClickAction.DROP) || (action == ClickAction.CONTROL_DROP);
+        return (action == InventoryAction.NUMBER_KEY) || (action == InventoryAction.DROP) || (action == InventoryAction.CONTROL_DROP);
     }
 
     /**
@@ -127,7 +127,7 @@ public abstract class InventoryActionEvent extends InventoryEvent {
      * @return True if this action normally requires Creative mode
      */
     public boolean isCreativeAction() {
-        return (action == ClickAction.MIDDLE) || (action == ClickAction.CREATIVE);
+        return (action == InventoryAction.MIDDLE) || (action == InventoryAction.CREATIVE);
     }
 
     /**

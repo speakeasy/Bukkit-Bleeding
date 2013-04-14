@@ -96,7 +96,7 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
     }
 
     public InventoryDragEvent(InventoryView what, ItemStack newCursor, boolean right, Map<Integer, Integer> slots) {
-        super(what, right ? ClickAction.DRAG_RIGHT : ClickAction.DRAG_LEFT);
+        super(what, right ? InventoryAction.DRAG_RIGHT : InventoryAction.DRAG_LEFT);
         this.cancelled = false;
         this.newCursor = newCursor;
         this.slots = new ArrayList<PaintedSlot>();

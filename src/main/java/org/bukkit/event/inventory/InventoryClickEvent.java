@@ -30,7 +30,7 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
     private ItemStack current = null;
     private int hotbarKey = -1;
 
-    public InventoryClickEvent(InventoryView what, SlotType type, int slot, ClickAction action) {
+    public InventoryClickEvent(InventoryView what, SlotType type, int slot, InventoryAction action) {
         super(what, action);
         this.slot_type = type;
         this.result = Result.DEFAULT;
@@ -39,7 +39,7 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
     }
 
     public InventoryClickEvent(InventoryView what, SlotType type, int slot, int key) {
-        this(what, type, slot, ClickAction.NUMBER_KEY);
+        this(what, type, slot, InventoryAction.NUMBER_KEY);
         this.hotbarKey = key;
     }
 

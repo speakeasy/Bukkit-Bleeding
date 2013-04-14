@@ -26,7 +26,7 @@ public class InventoryCreativeEvent extends InventoryClickEvent {
     private boolean creative;
 
     public InventoryCreativeEvent(InventoryView what, SlotType type, int slot, ItemStack newItem, boolean inCreative) {
-        super(what, type, slot, ClickAction.CREATIVE);
+        super(what, type, slot, InventoryAction.CREATIVE);
         this.item = newItem;
         this.creative = inCreative;
         result = inCreative ? Result.DEFAULT : Result.DENY;
