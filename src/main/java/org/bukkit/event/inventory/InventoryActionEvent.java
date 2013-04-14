@@ -5,7 +5,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 public class InventoryActionEvent extends InventoryEvent {
-    protected ClickAction action;
+    protected final ClickAction action;
 
     public enum ClickAction {
         /**
@@ -81,6 +81,10 @@ public class InventoryActionEvent extends InventoryEvent {
      */
     public ItemStack getCursor() {
         return getView().getCursor();
+    }
+
+    public ClickAction getAction() {
+        return action;
     }
 
     /**
