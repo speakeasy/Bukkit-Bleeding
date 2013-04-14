@@ -1,15 +1,14 @@
 package org.bukkit.event.inventory;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import com.google.common.collect.ImmutableSet;
 
 /**
  * This event is called when the player drags an item in their cursor across
@@ -20,110 +19,35 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
     private ItemStack newCursor;
-    private List<DraggingSlot> slots;
+    private Set<Integer> rawSlots;
+    private Set<Integer> containerSlots;
 
-    /**
-     * A holder class for the slots contained in this InventoryDragEvent.
-     */
-    public class DraggingSlot {
-        private ItemStack item;
-        private ItemStack result;
-        private SlotType slotType;
-        private int whichSlot;
-        private int rawSlot;
-
-        public DraggingSlot(int rawSlot, int amount) {
-            InventoryView view = getView();
-            item = view.getItem(rawSlot);
-            result = view.getCursor();
-            if (result != null) {
-                result = result.clone();
-                result.setAmount(item.getAmount() + amount);
-            }
-            slotType = view.getSlotType(rawSlot);
-            whichSlot = view.convertSlot(rawSlot);
-            this.rawSlot = rawSlot;
-        }
-
-        /**
-         * Gets the item in the dragged-over slot.
-         * @return The item
-         */
-        public ItemStack getItem() {
-            return item.clone();
-        }
-
-        /**
-         * Gets the result item in the dragged slot after the drag is done.
-         * <p>
-         * Changes to this item stack will be reflected in the inventory.
-         * @return The result item
-         */
-        public ItemStack getResult() {
-            return result;
-        }
-
-        /**
-         * Sets the result item in the dragged slot.
-         * @param result The result item
-         */
-        public void setResult(ItemStack result) {
-            this.result = result;
-        }
-
-        /**
-         * Gets the SlotType of the dragged slot.
-         * @return The slot type
-         */
-        public SlotType getSlotType() {
-            return slotType;
-        }
-
-        /**
-         * The slot number that was clicked, ready for passing to
-         * {@link Inventory#getItem(int)}.
-         * <p>
-         * Note that there may be two slots with the same slot number, since
-         * a view links two different inventories.
-         * @return The slot number.
-         */
-        public int getSlot() {
-            return whichSlot;
-        }
-
-        /**
-         * <p>The raw slot number, which is unique for the view.</p>
-         * @return The slot number.
-         */
-        public int getRawSlot() {
-            return rawSlot;
-        }
-    }
-
-    public InventoryDragEvent(InventoryView what, ItemStack newCursor, boolean right, Map<Integer, Integer> slots) {
+    public InventoryDragEvent(InventoryView what, ItemStack newCursor, boolean right, Set<Integer> slots) {
         super(what, right ? InventoryAction.DRAG_RIGHT : InventoryAction.DRAG_LEFT);
         this.cancelled = false;
         this.newCursor = newCursor;
-        this.slots = new ArrayList<DraggingSlot>();
-        for (Map.Entry<Integer, Integer> slot : slots.entrySet()) {
-            this.slots.add(new DraggingSlot(slot.getKey(), slot.getValue()));
+        this.rawSlots = Collections.unmodifiableSet(slots);
+        ImmutableSet.Builder<Integer> b = ImmutableSet.builder();
+        for (Integer slot : slots) {
+            b.add(what.convertSlot(slot));
         }
+        this.containerSlots = b.build();
     }
 
     /**
      * Get the slots to be changed in this InventoryDragEvent.
-     * @return list of DraggingSlots
+     * @return list of raw slot ids, suitable for InventoryView.getItem()
      */
-    public List<DraggingSlot> getSlots() {
-        return Collections.unmodifiableList(slots);
+    public Set<Integer> getRawSlots() {
+        return rawSlots;
     }
 
     /**
-     * Set the slots to be changed in this drag event.
-     * @param newslots list of slots to use
+     * Get the slots to be changed in this InventoryDragEvent.
+     * @return list of converted slot ids, suitable for Container.getItem()
      */
-    public void setSlots(List<DraggingSlot> newslots) {
-        this.slots = new ArrayList<DraggingSlot>(newslots);
+    public Set<Integer> getContainerSlots() {
+        return containerSlots;
     }
 
     /**
