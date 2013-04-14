@@ -1,6 +1,5 @@
 package org.bukkit.event.inventory;
 
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +20,6 @@ import org.bukkit.inventory.ItemStack;
  * </ul>
  */
 public class InventoryCreativeEvent extends InventoryClickEvent {
-    private static final HandlerList handlers = new HandlerList();
     private ItemStack item;
     private boolean creative;
 
@@ -54,7 +52,16 @@ public class InventoryCreativeEvent extends InventoryClickEvent {
      */
     @Override
     public ItemStack getCursor() {
-        return item;
+        return getItem();
+    }
+
+    /**
+     * The client doesn't tell the server what the cursor is, so we use
+     * what's about to be set as a good substitute.
+     */
+    @Override
+    public void setCursor(ItemStack item) {
+        setItem(item);
     }
 
     @Override
@@ -66,14 +73,5 @@ public class InventoryCreativeEvent extends InventoryClickEvent {
         } else {
             return !creative;
         }
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
     }
 }
