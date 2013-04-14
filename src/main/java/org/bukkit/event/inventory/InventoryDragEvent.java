@@ -4,12 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * This event is called when the player drags an item in their cursor across
+ * the inventory. The event is called even when only one slot is selected
+ * (despite not rendering on the client) for technical reasons.
+ */
 public class InventoryDragEvent extends InventoryActionEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;

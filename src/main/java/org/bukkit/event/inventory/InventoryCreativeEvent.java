@@ -5,6 +5,21 @@ import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * This event is called when a player in creative mode puts down or picks up
+ * an item in their inventory / hotbar, opens the creative inventory for the
+ * first time, and when they drop items from creative.
+ * <p>
+ * This event is also called when a player not in creative attempts to send
+ * those same packets to the server.
+ * <p>
+ * Result behavior:
+ * <ul>
+ * <li><b>DEFAULT</b> - if the player is not in creative mode, or the item is invalid, nothing will be done.</li>
+ * <li><b>DENY</b> - Nothing will be done.</li>
+ * <li><b>ALLOW</b> - the click will go through even with an invalid item or a player not in creative mode.</li>
+ * </ul>
+ */
 public class InventoryCreativeEvent extends InventoryClickEvent {
     private static final HandlerList handlers = new HandlerList();
     private ItemStack item;

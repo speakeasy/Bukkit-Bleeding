@@ -64,11 +64,7 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
 
     /**
      * Set the result of the InventoryClickEvent.
-     * <p>
-     * <b>WARNING</b>: Result.ALLOW deviates from vanilla behavior. For
-     * details, see the net.minecraft.server.PlayerConnection class from your
-     * Bukkit implementation. It is recommended to use Result.DEFAULT in most
-     * cases.
+     *
      * @param newResult new {@link Result}
      */
     public void setResult(Result newResult) {
@@ -114,6 +110,9 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
 
     /**
      * Sets the result of this event in a manner consistent with isCancelled().
+     * It is preferred to use {@link InventoryClickEvent#setResult(Result)}
+     * instead, however.
+     *
      * @param toCancel result is DENY if true, DEFAULT if false, and ALLOW if
      *    false and this ClickEvent requires creative
      */
@@ -143,10 +142,9 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
      * into the InventoryView of the appropriate slot on the hotbar.
      * @return a raw slot index
      */
-    // TODO test
     public int getHotbarSlot() {
         if (hotbarKey == -1) return -1;
-        return hotbarKey + getView().getTopInventory().getSize() + 27;
+        return hotbarKey + getView().getTopInventory().getSize() + 28;
     }
 
     /**

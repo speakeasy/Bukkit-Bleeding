@@ -4,7 +4,11 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-public class InventoryActionEvent extends InventoryEvent {
+/**
+ * An abstract base for the various types of actions a HumanEntity can do in
+ * an Inventory.
+ */
+public abstract class InventoryActionEvent extends InventoryEvent {
     protected final ClickAction action;
 
     public enum ClickAction {
@@ -84,6 +88,10 @@ public class InventoryActionEvent extends InventoryEvent {
         return getView().getCursor();
     }
 
+    /**
+     * Get the ClickAction this event is for.
+     * @return the type of inventory action
+     */
     public ClickAction getAction() {
         return action;
     }
@@ -110,6 +118,10 @@ public class InventoryActionEvent extends InventoryEvent {
         return (action == ClickAction.SHIFT_LEFT) || (action == ClickAction.SHIFT_RIGHT) || (action == ClickAction.CONTROL_DROP);
     }
 
+    public boolean isKeyboardClick() {
+        return (action == ClickAction.NUMBER_KEY) || (action == ClickAction.DROP) || (action == ClickAction.CONTROL_DROP);
+    }
+
     /**
      * Some click events are only permitted in Creative mode.
      * @return True if this action normally requires Creative mode
@@ -127,7 +139,7 @@ public class InventoryActionEvent extends InventoryEvent {
     }
 
     /**
-     * Alias for {@link #getWhoClicked()}
+     * Convenience alias for {@link #getWhoClicked()}
      */
     public HumanEntity getPlayer() {
         return getView().getPlayer();
