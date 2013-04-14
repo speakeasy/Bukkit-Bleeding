@@ -8,8 +8,18 @@ import org.bukkit.inventory.Recipe;
 public class CraftItemEvent extends InventoryClickEvent {
     private Recipe recipe;
 
+    @Deprecated
     public CraftItemEvent(Recipe recipe, InventoryView what, SlotType type, int slot, boolean right, boolean shift) {
-        super(what, type, slot, right, shift);
+        this(recipe, what, type, slot, right ? (shift ? ClickType.SHIFT_RIGHT : ClickType.RIGHT) : (shift ? ClickType.SHIFT_LEFT : ClickType.LEFT));
+    }
+
+    public CraftItemEvent(Recipe recipe, InventoryView what, SlotType type, int slot, ClickType action) {
+        super(what, type, slot, action);
+        this.recipe = recipe;
+    }
+
+    public CraftItemEvent(Recipe recipe, InventoryView what, SlotType type, int slot, int key) {
+        super(what, type, slot, key);
         this.recipe = recipe;
     }
 
