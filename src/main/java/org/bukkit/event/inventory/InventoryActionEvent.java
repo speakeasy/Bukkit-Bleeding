@@ -80,6 +80,33 @@ public abstract class InventoryActionEvent extends InventoryEvent {
      * This enum is reserved for future expansion of the event.
      */
     public enum InventoryAction {
+        NOTHING,
+        PICKUP_ALL,
+        PICKUP_SOME,
+        PICKUP_HALF,
+        PICKUP_ONE,
+        PLACE_ALL,
+        PLACE_SOME,
+        PLACE_ONE,
+        DROP_ALL_CURSOR,
+        DROP_ONE_CURSOR,
+        MOVE_TO_TOP_STARTING_AT_TOP_LEFT,
+        MOVE_TO_TOP_STARTING_AT_BOTTOM_RIGHT,
+        MOVE_TO_BOTTOM_STARTING_AT_TOP_LEFT,
+        MOVE_TO_BOTTOM_STARTING_AT_BOTTOM_RIGHT,
+        HOTBAR_MOVE_AND_READD,
+        HOTBAR_SWAP,
+        CLONE_STACK,
+        DROP_ALL_SLOT,
+        DROP_ONE_SLOT,
+        COLLECT_STACK_TO_CURSOR,
+        RESET_DRAG_STATE,
+        BEGIN_DRAG,
+        DRAG_ADD_SLOT,
+        FINISH_DRAG,
+        PLACE_SINGLE_IN_MULTIPLE_SLOTS,
+        PLACE_MULTIPLE_IN_MULTIPLE_SLOTS,
+        ;
     }
 
     public InventoryActionEvent(InventoryView transaction, ClickType action) {
