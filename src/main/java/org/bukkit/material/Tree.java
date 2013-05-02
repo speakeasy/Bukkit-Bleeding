@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
 import org.bukkit.block.BlockFace;
@@ -54,6 +56,7 @@ public class Tree extends MaterialData {
      * @param species New species of this tree
      */
     public void setSpecies(TreeSpecies species) {
+        Validate.notNull(species, "Species cannot be null");
         setData((byte) ((getData() & 0xC) | species.getData()));
     }
 
@@ -80,6 +83,7 @@ public class Tree extends MaterialData {
      * @param dir - direction of end of log (BlockFace.SELF for no direction)
      */
     public void setDirection(BlockFace dir) {
+        Validate.notNull(dir, "Direction cannot be null");
         int dat;
         switch (dir) {
             case UP:

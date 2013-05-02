@@ -4,6 +4,8 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * Represents a type of creature.
  * @deprecated Use EntityType instead.
@@ -86,6 +88,7 @@ public enum CreatureType {
     }
 
     public static CreatureType fromEntityType(EntityType creatureType) {
+        Validate.notNull(creatureType, "Creature type cannot be null");
         return fromName(creatureType.getName());
     }
 }

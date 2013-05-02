@@ -95,6 +95,7 @@ public class ShapelessRecipe implements Recipe {
      * @return The changed recipe, so you can chain calls.
      */
     public ShapelessRecipe addIngredient(int count, Material ingredient, int rawdata) {
+        Validate.notNull(ingredient, "Ingredient cannot be null");
         Validate.isTrue(ingredients.size() + count <= 9, "Shapeless recipes cannot have more than 9 ingredients");
 
         // -1 is the old wildcard, map to Short.MAX_VALUE as the new one

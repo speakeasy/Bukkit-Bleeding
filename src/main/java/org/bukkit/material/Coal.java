@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.CoalType;
 import org.bukkit.Material;
 
@@ -47,6 +49,7 @@ public class Coal extends MaterialData {
      * @param type New type of this coal
      */
     public void setType(CoalType type) {
+        Validate.notNull(type, "Type cannot be null");
         setData(type.getData());
     }
 

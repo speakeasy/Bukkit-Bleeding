@@ -1,5 +1,7 @@
 package org.bukkit.event;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredListener;
 
@@ -102,6 +104,7 @@ public class HandlerList {
      * @param listener listener to register
      */
     public synchronized void register(RegisteredListener listener) {
+        Validate.notNull(listener, "Listener cannot be null");
         if (handlerslots.get(listener.getPriority()).contains(listener))
             throw new IllegalStateException("This listener is already registered to priority " + listener.getPriority().toString());
         handlers = null;
@@ -114,6 +117,7 @@ public class HandlerList {
      * @param listeners listeners to register
      */
     public void registerAll(Collection<RegisteredListener> listeners) {
+        Validate.notNull(listeners, "Listeners collection cannot be null");
         for (RegisteredListener listener : listeners) {
             register(listener);
         }

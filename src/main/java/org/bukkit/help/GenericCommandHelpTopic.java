@@ -1,11 +1,12 @@
 package org.bukkit.help;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.command.defaults.VanillaCommand;
 import org.bukkit.help.HelpTopic;
 
@@ -19,6 +20,7 @@ public class GenericCommandHelpTopic extends HelpTopic {
     protected Command command;
 
     public GenericCommandHelpTopic(Command command) {
+        Validate.notNull(command, "Command cannot be null");
         this.command = command;
 
         if (command.getLabel().startsWith("/")) {

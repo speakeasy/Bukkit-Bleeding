@@ -1,6 +1,8 @@
 package org.bukkit.util;
 
 import java.util.Map;
+
+import org.apache.commons.lang.Validate;
 import org.bukkit.configuration.serialization.SerializableAs;
 
 /**
@@ -109,6 +111,7 @@ public class BlockVector extends Vector {
     }
 
     public static BlockVector deserialize(Map<String, Object> args) {
+        Validate.notNull(args, "Args cannot be null");
         double x = 0;
         double y = 0;
         double z = 0;

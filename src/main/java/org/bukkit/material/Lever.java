@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
 
@@ -84,6 +86,7 @@ public class Lever extends SimpleAttachableMaterialData implements Redstone {
      * Sets the direction this lever is pointing in
      */
     public void setFacingDirection(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         byte data = (byte) (getData() & 0x8);
         BlockFace attach = getAttachedFace();
 

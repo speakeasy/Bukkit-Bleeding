@@ -133,6 +133,7 @@ public abstract class Command {
      * @return true if they can use it, otherwise false
      */
     public boolean testPermission(CommandSender target) {
+        Validate.notNull(target, "Target cannot be null");
         if (testPermissionSilent(target)) {
             return true;
         }
@@ -157,6 +158,7 @@ public abstract class Command {
      * @return true if they can use it, otherwise false
      */
     public boolean testPermissionSilent(CommandSender target) {
+        Validate.notNull(target, "Target cannot be null");
         if ((permission == null) || (permission.length() == 0)) {
             return true;
         }
@@ -188,6 +190,7 @@ public abstract class Command {
      * @return returns true if the name change happened instantly or false if it was scheduled for reregistration
      */
     public boolean setLabel(String name) {
+        Validate.notNull(name, "Name cannot be null");
         this.nextLabel = name;
         if (!isRegistered()) {
             this.label = name;
@@ -285,6 +288,7 @@ public abstract class Command {
      * @return This command object, for linking
      */
     public Command setAliases(List<String> aliases) {
+        Validate.notNull(aliases, "Aliases list cannot be null");
         this.aliases = aliases;
         if (!isRegistered()) {
             this.activeAliases = new ArrayList<String>(aliases);
@@ -299,6 +303,7 @@ public abstract class Command {
      * @return This command object, for linking
      */
     public Command setDescription(String description) {
+        Validate.notNull(description, "Description cannot be null");
         this.description = description;
         return this;
     }
@@ -321,6 +326,7 @@ public abstract class Command {
      * @return This command object, for linking
      */
     public Command setUsage(String usage) {
+        Validate.notNull(usage, "Usage cannot be null");
         this.usageMessage = usage;
         return this;
     }
@@ -330,6 +336,7 @@ public abstract class Command {
     }
 
     public static void broadcastCommandMessage(CommandSender source, String message, boolean sendToSource) {
+        Validate.notNull(source, "Source cannot be null");
         String result = source.getName() + ": " + message;
 
         if (source instanceof BlockCommandSender && ((BlockCommandSender) source).getBlock().getWorld().getGameRuleValue("commandBlockOutput").equalsIgnoreCase("false")) {

@@ -72,6 +72,7 @@ public class ShapedRecipe implements Recipe {
      * @return The changed recipe, so you can chain calls.
      */
     public ShapedRecipe setIngredient(char key, MaterialData ingredient) {
+        Validate.notNull(ingredient, "Ingredient cannot be null");
         return setIngredient(key, ingredient.getItemType(), ingredient.getData());
     }
 
@@ -95,6 +96,7 @@ public class ShapedRecipe implements Recipe {
      * @return The changed recipe, so you can chain calls.
      */
     public ShapedRecipe setIngredient(char key, Material ingredient, int raw) {
+        Validate.notNull(ingredient, "Ingredient cannot be null");
         Validate.isTrue(ingredients.containsKey(key), "Symbol does not appear in the shape:", key);
 
         // -1 is the old wildcard, map to Short.MAX_VALUE as the new one

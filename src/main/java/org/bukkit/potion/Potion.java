@@ -138,8 +138,8 @@ public class Potion {
      * @param to The itemstack to apply to
      */
     public void apply(ItemStack to) {
-        Validate.notNull(to, "itemstack cannot be null");
-        Validate.isTrue(to.getType() == Material.POTION, "given itemstack is not a potion");
+        Validate.notNull(to, "Itemstack cannot be null");
+        Validate.isTrue(to.getType() == Material.POTION, "Given itemstack is not a potion");
         to.setDurability(toDamageValue());
     }
 
@@ -151,7 +151,7 @@ public class Potion {
      * @param to The entity to apply the effects to
      */
     public void apply(LivingEntity to) {
-        Validate.notNull(to, "entity cannot be null");
+        Validate.notNull(to, "Entity cannot be null");
         to.addPotionEffects(getEffects());
     }
 
@@ -266,7 +266,7 @@ public class Potion {
      */
     @Deprecated
     public void setTier(Tier tier) {
-        Validate.notNull(tier, "tier cannot be null");
+        Validate.notNull(tier, "Tier cannot be null");
         this.level = (tier == Tier.TWO ? 2 : 1);
     }
 
@@ -384,8 +384,7 @@ public class Potion {
 
     public static Potion fromItemStack(ItemStack item) {
         Validate.notNull(item, "item cannot be null");
-        if (item.getType() != Material.POTION)
-            throw new IllegalArgumentException("item is not a potion");
+        Validate.isTrue(item.getType() == Material.POTION, "Item is not a potion");
         return fromDamage(item.getDurability());
     }
 
@@ -405,8 +404,7 @@ public class Potion {
      * @param other The new PotionBrewer
      */
     public static void setPotionBrewer(PotionBrewer other) {
-        if (brewer != null)
-            throw new IllegalArgumentException("brewer can only be set internally");
+        Validate.isTrue(brewer == null, "Brewer can only be set internally");
         brewer = other;
     }
 

@@ -130,6 +130,7 @@ public class Note {
      * @param sharped Set if the tone is sharped (e.g. for F#).
      */
     public Note(int octave, Tone tone, boolean sharped) {
+        Validate.notNull(tone, "Tone cannot be null");
         if (sharped && !tone.isSharpable()) {
             tone = Tone.values()[tone.ordinal() + 1];
             sharped = false;
@@ -149,6 +150,7 @@ public class Note {
      * @return The new note.
      */
     public static Note flat(int octave, Tone tone) {
+        Validate.notNull(tone, "Tone cannot be null");
         Validate.isTrue(octave != 2, "Octave cannot be 2 for flats");
         tone = tone == Tone.G ? Tone.F : Tone.values()[tone.ordinal() - 1];
         return new Note(octave, tone, tone.isSharpable());

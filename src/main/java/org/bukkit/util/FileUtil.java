@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * Class containing file utilities
  */
@@ -21,6 +23,7 @@ public class FileUtil {
      */
 
     public static boolean copy(File inFile, File outFile) {
+        Validate.notNull(inFile, "Source file cannot be null");
         if (!inFile.exists()) {
             return false;
         }

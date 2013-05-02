@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
@@ -38,6 +40,7 @@ public class Skull extends MaterialData implements Directional {
     }
 
     public void setFacingDirection(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         int data;
 
         switch (face) {

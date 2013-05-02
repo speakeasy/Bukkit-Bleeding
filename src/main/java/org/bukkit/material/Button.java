@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
 
@@ -76,6 +78,7 @@ public class Button extends SimpleAttachableMaterialData implements Redstone {
      * Sets the direction this button is pointing toward
      */
     public void setFacingDirection(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         byte data = (byte) (getData() & 0x8);
 
         switch (face) {

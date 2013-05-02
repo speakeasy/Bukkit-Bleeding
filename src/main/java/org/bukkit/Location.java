@@ -1,5 +1,7 @@
 package org.bukkit;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.block.Block;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
@@ -232,9 +234,7 @@ public class Location implements Cloneable {
      * @throws IllegalArgumentException for differing worlds
      */
     public Location add(Location vec) {
-        if (vec == null || vec.getWorld() != getWorld()) {
-            throw new IllegalArgumentException("Cannot add Locations of differing worlds");
-        }
+        Validate.isTrue(vec != null && vec.getWorld() == getWorld(), "Cannot add Locations of differing worlds");
 
         x += vec.x;
         y += vec.y;
@@ -250,6 +250,7 @@ public class Location implements Cloneable {
      * @return the same location
      */
     public Location add(Vector vec) {
+        Validate.notNull(vec, "Vector cannot be null");
         this.x += vec.getX();
         this.y += vec.getY();
         this.z += vec.getZ();
@@ -281,9 +282,7 @@ public class Location implements Cloneable {
      * @throws IllegalArgumentException for differing worlds
      */
     public Location subtract(Location vec) {
-        if (vec == null || vec.getWorld() != getWorld()) {
-            throw new IllegalArgumentException("Cannot add Locations of differing worlds");
-        }
+        Validate.isTrue(vec != null && vec.getWorld() == getWorld(), "Cannot add Locations of differing worlds");
 
         x -= vec.x;
         y -= vec.y;
@@ -299,6 +298,7 @@ public class Location implements Cloneable {
      * @return the same location
      */
     public Location subtract(Vector vec) {
+        Validate.notNull(vec, "Vector cannot be null");
         this.x -= vec.getX();
         this.y -= vec.getY();
         this.z -= vec.getZ();

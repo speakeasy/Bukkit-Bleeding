@@ -2,6 +2,9 @@ package org.bukkit.permissions;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -14,11 +17,8 @@ public class PermissionAttachment {
     private final Plugin plugin;
 
     public PermissionAttachment(Plugin plugin, Permissible Permissible) {
-        if (plugin == null) {
-            throw new IllegalArgumentException("Plugin cannot be null");
-        } else if (!plugin.isEnabled()) {
-            throw new IllegalArgumentException("Plugin " + plugin.getDescription().getFullName() + " is disabled");
-        }
+        Validate.notNull(plugin, "Plugin cannot be null");
+        Validate.isTrue(plugin.isEnabled(),"Plugin " + plugin.getDescription().getFullName() + " is disabled");
 
         this.permissible = Permissible;
         this.plugin = plugin;
@@ -78,6 +78,7 @@ public class PermissionAttachment {
      * @param value New value of the permission
      */
     public void setPermission(String name, boolean value) {
+        Validate.notNull(name, "Name cannot be null");
         permissions.put(name.toLowerCase(), value);
         permissible.recalculatePermissions();
     }
@@ -89,6 +90,7 @@ public class PermissionAttachment {
      * @param value New value of the permission
      */
     public void setPermission(Permission perm, boolean value) {
+        Validate.notNull(perm, "Permission cannot be null");
         setPermission(perm.getName(), value);
     }
 
@@ -100,6 +102,7 @@ public class PermissionAttachment {
      * @param name Name of the permission to remove
      */
     public void unsetPermission(String name) {
+        Validate.notNull(name, "Name cannot be null");
         permissions.remove(name.toLowerCase());
         permissible.recalculatePermissions();
     }
@@ -112,6 +115,7 @@ public class PermissionAttachment {
      * @param perm Permission to remove
      */
     public void unsetPermission(Permission perm) {
+        Validate.notNull(perm, "Permission cannot be null");
         unsetPermission(perm.getName());
     }
 

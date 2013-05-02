@@ -1,6 +1,9 @@
 package org.bukkit;
 
 import java.util.Random;
+
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
@@ -22,9 +25,7 @@ public class WorldCreator {
      * @param name Name of the world that will be created
      */
     public WorldCreator(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("World name cannot be null");
-        }
+        Validate.notNull(name, "World name cannot be null");
 
         this.name = name;
         this.seed = (new Random()).nextLong();
@@ -37,9 +38,7 @@ public class WorldCreator {
      * @return This object, for chaining
      */
     public WorldCreator copy(World world) {
-        if (world == null) {
-            throw new IllegalArgumentException("World cannot be null");
-        }
+        Validate.notNull(world, "World cannot be null");
 
         seed = world.getSeed();
         environment = world.getEnvironment();
@@ -55,9 +54,7 @@ public class WorldCreator {
      * @return This object, for chaining
      */
     public WorldCreator copy(WorldCreator creator) {
-        if (creator == null) {
-            throw new IllegalArgumentException("Creator cannot be null");
-        }
+        Validate.notNull(creator, "Creator cannot be null");
 
         seed = creator.seed();
         environment = creator.environment();
@@ -263,9 +260,7 @@ public class WorldCreator {
     public static ChunkGenerator getGeneratorForName(String world, String name, CommandSender output) {
         ChunkGenerator result = null;
 
-        if (world == null) {
-            throw new IllegalArgumentException("World name must be specified");
-        }
+        Validate.notNull(world, "World name cannot be null");
 
         if (output == null) {
             output = Bukkit.getConsoleSender();

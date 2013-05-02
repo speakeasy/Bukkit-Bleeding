@@ -1,5 +1,7 @@
 package org.bukkit.permissions;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * Holds information on a permission and which {@link PermissionAttachment} provides it
  */
@@ -10,11 +12,8 @@ public class PermissionAttachmentInfo {
     private final boolean value;
 
     public PermissionAttachmentInfo(Permissible permissible, String permission, PermissionAttachment attachment, boolean value) {
-        if (permissible == null) {
-            throw new IllegalArgumentException("Permissible may not be null");
-        } else if (permission == null) {
-            throw new IllegalArgumentException("Permissions may not be null");
-        }
+        Validate.notNull(permissible, "Permissible may not be null");
+        Validate.notNull(permission, "Permissions may not be null");
 
         this.permissible = permissible;
         this.permission = permission;

@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
@@ -66,6 +68,7 @@ public class TripwireHook extends SimpleAttachableMaterialData implements Redsto
     }
 
     public void setFacingDirection(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         int dat = getData() & 0xC;
         switch (face) {
         case WEST:

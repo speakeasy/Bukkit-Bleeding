@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
@@ -57,6 +59,7 @@ public class CocoaPlant extends MaterialData implements Directional, Attachable 
      * @param sz - size of plant
      */
     public void setSize(CocoaPlantSize sz) {
+        Validate.notNull(sz, "Size cannot be null");
         int dat = getData() & 0x3;
         switch (sz) {
             case SMALL:
@@ -76,6 +79,7 @@ public class CocoaPlant extends MaterialData implements Directional, Attachable 
     }
 
     public void setFacingDirection(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         int dat = getData() & 0xC;
         switch (face) {
             default:

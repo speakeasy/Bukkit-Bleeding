@@ -3,6 +3,8 @@ package org.bukkit.permissions;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * Represents the possible default values for permissions
  */
@@ -47,6 +49,7 @@ public enum PermissionDefault {
      * @return Specified value, or null if not found
      */
     public static PermissionDefault getByName(String name) {
+        Validate.notNull(name, "Name cannot be null");
         return lookup.get(name.toLowerCase().replaceAll("[^a-z!]", ""));
     }
 

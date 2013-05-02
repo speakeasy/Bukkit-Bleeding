@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.SandstoneType;
 
@@ -47,6 +49,7 @@ public class Sandstone extends MaterialData {
      * @param type New type of this sandstone
      */
     public void setType(SandstoneType type) {
+        Validate.notNull(type, "Type cannot be null");
         setData(type.getData());
     }
 

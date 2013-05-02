@@ -1,5 +1,7 @@
 package org.bukkit.enchantments;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -157,6 +159,7 @@ public enum EnchantmentTarget {
      * @return True if the target includes the item
      */
     public boolean includes(ItemStack item) {
+        Validate.notNull(item, "Item cannot be null");
         return includes(item.getType());
     }
 }

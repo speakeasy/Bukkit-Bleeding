@@ -1,5 +1,7 @@
 package org.bukkit.inventory;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.material.MaterialData;
 
@@ -49,6 +51,7 @@ public class FurnaceRecipe implements Recipe {
      * @return The changed recipe, so you can chain calls.
      */
     public FurnaceRecipe setInput(MaterialData input) {
+        Validate.notNull(input, "Input cannot be null");
         return setInput(input.getItemType(), input.getData());
     }
 

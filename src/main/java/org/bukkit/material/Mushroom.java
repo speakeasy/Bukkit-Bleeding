@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
@@ -56,6 +57,7 @@ public class Mushroom extends MaterialData {
      * @return True if it is painted.
      */
     public boolean isFacePainted(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         byte data = getData();
 
         if (data == SHROOM_NONE || data == SHROOM_STEM) {
@@ -85,6 +87,7 @@ public class Mushroom extends MaterialData {
      * @param painted True if you want to paint it, false if you want the pores to show.
      */
     public void setFacePainted(BlockFace face, boolean painted) {
+        Validate.notNull(face, "Face cannot be null");
         if (painted == isFacePainted(face)) {
             return;
         }

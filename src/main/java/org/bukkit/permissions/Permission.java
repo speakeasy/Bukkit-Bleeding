@@ -103,9 +103,7 @@ public class Permission {
      * @param value The new default to set
      */
     public void setDefault(PermissionDefault value) {
-        if (defaultValue == null) {
-            throw new IllegalArgumentException("Default value cannot be null");
-        }
+        Validate.notNull(value, "Default value cannot be null");
 
         defaultValue = value;
         recalculatePermissibles();
@@ -171,6 +169,7 @@ public class Permission {
      * @return Parent permission it created or loaded
      */
     public Permission addParent(String name, boolean value) {
+        Validate.notNull(name, "Parent name cannot be null");
         PluginManager pm = Bukkit.getServer().getPluginManager();
         String lname = name.toLowerCase();
 
@@ -193,6 +192,7 @@ public class Permission {
      * @param value The value to set this permission to
      */
     public void addParent(Permission perm, boolean value) {
+        Validate.notNull(perm, "Parent permission cannot be null");
         perm.getChildren().put(getName(), value);
         perm.recalculatePermissibles();
     }
@@ -211,6 +211,8 @@ public class Permission {
      * @return Permission object
      */
     public static List<Permission> loadPermissions(Map<?, ?> data, String error, PermissionDefault def) {
+        Validate.notNull(data, "Data cannot be null");
+        Validate.notNull(def, "Permission default cannot be null");
         List<Permission> result = new ArrayList<Permission>();
 
         for (Map.Entry<?, ?> entry : data.entrySet()) {
@@ -257,6 +259,7 @@ public class Permission {
     public static Permission loadPermission(String name, Map<?, ?> data, PermissionDefault def, List<Permission> output) {
         Validate.notNull(name, "Name cannot be null");
         Validate.notNull(data, "Data cannot be null");
+        Validate.notNull(def, "Permission default cannot be null");
 
         String desc = null;
         Map<String, Boolean> children = null;

@@ -3,6 +3,8 @@ package org.bukkit.enchantments;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.command.defaults.EnchantCommand;
 import org.bukkit.inventory.ItemStack;
 
@@ -216,6 +218,7 @@ public abstract class Enchantment {
      * @param enchantment Enchantment to register
      */
     public static void registerEnchantment(Enchantment enchantment) {
+        Validate.notNull(enchantment, "Enchantment cannot be null");
         if (byId.containsKey(enchantment.id) || byName.containsKey(enchantment.getName())) {
             throw new IllegalArgumentException("Cannot set already-set enchantment");
         } else if (!isAcceptingRegistrations()) {

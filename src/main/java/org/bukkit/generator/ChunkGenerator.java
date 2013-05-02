@@ -3,6 +3,9 @@ package org.bukkit.generator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -199,6 +202,7 @@ public abstract class ChunkGenerator {
      * @return true if the location is valid, otherwise false
      */
     public boolean canSpawn(World world, int x, int z) {
+        Validate.notNull(world, "World cannot be null");
         Block highest = world.getBlockAt(x, world.getHighestBlockYAt(x, z), z);
 
         switch (world.getEnvironment()) {

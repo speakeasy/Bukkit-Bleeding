@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
 
@@ -56,6 +58,7 @@ public class Ladder extends SimpleAttachableMaterialData {
      * Sets the direction this ladder is facing
      */
     public void setFacingDirection(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         byte data = (byte) 0x0;
 
         switch (face) {

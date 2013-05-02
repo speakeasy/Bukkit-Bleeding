@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * Represents the palette that map items use.
  */
@@ -87,6 +89,7 @@ public final class MapPalette {
      * @return A byte[] containing the pixels of the image.
      */
     public static byte[] imageToBytes(Image image) {
+        Validate.notNull(image, "Image cannot be null");
         BufferedImage temp = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = temp.createGraphics();
         graphics.drawImage(image, 0, 0, null);
@@ -121,6 +124,7 @@ public final class MapPalette {
      * @return The index in the palette.
      */
     public static byte matchColor(Color color) {
+        Validate.notNull(color, "Color cannot be null");
         if (color.getAlpha() < 128) return 0;
 
         int index = 0;

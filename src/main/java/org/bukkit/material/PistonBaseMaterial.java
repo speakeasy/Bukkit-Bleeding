@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
@@ -24,6 +26,7 @@ public class PistonBaseMaterial extends MaterialData implements Directional, Red
     }
 
     public void setFacingDirection(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         byte data = (byte) (getData() & 0x8);
 
         switch (face) {

@@ -494,6 +494,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @see ConfigurationSerializable
      */
     public static ItemStack deserialize(Map<String, Object> args) {
+        Validate.notNull(args, "Args cannot be null");
         Material type = Material.getMaterial((String) args.get("type"));
         short damage = 0;
         int amount = 1;

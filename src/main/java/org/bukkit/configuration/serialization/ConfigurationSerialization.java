@@ -101,7 +101,7 @@ public class ConfigurationSerialization {
     }
 
     public ConfigurationSerializable deserialize(Map<String, Object> args) {
-        Validate.notNull(args, "Args must not be null");
+        Validate.notNull(args, "Args cannot be null");
 
         ConfigurationSerializable result = null;
         Method method = null;
@@ -163,6 +163,7 @@ public class ConfigurationSerialization {
      * @return New instance of the specified class
      */
     public static ConfigurationSerializable deserializeObject(Map<String, Object> args) {
+        Validate.notNull(args, "Args cannot be null");
         Class<? extends ConfigurationSerializable> clazz = null;
 
         if (args.containsKey(SERIALIZED_TYPE_KEY)) {
@@ -193,6 +194,7 @@ public class ConfigurationSerialization {
      * @param clazz Class to register
      */
     public static void registerClass(Class<? extends ConfigurationSerializable> clazz) {
+        Validate.notNull(clazz, "Class cannot be null");
         DelegateDeserialization delegate = clazz.getAnnotation(DelegateDeserialization.class);
 
         if (delegate == null) {
@@ -249,6 +251,7 @@ public class ConfigurationSerialization {
      * @return Alias to use for the class
      */
     public static String getAlias(Class<? extends ConfigurationSerializable> clazz) {
+        Validate.notNull(clazz, "Class cannot be null");
         DelegateDeserialization delegate = clazz.getAnnotation(DelegateDeserialization.class);
 
         if (delegate != null) {

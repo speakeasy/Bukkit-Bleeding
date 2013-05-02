@@ -2,6 +2,8 @@ package org.bukkit.map;
 
 import java.util.HashMap;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * Represents a bitmap font drawable to a map.
  */
@@ -19,6 +21,7 @@ public class MapFont {
      * @throws IllegalStateException if this font is static.
      */
     public void setChar(char ch, CharacterSprite sprite) {
+        Validate.notNull(sprite, "Sprite cannot be null");
         if (!malleable) {
             throw new IllegalStateException("this font is not malleable");
         }
@@ -73,6 +76,7 @@ public class MapFont {
      * @return True if the string contains only defined characters, false otherwise.
      */
     public boolean isValid(String text) {
+        Validate.notNull(text, "Text cannot be null");
         for (int i = 0; i < text.length(); ++i) {
             char ch = text.charAt(i);
             if (ch == '\u00A7' || ch == '\n') continue;

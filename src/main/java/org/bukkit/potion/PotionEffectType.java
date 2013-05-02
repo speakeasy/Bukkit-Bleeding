@@ -206,7 +206,7 @@ public abstract class PotionEffectType {
      * @return Resulting PotionEffectType, or null if not found.
      */
     public static PotionEffectType getByName(String name) {
-        Validate.notNull(name, "name cannot be null");
+        Validate.notNull(name, "Name cannot be null");
         return byName.get(name.toLowerCase());
     }
 

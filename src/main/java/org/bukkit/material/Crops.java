@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.CropState;
 import org.bukkit.Material;
 
@@ -47,6 +49,7 @@ public class Crops extends MaterialData {
      * @param state New growth state of this crop
      */
     public void setState(CropState state) {
+        Validate.notNull(state, "State cannot be null");
         setData(state.getData());
     }
 

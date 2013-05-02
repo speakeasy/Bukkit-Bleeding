@@ -65,6 +65,7 @@ public final class SimplePluginManager implements PluginManager {
      * @throws IllegalArgumentException Thrown when the given Class is not a valid PluginLoader
      */
     public void registerInterface(Class<? extends PluginLoader> loader) throws IllegalArgumentException {
+        Validate.notNull(loader, "Plugin loader cannot be null");
         PluginLoader instance;
 
         if (PluginLoader.class.isAssignableFrom(loader)) {
@@ -370,6 +371,7 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public void enablePlugin(final Plugin plugin) {
+        Validate.notNull(plugin, "Plugin cannot be null");
         if (!plugin.isEnabled()) {
             List<Command> pluginCommands = PluginCommandYamlParser.parse(plugin);
 
@@ -395,6 +397,7 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public void disablePlugin(final Plugin plugin) {
+        Validate.notNull(plugin, "Plugin cannot be null");
         if (plugin.isEnabled()) {
             try {
                 plugin.getPluginLoader().disablePlugin(plugin);
@@ -449,6 +452,7 @@ public final class SimplePluginManager implements PluginManager {
      * @param event Event details
      */
     public void callEvent(Event event) {
+        Validate.notNull(event, "Event cannot be null");
         if (event.isAsynchronous()) {
             if (Thread.holdsLock(this)) {
                 throw new IllegalStateException(event.getEventName() + " cannot be triggered asynchronously from inside synchronized code.");
@@ -495,6 +499,8 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public void registerEvents(Listener listener, Plugin plugin) {
+        Validate.notNull(listener, "Listener cannot be null");
+        Validate.notNull(plugin, "Plugin cannot be null");
         if (!plugin.isEnabled()) {
             throw new IllegalPluginAccessException("Plugin attempted to register " + listener + " while not enabled");
         }
@@ -562,10 +568,12 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public Permission getPermission(String name) {
+        Validate.notNull(name, "Permission name cannot be null");
         return permissions.get(name.toLowerCase());
     }
 
     public void addPermission(Permission perm) {
+        Validate.notNull(perm, "Permission cannot be null");
         String name = perm.getName().toLowerCase();
 
         if (permissions.containsKey(name)) {
@@ -581,14 +589,17 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public void removePermission(Permission perm) {
+        Validate.notNull(perm, "Permission cannot be null");
         removePermission(perm.getName());
     }
 
     public void removePermission(String name) {
+        Validate.notNull(name, "Permission name cannot be null");
         permissions.remove(name.toLowerCase());
     }
 
     public void recalculatePermissionDefaults(Permission perm) {
+        Validate.notNull(perm, "Permission cannot be null");
         if (permissions.containsValue(perm)) {
             defaultPerms.get(true).remove(perm);
             defaultPerms.get(false).remove(perm);
@@ -617,6 +628,8 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public void subscribeToPermission(String permission, Permissible permissible) {
+        Validate.notNull(permission, "Permission name cannot be null");
+        Validate.notNull(permissible, "Permissible cannot be null");
         String name = permission.toLowerCase();
         Map<Permissible, Boolean> map = permSubs.get(name);
 
@@ -629,6 +642,8 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public void unsubscribeFromPermission(String permission, Permissible permissible) {
+        Validate.notNull(permission, "Permission name cannot be null");
+        Validate.notNull(permissible, "Permissible cannot be null");
         String name = permission.toLowerCase();
         Map<Permissible, Boolean> map = permSubs.get(name);
 
@@ -642,6 +657,7 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public Set<Permissible> getPermissionSubscriptions(String permission) {
+        Validate.notNull(permission, "Permission name cannot be null");
         String name = permission.toLowerCase();
         Map<Permissible, Boolean> map = permSubs.get(name);
 
@@ -653,6 +669,7 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public void subscribeToDefaultPerms(boolean op, Permissible permissible) {
+        Validate.notNull(permissible, "Permissible cannot be null");
         Map<Permissible, Boolean> map = defSubs.get(op);
 
         if (map == null) {
@@ -664,6 +681,7 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public void unsubscribeFromDefaultPerms(boolean op, Permissible permissible) {
+        Validate.notNull(permissible, "Permissible cannot be null");
         Map<Permissible, Boolean> map = defSubs.get(op);
 
         if (map != null) {

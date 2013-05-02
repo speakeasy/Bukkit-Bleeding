@@ -3,6 +3,8 @@ package org.bukkit;
 import com.google.common.collect.Maps;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * Represents various types of worlds that may exist
  */
@@ -35,6 +37,7 @@ public enum WorldType {
      * @return Requested WorldType, or null if not found
      */
     public static WorldType getByName(String name) {
+        Validate.notNull(name, "Name cannot be null");
         return BY_NAME.get(name.toUpperCase());
     }
 

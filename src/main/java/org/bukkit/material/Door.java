@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
@@ -96,6 +98,7 @@ public class Door extends MaterialData implements Directional, Openable {
      */
     @Deprecated
     public void setFacingDirection(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         byte data = (byte) (getData() & 0x12);
         switch (face) {
         case NORTH:

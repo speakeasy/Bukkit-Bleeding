@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.NetherWartsState;
 
@@ -56,6 +58,7 @@ public class NetherWarts extends MaterialData {
      * @param state New growth state of this nether wart
      */
     public void setState(NetherWartsState state) {
+        Validate.notNull(state, "State cannot be null");
         switch (state) {
             case SEEDED:
                 setData((byte) 0x0);

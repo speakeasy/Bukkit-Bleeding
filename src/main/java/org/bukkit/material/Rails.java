@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
@@ -115,6 +117,7 @@ public class Rails extends MaterialData {
      * @param isOnSlope whether or not the track should be on a slope
      */
     public void setDirection(BlockFace face, boolean isOnSlope) {
+        Validate.notNull(face, "Face cannot be null");
         switch (face) {
         case EAST:
             setData((byte) (isOnSlope ? 0x2 : 0x1));

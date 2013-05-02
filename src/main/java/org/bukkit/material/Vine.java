@@ -3,6 +3,8 @@ package org.bukkit.material;
 import java.util.Arrays;
 import java.util.EnumSet;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
@@ -65,6 +67,7 @@ public class Vine extends MaterialData {
      * @return Whether it is attached to that face.
      */
     public boolean isOnFace(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         switch (face) {
             case WEST:
                 return (getData() & VINE_WEST) == VINE_WEST;
@@ -95,6 +98,7 @@ public class Vine extends MaterialData {
      * @param face The face to attach.
      */
     public void putOnFace(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         switch(face) {
             case WEST:
                 setData((byte) (getData() | VINE_WEST));
@@ -137,6 +141,7 @@ public class Vine extends MaterialData {
      * @param face The face to detach.
      */
     public void removeFromFace(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         switch(face) {
             case WEST:
                 setData((byte) (getData() & ~VINE_WEST));

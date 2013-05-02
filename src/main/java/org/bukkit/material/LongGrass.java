@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.GrassSpecies;
 import org.bukkit.Material;
 
@@ -47,6 +49,7 @@ public class LongGrass extends MaterialData {
      * @param species New species of this grass
      */
     public void setSpecies(GrassSpecies species) {
+        Validate.notNull(species, "Species cannot be null");
         setData(species.getData());
     }
 

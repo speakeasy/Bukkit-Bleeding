@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
@@ -37,6 +39,7 @@ public class SpawnEgg extends MaterialData {
      * @param type The entity type.
      */
     public void setSpawnedType(EntityType type) {
+        Validate.notNull(type, "Type cannot be null");
         setData((byte) type.getTypeId());
     }
 

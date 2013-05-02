@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
 
@@ -132,6 +134,7 @@ public class Sign extends MaterialData implements Attachable {
     }
 
     public void setFacingDirection(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         byte data;
 
         if (isWallSign()) {

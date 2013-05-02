@@ -1,5 +1,7 @@
 package org.bukkit.plugin;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Bukkit;
 import org.bukkit.event.server.ServiceRegisterEvent;
 import org.bukkit.event.server.ServiceUnregisterEvent;
@@ -36,6 +38,10 @@ public class SimpleServicesManager implements ServicesManager {
      * @param priority priority of the provider
      */
     public <T> void register(Class<T> service, T provider, Plugin plugin, ServicePriority priority) {
+        Validate.notNull(service, "Service cannot be null");
+        Validate.notNull(provider, "Provider cannot be null");
+        Validate.notNull(plugin, "Plugin cannot be null");
+        Validate.notNull(priority, "Priority cannot be null");
         RegisteredServiceProvider<T> registeredProvider = null;
         synchronized (providers) {
             List<RegisteredServiceProvider<?>> registered = providers.get(service);
@@ -197,6 +203,7 @@ public class SimpleServicesManager implements ServicesManager {
      * @return provider or null
      */
     public <T> T load(Class<T> service) {
+        Validate.notNull(service, "Service cannot be null");
         synchronized (providers) {
             List<RegisteredServiceProvider<?>> registered = providers.get(service);
 

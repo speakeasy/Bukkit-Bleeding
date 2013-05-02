@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 
@@ -42,6 +44,7 @@ public class Dye extends MaterialData implements Colorable {
      * @param color New color of this dye
      */
     public void setColor(DyeColor color) {
+        Validate.notNull(color, "Color cannot be null");
         setData(color.getDyeData());
     }
 

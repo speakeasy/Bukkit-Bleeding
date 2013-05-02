@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
@@ -57,6 +59,7 @@ public class Stairs extends MaterialData implements Directional {
      * Set the direction the stair part of the block is facing
      */
     public void setFacingDirection(BlockFace face) {
+        Validate.notNull(face, "Face cannot be null");
         byte data;
 
         switch (face) {

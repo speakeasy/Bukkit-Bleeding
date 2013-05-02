@@ -343,6 +343,7 @@ public final class FireworkEffect implements ConfigurationSerializable {
      * @see ConfigurationSerializable
      */
     public static ConfigurationSerializable deserialize(Map<String, Object> map) {
+        Validate.notNull(map, "Map cannot be null");
         Type type = Type.valueOf((String) map.get(TYPE));
         if (type == null) {
             throw new IllegalArgumentException(map.get(TYPE) + " is not a valid Type");

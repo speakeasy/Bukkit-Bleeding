@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.GrassSpecies;
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
@@ -72,6 +74,7 @@ public class FlowerPot extends MaterialData {
      * @param materialData MaterialData of the block to put in the flower pot.
      */
     public void setContents(MaterialData materialData) {
+        Validate.notNull(materialData, "Contents cannot be null");
         Material mat = materialData.getItemType();
 
         if (mat == Material.RED_ROSE) {

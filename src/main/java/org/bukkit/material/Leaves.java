@@ -1,5 +1,7 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
 
@@ -47,6 +49,7 @@ public class Leaves extends MaterialData {
      * @param species New species of this leave
      */
     public void setSpecies(TreeSpecies species) {
+        Validate.notNull(species, "Species cannot be null");
         setData(species.getData());
     }
 

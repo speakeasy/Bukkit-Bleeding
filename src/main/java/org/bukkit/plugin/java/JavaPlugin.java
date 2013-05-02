@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -139,15 +141,11 @@ public abstract class JavaPlugin extends PluginBase {
     }
 
     public void saveResource(String resourcePath, boolean replace) {
-        if (resourcePath == null || resourcePath.equals("")) {
-            throw new IllegalArgumentException("ResourcePath cannot be null or empty");
-        }
+        Validate.isTrue((resourcePath != null && !resourcePath.equals("")), "ResourcePath cannot be null or empty");
 
         resourcePath = resourcePath.replace('\\', '/');
         InputStream in = getResource(resourcePath);
-        if (in == null) {
-            throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found in " + file);
-        }
+        Validate.isTrue(in != null, "The embedded resource '" + resourcePath + "' cannot be found in " + file);
 
         File outFile = new File(dataFolder, resourcePath);
         int lastIndex = resourcePath.lastIndexOf('/');
@@ -176,9 +174,7 @@ public abstract class JavaPlugin extends PluginBase {
     }
 
     public InputStream getResource(String filename) {
-        if (filename == null) {
-            throw new IllegalArgumentException("Filename cannot be null");
-        }
+        Validate.notNull(filename, "Filename cannot be null");
 
         try {
             URL url = getClassLoader().getResource(filename);
@@ -313,6 +309,7 @@ public abstract class JavaPlugin extends PluginBase {
      * @return PluginCommand if found, otherwise null
      */
     public PluginCommand getCommand(String name) {
+        Validate.notNull(name, "Name cannot be null");
         String alias = name.toLowerCase();
         PluginCommand command = getServer().getPluginCommand(alias);
 

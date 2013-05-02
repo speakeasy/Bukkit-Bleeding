@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
+
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.yaml.snakeyaml.Yaml;
@@ -39,6 +41,7 @@ public final class PluginDescriptionFile {
     private PermissionDefault defaultPerm = PermissionDefault.OP;
 
     public PluginDescriptionFile(final InputStream stream) throws InvalidDescriptionException {
+        Validate.notNull(stream, "Stream cannot be null");
         loadMap(asMap(yaml.load(stream)));
     }
 
@@ -49,6 +52,7 @@ public final class PluginDescriptionFile {
      * @throws InvalidDescriptionException If the PluginDescriptionFile is invalid
      */
     public PluginDescriptionFile(final Reader reader) throws InvalidDescriptionException {
+        Validate.notNull(reader, "Reader cannot be null");
         loadMap(asMap(yaml.load(reader)));
     }
 
@@ -60,6 +64,9 @@ public final class PluginDescriptionFile {
      * @param mainClass Full location of the main class of this plugin
      */
     public PluginDescriptionFile(final String pluginName, final String pluginVersion, final String mainClass) {
+        Validate.notNull(pluginName, "Plugin name cannot be null");
+        Validate.notNull(pluginVersion, "Plugin version cannot be null");
+        Validate.notNull(mainClass, "Plugin main class cannot be null");
         name = pluginName;
         version = pluginVersion;
         main = mainClass;
@@ -71,6 +78,7 @@ public final class PluginDescriptionFile {
      * @param writer Writer to output this file to
      */
     public void save(Writer writer) {
+        Validate.notNull(writer, "Writer cannot be null");
         yaml.dump(saveMap(), writer);
     }
 
