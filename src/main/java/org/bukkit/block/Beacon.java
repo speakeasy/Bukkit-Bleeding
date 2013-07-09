@@ -2,6 +2,7 @@ package org.bukkit.block;
 
 import java.util.Collection;
 
+import org.bukkit.inventory.BeaconInventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.potion.PotionEffect;
 
@@ -9,6 +10,11 @@ import org.bukkit.potion.PotionEffect;
  * Represents a beacon.
  */
 public interface Beacon extends BlockState, InventoryHolder {
+    /**
+     * Get the BeaconInventory.
+     */
+    public BeaconInventory getInventory();
+
     /**
      * Get the PotionEffects that are provided by this beacon while it is
      * active.
