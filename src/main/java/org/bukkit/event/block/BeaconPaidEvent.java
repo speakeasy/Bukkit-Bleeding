@@ -3,6 +3,9 @@ package org.bukkit.event.block;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.Validate;
+import org.bukkit.Material;
+import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -18,9 +21,9 @@ import com.google.common.collect.ImmutableList;
  */
 public class BeaconPaidEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private ImmutableList<PotionEffect> effects;
     private Player player;
     private boolean cancelled = false;
+    private List<PotionEffect> effects;
 
     public BeaconPaidEvent(final Block block, Player player, Collection<PotionEffect> newEffects) {
         super(block);
@@ -38,13 +41,34 @@ public class BeaconPaidEvent extends BlockEvent implements Cancellable {
     }
 
     /**
-     * Get the PotionEffects chosen by the player. (These have already been
-     * validated.)
+     * Get the Beacon involved in this event.
+     *
+     * @return the Beacon block state
+     */
+    public Beacon getState() {
+        if (block.getType() == Material.BEACON) {
+            return (Beacon) block.getState();
+        }
+        return null;
+    }
+
+    /**
+     * Get the new PotionEffects to put on the beacon.
      *
      * @return the PotionEffects to apply to the beacon
      */
-    public List<PotionEffect> getEffects() {
+    public List<PotionEffect> getNewEffects() {
         return effects;
+    }
+
+    /**
+     * Set the new PotionEffects to put on the beacon.
+     *
+     * @param newEffects new PotionEffects to apply to the beacon
+     */
+    public void setNewEffects(List<PotionEffect> newEffects) {
+        Validate.noNullElements(newEffects, "Cannot set null PotionEffects");
+        effects = newEffects;
     }
 
     public boolean isCancelled() {

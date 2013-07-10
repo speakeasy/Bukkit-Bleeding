@@ -28,15 +28,16 @@ public interface Beacon extends BlockState, InventoryHolder {
     /**
      * Set the PotionEffects provided by this beacon while it is active.
      * <p>
-     * The duration parameter for the provided effects is ignored.
+     * The duration and ambient parameters for the provided effects are
+     * ignored.
      *
      * @param newEffects PotionEffects to provide to players
      */
     public void setEffects(Collection<PotionEffect> newEffects);
 
     /**
-     * Remove any plugin-provided effects on this beacon and reset them to the
-     * default.
+     * Remove any plugin-provided effects on this beacon and revert them to
+     * the effects last paid for.
      *
      * @return the new effects the beacon is providing
      */
