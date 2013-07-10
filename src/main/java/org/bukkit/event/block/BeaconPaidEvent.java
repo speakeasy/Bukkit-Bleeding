@@ -11,6 +11,11 @@ import org.bukkit.potion.PotionEffect;
 
 import com.google.common.collect.ImmutableList;
 
+/**
+ * This event is called when a player pays to change a beacon. The payment
+ * will only be removed after the event if it is not cancelled, so it will
+ * still be in the {@link org.bukkit.inventory.BeaconInventory}.
+ */
 public class BeaconPaidEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private ImmutableList<PotionEffect> effects;
@@ -33,7 +38,8 @@ public class BeaconPaidEvent extends BlockEvent implements Cancellable {
     }
 
     /**
-     * Get the PotionEffects chosen by the player. (These have already been validated.)
+     * Get the PotionEffects chosen by the player. (These have already been
+     * validated.)
      *
      * @return the PotionEffects to apply to the beacon
      */
