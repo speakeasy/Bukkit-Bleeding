@@ -26,22 +26,31 @@ public interface Beacon extends BlockState, InventoryHolder {
     public Collection<PotionEffect> getEffects();
 
     /**
+     * Get the PotionEffects that were last set on this beacon by a non-plugin
+     * method.
+     *
+     * @return PotionEffects that would be provided if effects were reset
+     */
+    public Collection<PotionEffect> getDefaultEffects();
+
+    /**
      * Set the PotionEffects provided by this beacon while it is active.
      * <p>
      * The duration and ambient parameters for the provided effects are
      * ignored.
      *
      * @param newEffects PotionEffects to provide to players
+     * @see #resetEffects()
      */
     public void setEffects(Collection<PotionEffect> newEffects);
 
     /**
-     * Remove any plugin-provided effects on this beacon and revert them to
-     * the effects last paid for.
+     * Revert the effects this beacon is providing to the effects returned by
+     * {@link #getDefaultEffects()}.
      *
-     * @return the new effects the beacon is providing
+     * @see #setEffects(Collection)
      */
-    public Collection<PotionEffect> resetEffects();
+    public void resetEffects();
 
     /**
      * Whether this beacon is actively providing PotionEffects to players.
@@ -52,6 +61,68 @@ public interface Beacon extends BlockState, InventoryHolder {
      * @return if the beacon provided effects in the last cycle
      */
     public boolean isActive();
+
+    /**
+     * Check if a plugin has overridden the activation logic of the beacon.
+     *
+     * @return if setActive() has been called
+     */
+    public boolean isActivationOverridden();
+
+    /**
+     * Override the normal activation logic of this beacon to the given
+     * activation state.
+     * <p>
+     * Even if you specify a true override, the beacon will continue to be
+     * inactive if no effects are set.
+     * <p>
+     * Even if you specify a true override, the beacon will continue to be
+     * inactive if there is no pyramid and the radius is not overridden.
+     *
+     * @param active new activation state
+     */
+    public void setActive(boolean active);
+
+    /**
+     * Clear the activation logic override.
+     */
+    public void resetActive();
+
+    /**
+     * Get the radius for which nearby players will be given the effects.
+     * <p>
+     * If the beacon pyramid is completely broken, this will return 0.
+     *
+     * @return the radius to check for players
+     */
+    public double getRadius();
+
+    /**
+     * Get the radius that this beacon would be providing effects based on its
+     * pyramid size. This is only different from {@link #getRadius()} if a
+     * plugin has changed the radius.
+     *
+     * @return the default radius to check for players
+     */
+    public double getDefaultRadius();
+
+    /**
+     * Override the radius for which nearby players will be given the effects
+     * of this beacon.
+     *
+     * @param radius new radius
+     * @see #resetRadius()
+     */
+    public void setRadius(double radius);
+
+    /**
+     * Reset the radius for which nearby players will be given the effects of
+     * this beacon to the radius determined solely by the pyramid size as
+     * returned by {@link #getDefaultRadius()}.
+     *
+     * @see #getDefaultRadius()
+     */
+    public void resetRadius();
 
     /**
      * Return whether this beacon can "see the sky", using an
@@ -65,15 +136,6 @@ public interface Beacon extends BlockState, InventoryHolder {
      * @return if the beacon can "see the sky"
      */
     public boolean canSeeSky();
-
-    /**
-     * Get the radius for which nearby players will be given the effects.
-     * <p>
-     * If the beacon pyramid is completely broken, this will return 0.
-     *
-     * @return the radius to check for players
-     */
-    public double getRadius();
 
     /**
      * Get the size of the pyramid of blocks below this beacon.
