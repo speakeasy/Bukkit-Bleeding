@@ -3,11 +3,11 @@ package org.bukkit.command.defaults;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -29,6 +29,10 @@ public class SpreadPlayersCommand extends VanillaCommand {
 
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
+        if (!testPermission(sender)) {
+            return true;
+        }
+
         if (args.length < 6) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
@@ -49,13 +53,14 @@ public class SpreadPlayersCommand extends VanillaCommand {
         }
 
         boolean teams = false;
-        if ("true".equalsIgnoreCase(args[4])) teams = true;
-        else if (!"false".equalsIgnoreCase(args[4])) {
+        if ("true".equalsIgnoreCase(args[4])) {
+            teams = true;
+        } else if (!"false".equalsIgnoreCase(args[4])) {
             sender.sendMessage(String.format(ChatColor.RED + "'%s' is not true or false", args[4]));
             return false;
         }
 
-        ArrayList players = Lists.newArrayList();
+        List<Player> players = Lists.newArrayList();
         int i = 5;
 
         while (i < args.length) {
@@ -66,7 +71,7 @@ public class SpreadPlayersCommand extends VanillaCommand {
             }
         }
 
-        world = ((Player)players.get(0)).getWorld();
+        world = ((Player) players.get(0)).getWorld();
         random = new Random();
 
         double xRangeMin = x - range;
@@ -79,6 +84,9 @@ public class SpreadPlayersCommand extends VanillaCommand {
         double distanceSpread = spread(players, locations, teams);
 
         sender.sendMessage(String.format("Succesfully spread %d %s around %s,%s", locations.length, teams ? "teams" : "players", x, z));
+        if (locations.length > 1) {
+            sender.sendMessage(String.format("(Average distance between %s is %s blocks apart after %s iterations)", teams ? "teams" : "playes",  String.format("%.2f", distanceSpread), rangeSpread));
+        }
         return true;
     }
 
@@ -180,10 +188,10 @@ public class SpreadPlayersCommand extends VanillaCommand {
         }
     }
 
-    private double spread(ArrayList list, Location[] locations, boolean teams) {
+    private double spread(List<Player> list, Location[] locations, boolean teams) {
         double distance = 0.0D;
         int i = 0;
-        HashMap hashmap = Maps.newHashMap();
+        Map<Team, Location> hashmap = Maps.newHashMap();
 
         for (int j = 0; j < list.size(); ++j) {
             Player player = (Player) list.get(j);
@@ -218,23 +226,20 @@ public class SpreadPlayersCommand extends VanillaCommand {
         return distance;
     }
 
-    private int getTeams(ArrayList list) {
-        HashSet hashset = Sets.newHashSet();
-        Iterator iterator = list.iterator();
+    private int getTeams(List<Player> players) {
+        Set<Team> teams = Sets.newHashSet();
 
-        while (iterator.hasNext()) {
-            Player player = (Player) iterator.next();
-            hashset.add(player.getScoreboard().getPlayerTeam(player));
+        for (Player player : players) {
+            teams.add(player.getScoreboard().getPlayerTeam(player));
         }
 
-        return hashset.size();
+        return teams.size();
     }
 
     private Location[] getSpreadLocations(int size, double xRangeMin, double zRangeMin, double xRangeMax, double zRangeMax) {
         Location[] locations = new Location[size];
 
         for (int i = 0; i < size; ++i) {
-
             double x = xRangeMin >= xRangeMax ? xRangeMin : random.nextDouble() * (xRangeMax - xRangeMin) + xRangeMin;
             double z = zRangeMin >= zRangeMax ? zRangeMin : random.nextDouble() * (zRangeMax - zRangeMin) + zRangeMin;
             locations[i] = (new Location(world, x, 0, z));
