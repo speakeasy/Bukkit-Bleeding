@@ -6,10 +6,13 @@ import java.util.List;
 import org.bukkit.inventory.BeaconInventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 /**
  * Represents a beacon.
+ * <p>
+ * None of the methods in this class will directly affect what shows up on the
+ * client Beacon GUI, except getInventory(). To modify those values, use the
+ * InventoryView.Property class.
  */
 public interface Beacon extends BlockState, InventoryHolder {
     /**
@@ -29,12 +32,10 @@ public interface Beacon extends BlockState, InventoryHolder {
     public List<PotionEffect> getEffects();
 
     /**
-     * Get the PotionEffects using the vanilla method.
-     * <p>
-     * To change the results of this method, use
-     * {@link #setDefaultEffects(PotionEffectType, PotionEffectType)}.
+     * Get the PotionEffects that were last set by a player.
      *
      * @return PotionEffects that would be provided if effects were reset
+     * @see PlayerPayBeaconEvent
      */
     public List<PotionEffect> getDefaultEffects();
 
@@ -51,22 +52,6 @@ public interface Beacon extends BlockState, InventoryHolder {
      * @see #resetEffects()
      */
     public void setEffects(Collection<PotionEffect> newEffects);
-
-    /**
-     * Sets the PotionEffectTypes of this beacon in a way resembling how
-     * players do it.
-     * <p>
-     * This method will change the return values of
-     * {@link #getDefaultEffects()} and will change the information displayed
-     * on the client.
-     * <p>
-     * Behavior is undefined when the provided PotionEffectTypes are not
-     * normally available in a beacon.
-     *
-     * @param left PotionEffectType on the left portion
-     * @param right PotionEffectType on the right portion
-     */
-    public void setDefaultEffects(PotionEffectType left, PotionEffectType right);
 
     /**
      * Check whether this beacon has effects set by a plugin via setEffects().
