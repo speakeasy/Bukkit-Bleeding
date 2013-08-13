@@ -1,43 +1,33 @@
-package org.bukkit.event.block;
+package org.bukkit.event.player;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
-import org.bukkit.Material;
 import org.bukkit.block.Beacon;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
-
-import com.google.common.collect.ImmutableList;
 
 /**
  * This event is called when a player pays to change a beacon. The payment
  * will only be removed after the event if it is not cancelled, so it will
- * still be in the {@link org.bukkit.inventory.BeaconInventory}.
+ * still be in the {@link org.bukkit.inventory.BeaconInventory} and
+ * retrievable via Beacon.getInventory.getItem().
  */
-public class BeaconPaidEvent extends BlockEvent implements Cancellable {
+public class PlayerPayBeaconEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private Player player;
+    private Beacon state;
     private boolean cancelled = false;
     private List<PotionEffect> effects;
 
-    public BeaconPaidEvent(final Block block, Player player, Collection<PotionEffect> newEffects) {
-        super(block);
-        this.player = player;
-        effects = ImmutableList.copyOf(newEffects);
-    }
-
-    /**
-     * Get the player that performed the transaction.
-     *
-     * @return the triggering player
-     */
-    public Player getPlayer() {
-        return player;
+    public PlayerPayBeaconEvent(final Beacon beacon, Player player, Collection<PotionEffect> newEffects) {
+        super(player);
+        state = beacon;
+        effects = new ArrayList<PotionEffect>(newEffects);
     }
 
     /**
@@ -45,11 +35,8 @@ public class BeaconPaidEvent extends BlockEvent implements Cancellable {
      *
      * @return the Beacon block state
      */
-    public Beacon getState() {
-        if (block.getType() == Material.BEACON) {
-            return (Beacon) block.getState();
-        }
-        return null;
+    public Beacon getBeacon() {
+        return state;
     }
 
     /**
@@ -67,7 +54,7 @@ public class BeaconPaidEvent extends BlockEvent implements Cancellable {
      * @param newEffects new PotionEffects to apply to the beacon
      */
     public void setNewEffects(List<PotionEffect> newEffects) {
-        Validate.noNullElements(newEffects, "Cannot set null PotionEffects");
+        Validate.noNullElements(newEffects, "Cannot provide null PotionEffects");
         effects = newEffects;
     }
 

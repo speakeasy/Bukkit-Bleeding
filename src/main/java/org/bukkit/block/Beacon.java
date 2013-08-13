@@ -1,17 +1,20 @@
 package org.bukkit.block;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.bukkit.inventory.BeaconInventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 /**
  * Represents a beacon.
  */
 public interface Beacon extends BlockState, InventoryHolder {
     /**
-     * Get the BeaconInventory.
+     * Get the BeaconInventory for this beacon, containing the single payment
+     * slot.
      */
     public BeaconInventory getInventory();
 
@@ -23,21 +26,26 @@ public interface Beacon extends BlockState, InventoryHolder {
      *
      * @return PotionEffects to provide to players
      */
-    public Collection<PotionEffect> getEffects();
+    public List<PotionEffect> getEffects();
 
     /**
-     * Get the PotionEffects that were last set on this beacon by a non-plugin
-     * method.
+     * Get the PotionEffects using the vanilla method.
+     * <p>
+     * To change the results of this method, use
+     * {@link #setDefaultEffects(PotionEffectType, PotionEffectType)}.
      *
      * @return PotionEffects that would be provided if effects were reset
      */
-    public Collection<PotionEffect> getDefaultEffects();
+    public List<PotionEffect> getDefaultEffects();
 
     /**
      * Set the PotionEffects provided by this beacon while it is active.
      * <p>
      * The duration and ambient parameters for the provided effects are
      * ignored.
+     * <p>
+     * This method will <b>not</b> change any of the information displayed on
+     * the client. To do that, use <code>setDefaultEffects</code>.
      *
      * @param newEffects PotionEffects to provide to players
      * @see #resetEffects()
@@ -45,53 +53,73 @@ public interface Beacon extends BlockState, InventoryHolder {
     public void setEffects(Collection<PotionEffect> newEffects);
 
     /**
+     * Sets the PotionEffectTypes of this beacon in a way resembling how
+     * players do it.
+     * <p>
+     * This method will change the return values of
+     * {@link #getDefaultEffects()} and will change the information displayed
+     * on the client.
+     * <p>
+     * Behavior is undefined when the provided PotionEffectTypes are not
+     * normally available in a beacon.
+     *
+     * @param left PotionEffectType on the left portion
+     * @param right PotionEffectType on the right portion
+     */
+    public void setDefaultEffects(PotionEffectType left, PotionEffectType right);
+
+    /**
+     * Check whether this beacon has effects set by a plugin via setEffects().
+     *
+     * @return if custom effects are active
+     */
+    public boolean hasCustomEffects();
+
+    /**
      * Revert the effects this beacon is providing to the effects returned by
      * {@link #getDefaultEffects()}.
-     *
-     * @see #setEffects(Collection)
      */
     public void resetEffects();
 
     /**
      * Whether this beacon is actively providing PotionEffects to players.
      * <p>
-     * This value is guaranteed to be updated right before the effects are
-     * provided.
+     * This value is guaranteed to be updated immediately before the effects
+     * are applied to players.
      *
      * @return if the beacon provided effects in the last cycle
      */
     public boolean isActive();
 
-    /**
-     * Check if a plugin has overridden the activation logic of the beacon.
-     *
-     * @return if setActive() has been called
-     */
-    public boolean isActivationOverridden();
+    public enum ActivationState {
+        ON, DEFAULT, OFF;
+    }
 
     /**
-     * Override the normal activation logic of this beacon to the given
-     * activation state.
+     * Check the ActivationState of this beacon.
+     *
+     * @return ActivationState being used
+     */
+    public ActivationState getActivationState();
+
+    /**
+     * Change the ActivationState of this beacon, overriding the default
+     * logic.
      * <p>
-     * Even if you specify a true override, the beacon will continue to be
-     * inactive if no effects are set.
-     * <p>
-     * Even if you specify a true override, the beacon will continue to be
-     * inactive if there is no pyramid and the radius is not overridden.
+     * Even if you specify ON, the beacon will continue to be inactive if no
+     * effects are set, or if there is no pyramid and the radius is not
+     * overridden.
      *
      * @param active new activation state
      */
-    public void setActive(boolean active);
+    public void setActivationState(ActivationState state);
 
     /**
-     * Clear the activation logic override.
-     */
-    public void resetActive();
-
-    /**
-     * Get the radius for which nearby players will be given the effects.
+     * Get the radius for which nearby players will be given the beacon's
+     * effects.
      * <p>
-     * If the beacon pyramid is completely broken, this will return 0.
+     * If the beacon pyramid is completely broken, and the radius is not
+     * overridden, this will return 0.
      *
      * @return the radius to check for players
      */
@@ -123,19 +151,6 @@ public interface Beacon extends BlockState, InventoryHolder {
      * @see #getDefaultRadius()
      */
     public void resetRadius();
-
-    /**
-     * Return whether this beacon can "see the sky", using an
-     * implementation-defined definition which is the same as the one which
-     * affects {@link #isActive()}. If it cannot, it will not be providing
-     * effects.
-     * <p>
-     * This can be used to help determine for which reason the beacon is not
-     * providing effects.
-     *
-     * @return if the beacon can "see the sky"
-     */
-    public boolean canSeeSky();
 
     /**
      * Get the size of the pyramid of blocks below this beacon.
