@@ -30,7 +30,7 @@ public class DifficultyCommand extends VanillaCommand {
             return false;
         }
 
-        Difficulty difficulty = Difficulty.getByValue(getDifficultyForString(sender, args[0]));
+        Difficulty difficulty = getDifficultyForString(sender, args[0]);
 
         if (Bukkit.isHardcore()) {
             difficulty = Difficulty.HARD;
@@ -52,17 +52,28 @@ public class DifficultyCommand extends VanillaCommand {
         return true;
     }
 
-    protected int getDifficultyForString(CommandSender sender, String name) {
+    protected Difficulty getDifficultyForString(CommandSender sender, String name) {
         if (name.equalsIgnoreCase("peaceful") || name.equalsIgnoreCase("p")) {
-            return 0;
+            return Difficulty.PEACEFUL;
         } else if (name.equalsIgnoreCase("easy") || name.equalsIgnoreCase("e")) {
-            return 1;
+            return Difficulty.EASY;
         } else if (name.equalsIgnoreCase("normal") || name.equalsIgnoreCase("n")) {
-            return 2;
+            return Difficulty.NORMAL;
         } else if (name.equalsIgnoreCase("hard") || name.equalsIgnoreCase("h")) {
-            return 3;
+            return Difficulty.HARD;
         } else {
-            return getInteger(sender, name, 0, 3);
+            switch (getInteger(sender, name, 0, 3)) {
+                case 0:
+                    return Difficulty.PEACEFUL;
+                case 1:
+                    return Difficulty.EASY;
+                case 2:
+                    return Difficulty.NORMAL;
+                case 3:
+                    return Difficulty.HARD;
+                default:
+                    return null;
+            }
         }
     }
 
