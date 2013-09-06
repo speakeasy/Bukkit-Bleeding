@@ -3,26 +3,17 @@ package org.bukkit.material;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
-public class HayBale extends Rotateable {
-    public HayBale() {
-        super(Material.HAY_BLOCK);
-    }
-
-    public HayBale(BlockFace direction) {
-        this();
-        setFacingDirection(direction);
-    }
-
+public class Rotateable extends MaterialData implements Directional {
     /**
      *
      * @deprecated Magic value
      */
     @Deprecated
-    public HayBale(final int type) {
+    public Rotateable(final int type) {
         super(type);
     }
 
-    public HayBale(final Material type) {
+    public Rotateable(final Material type) {
         super(type);
     }
 
@@ -31,7 +22,7 @@ public class HayBale extends Rotateable {
      * @deprecated Magic value
      */
     @Deprecated
-    public HayBale(final int type, final byte data) {
+    public Rotateable(final int type, final byte data) {
         super(type, data);
     }
 
@@ -40,7 +31,7 @@ public class HayBale extends Rotateable {
      * @deprecated Magic value
      */
     @Deprecated
-    public HayBale(final Material type, final byte data) {
+    public Rotateable(final Material type, final byte data) {
         super(type, data);
     }
 
@@ -68,11 +59,6 @@ public class HayBale extends Rotateable {
         setData((byte) ((getData() & 0x3) | (dat << 2)));
     }
 
-    /**
-     * Get direction of the hay
-     *
-     * @return BlockFace.TOP for upright (default), BlockFace.NORTH (east-west), BlockFace.WEST (north-sout), BlockFace.SELF (directionless)
-     */
     @Override
     public BlockFace getFacing() {
         switch ((getData() >> 2) & 0x3) {
@@ -86,15 +72,5 @@ public class HayBale extends Rotateable {
             case 3: // Directionless (bark on all sides)
                 return BlockFace.SELF;
         }
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + " facing " + getFacing();
-    }
-
-    @Override
-    public HayBale clone() {
-        return (HayBale) super.clone();
     }
 }
