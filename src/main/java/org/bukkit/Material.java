@@ -226,7 +226,7 @@ public enum Material {
     DROPPER(158, Dispenser.class),
     STAINED_CLAY(159, Wool.class),
     HAY_BLOCK(170),
-    CARPET(171),
+    CARPET(171, Wool.class),
     HARD_CLAY(172),
     COAL_BLOCK(173),
     // ----- Item Separator -----
