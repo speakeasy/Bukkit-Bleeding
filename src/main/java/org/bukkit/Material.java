@@ -224,7 +224,7 @@ public enum Material {
     QUARTZ_STAIRS(156, Stairs.class),
     ACTIVATOR_RAIL(157, PoweredRail.class),
     DROPPER(158, Dispenser.class),
-    STAINED_CLAY(159),
+    STAINED_CLAY(159, Wool.class),
     HAY_BLOCK(170),
     CARPET(171),
     HARD_CLAY(172),
