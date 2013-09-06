@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.QuartzType;
 import org.bukkit.block.BlockFace;
 
-public class QuartzBlock extends MaterialData {
+public class QuartzBlock extends MaterialData implements Directional {
     public QuartzBlock() {
         super(Material.QUARTZ_BLOCK);
     }
@@ -17,7 +17,7 @@ public class QuartzBlock extends MaterialData {
     public QuartzBlock(QuartzType type, BlockFace dir) {
         this();
         setType(type);
-        setDirection(dir);
+        setFacingDirection(dir);
     }
 
     /**
@@ -91,7 +91,8 @@ public class QuartzBlock extends MaterialData {
      *
      * @return BlockFace.TOP for upright (default), BlockFace.NORTH (east-west), BlockFace.WEST (north-south), BlockFace.SELF (directionless)
      */
-    public BlockFace getDirection() {
+    @Override
+    public BlockFace getFacing() {
         switch (getData()) {
             case 2:
                 return BlockFace.UP;
@@ -109,7 +110,8 @@ public class QuartzBlock extends MaterialData {
      *
      * @param dir direction end of quartz (BlockFace.SELF for no direction)
      */
-    public void setDirection(BlockFace dir) {
+    @Override
+    public void setFacingDirection(BlockFace dir) {
         switch (dir) {
             case UP:
             case DOWN:
