@@ -3,7 +3,7 @@ package org.bukkit.material;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
-public class Diode extends MaterialData implements Directional {
+public class Diode extends MaterialData implements Directional, Redstone {
     public Diode() {
         super(Material.DIODE_BLOCK_ON);
     }
@@ -119,5 +119,10 @@ public class Diode extends MaterialData implements Directional {
     @Override
     public Diode clone() {
         return (Diode) super.clone();
+    }
+
+    @Override
+    public boolean isPowered() {
+        return getItemType() == Material.DIODE_BLOCK_ON;
     }
 }
