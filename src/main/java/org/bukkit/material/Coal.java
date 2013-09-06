@@ -53,7 +53,14 @@ public class Coal extends MaterialData {
      * @return CoalType of this coal
      */
     public CoalType getType() {
-        return CoalType.getByData(getData());
+        switch (getData()) {
+            case 0x0:
+                return CoalType.COAL;
+            case 0x1:
+                return CoalType.CHARCOAL;
+            default:
+                return null;
+        }
     }
 
     /**
@@ -62,7 +69,14 @@ public class Coal extends MaterialData {
      * @param type New type of this coal
      */
     public void setType(CoalType type) {
-        setData(type.getData());
+        switch (type) {
+            case COAL:
+                setData((byte) 0x0);
+                return;
+            case CHARCOAL:
+                setData((byte) 0x1);
+                return;
+        }
     }
 
     @Override
