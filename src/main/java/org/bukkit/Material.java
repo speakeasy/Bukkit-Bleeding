@@ -51,6 +51,7 @@ import org.bukkit.material.Tree;
 import org.bukkit.material.Tripwire;
 import org.bukkit.material.TripwireHook;
 import org.bukkit.material.Vine;
+import org.bukkit.material.Wall;
 import org.bukkit.material.WoodenStep;
 import org.bukkit.material.Wool;
 import org.bukkit.potion.Potion;
@@ -201,7 +202,7 @@ public enum Material {
     JUNGLE_WOOD_STAIRS(136, Stairs.class),
     COMMAND(137, Command.class),
     BEACON(138),
-    COBBLE_WALL(139),
+    COBBLE_WALL(139, Wall.class),
     FLOWER_POT(140, FlowerPot.class),
     CARROT(141, Crops.class),
     POTATO(142, Crops.class),
