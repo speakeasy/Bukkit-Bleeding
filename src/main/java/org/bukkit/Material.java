@@ -15,6 +15,7 @@ import org.bukkit.material.Coal;
 import org.bukkit.material.CocoaPlant;
 import org.bukkit.material.Command;
 import org.bukkit.material.Crops;
+import org.bukkit.material.DaylightSensor;
 import org.bukkit.material.DetectorRail;
 import org.bukkit.material.Diode;
 import org.bukkit.material.Dispenser;
@@ -219,7 +220,7 @@ public enum Material {
     IRON_PLATE(148, PressurePlate.class),
     REDSTONE_COMPARATOR_OFF(149),
     REDSTONE_COMPARATOR_ON(150),
-    DAYLIGHT_DETECTOR(151),
+    DAYLIGHT_DETECTOR(151, DaylightSensor.class),
     REDSTONE_BLOCK(152),
     QUARTZ_ORE(153),
     HOPPER(154),
