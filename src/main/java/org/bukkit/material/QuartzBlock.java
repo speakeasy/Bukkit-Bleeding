@@ -130,4 +130,14 @@ public class QuartzBlock extends MaterialData implements Directional {
                 return;
         }
     }
+
+    @Override
+    public String toString() {
+        return getType() + " " + super.toString();
+    }
+
+    @Override
+    public QuartzBlock clone() {
+        return (QuartzBlock) super.clone();
+    }
 }
