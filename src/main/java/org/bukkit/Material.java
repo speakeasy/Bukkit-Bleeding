@@ -23,6 +23,7 @@ import org.bukkit.material.EnderChest;
 import org.bukkit.material.FlowerPot;
 import org.bukkit.material.Furnace;
 import org.bukkit.material.Gate;
+import org.bukkit.material.HayBale;
 import org.bukkit.material.Ladder;
 import org.bukkit.material.Leaves;
 import org.bukkit.material.Lever;
@@ -226,7 +227,7 @@ public enum Material {
     ACTIVATOR_RAIL(157, PoweredRail.class),
     DROPPER(158, Dispenser.class),
     STAINED_CLAY(159, Wool.class),
-    HAY_BLOCK(170),
+    HAY_BLOCK(170, HayBale.class),
     CARPET(171, Wool.class),
     HARD_CLAY(172),
     COAL_BLOCK(173),
