@@ -24,6 +24,7 @@ import org.bukkit.material.FlowerPot;
 import org.bukkit.material.Furnace;
 import org.bukkit.material.Gate;
 import org.bukkit.material.Ladder;
+import org.bukkit.material.Leaves;
 import org.bukkit.material.Lever;
 import org.bukkit.material.LongGrass;
 import org.bukkit.material.MaterialData;
@@ -81,7 +82,7 @@ public enum Material {
     IRON_ORE(15),
     COAL_ORE(16),
     LOG(17, Tree.class),
-    LEAVES(18, Tree.class),
+    LEAVES(18, Leaves.class),
     SPONGE(19),
     GLASS(20),
     LAPIS_ORE(21),
