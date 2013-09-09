@@ -56,12 +56,12 @@ public class DyeColorTest {
 
     @Test
     public void getDyeDyeColor() {
-        testColorable(new Dye(Material.INK_SACK, dye.getDyeData()));
+        testColorable(new Dye(dye));
     }
 
     @Test
     public void getWoolDyeColor() {
-        testColorable(new Wool(Material.WOOL, dye.getWoolData()));
+        testColorable(new Wool(dye));
     }
 
     private void testColorable(final Colorable colorable) {
