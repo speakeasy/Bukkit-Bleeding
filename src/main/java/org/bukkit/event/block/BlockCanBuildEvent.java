@@ -22,6 +22,7 @@ public class BlockCanBuildEvent extends BlockEvent {
      */
     @Deprecated
     protected int material;
+    protected Material type;
 
     /**
      *
@@ -29,9 +30,13 @@ public class BlockCanBuildEvent extends BlockEvent {
      */
     @Deprecated
     public BlockCanBuildEvent(final Block block, final int id, final boolean canBuild) {
+        this(block, Material.getMaterial(id), canBuild);
+    }
+
+    public BlockCanBuildEvent(final Block block, final Material material, final boolean canBuild) {
         super(block);
         buildable = canBuild;
-        material = id;
+        type = material;
     }
 
     /**
@@ -59,7 +64,7 @@ public class BlockCanBuildEvent extends BlockEvent {
      * @return The Material that we are trying to place
      */
     public Material getMaterial() {
-        return Material.getMaterial(material);
+        return type;
     }
 
     /**
