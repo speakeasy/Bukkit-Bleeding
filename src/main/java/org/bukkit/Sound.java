@@ -160,6 +160,7 @@ public enum Sound {
     ZOMBIE_PIG_ANGRY,
     ZOMBIE_PIG_DEATH,
     ZOMBIE_PIG_HURT,
+    ZOMBIE_STEP,
     // Dig Sounds
     DIG_WOOL,
     DIG_GRASS,
@@ -181,6 +182,7 @@ public enum Sound {
     HORSE_ANGRY,
     HORSE_ARMOR,
     HORSE_BREATHE,
+    HORSE_DEATH,
     HORSE_GALLOP,
     HORSE_HIT,
     HORSE_IDLE,
@@ -194,6 +196,7 @@ public enum Sound {
     DONKEY_HIT,
     DONKEY_IDLE,
     HORSE_SKELETON_DEATH,
+    HORSE_SKELETON_HIT,
     HORSE_SKELETON_IDLE,
     HORSE_ZOMBIE_DEATH,
     HORSE_ZOMBIE_HIT,
