@@ -223,7 +223,7 @@ public enum Material {
     DAYLIGHT_DETECTOR(151, DaylightSensor.class),
     REDSTONE_BLOCK(152),
     QUARTZ_ORE(153),
-    HOPPER(154),
+    HOPPER(154, Dispenser.class),
     QUARTZ_BLOCK(155, QuartzBlock.class),
     QUARTZ_STAIRS(156, Stairs.class),
     ACTIVATOR_RAIL(157, PoweredRail.class),
