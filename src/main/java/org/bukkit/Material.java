@@ -45,6 +45,7 @@ import org.bukkit.material.RedstoneLamp;
 import org.bukkit.material.RedstoneTorch;
 import org.bukkit.material.RedstoneWire;
 import org.bukkit.material.Sandstone;
+import org.bukkit.material.Sapling;
 import org.bukkit.material.Sign;
 import org.bukkit.material.Skull;
 import org.bukkit.material.SkullItem;
@@ -76,7 +77,7 @@ public enum Material {
     DIRT(3),
     COBBLESTONE(4),
     WOOD(5, Tree.class),
-    SAPLING(6, Tree.class),
+    SAPLING(6, Sapling.class),
     BEDROCK(7),
     WATER(8),
     STATIONARY_WATER(9),
