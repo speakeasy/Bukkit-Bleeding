@@ -47,6 +47,7 @@ import org.bukkit.material.RedstoneWire;
 import org.bukkit.material.Sandstone;
 import org.bukkit.material.Sign;
 import org.bukkit.material.Skull;
+import org.bukkit.material.SkullItem;
 import org.bukkit.material.SmoothBrick;
 import org.bukkit.material.SpawnEgg;
 import org.bukkit.material.Stairs;
@@ -381,7 +382,7 @@ public enum Material {
     POISONOUS_POTATO(394),
     EMPTY_MAP(395),
     GOLDEN_CARROT(396),
-    SKULL_ITEM(397),
+    SKULL_ITEM(397, SkullItem.class),
     CARROT_STICK(398, 1, 25),
     NETHER_STAR(399),
     PUMPKIN_PIE(400),
