@@ -44,7 +44,12 @@ public abstract class InventoryView {
         /**
          * In an enchanting inventory, the bottom button's experience level value.
          */
-        ENCHANT_BUTTON3(2, InventoryType.ENCHANTING);
+        ENCHANT_BUTTON3(2, InventoryType.ENCHANTING),
+        /**
+         * The cost to repair an item in the inventory.
+         */
+        REPAIR_COST(0, InventoryType.ANVIL),
+        ;
         int id;
         InventoryType style;
         private Property(int id, InventoryType appliesTo) {
