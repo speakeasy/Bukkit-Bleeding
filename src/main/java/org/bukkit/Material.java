@@ -38,6 +38,7 @@ import org.bukkit.material.Pumpkin;
 import org.bukkit.material.Rails;
 import org.bukkit.material.RedstoneTorch;
 import org.bukkit.material.RedstoneWire;
+import org.bukkit.material.Sand;
 import org.bukkit.material.Sandstone;
 import org.bukkit.material.Sign;
 import org.bukkit.material.Skull;
@@ -74,7 +75,7 @@ public enum Material {
     STATIONARY_WATER(9, MaterialData.class),
     LAVA(10, MaterialData.class),
     STATIONARY_LAVA(11, MaterialData.class),
-    SAND(12),
+    SAND(12, Sand.class),
     GRAVEL(13),
     GOLD_ORE(14),
     IRON_ORE(15),
