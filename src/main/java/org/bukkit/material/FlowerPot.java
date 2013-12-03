@@ -1,5 +1,6 @@
 package org.bukkit.material;
 
+import org.bukkit.FlowerSpecies;
 import org.bukkit.GrassSpecies;
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
@@ -55,7 +56,7 @@ public class FlowerPot extends MaterialData {
     public MaterialData getContents() {
         switch (getData()) {
             case 1:
-                return new MaterialData(Material.RED_ROSE);
+                return new Flower(FlowerSpecies.POPPY);
             case 2:
                 return new MaterialData(Material.YELLOW_FLOWER);
             case 3:
@@ -76,6 +77,10 @@ public class FlowerPot extends MaterialData {
                 return new MaterialData(Material.DEAD_BUSH);
             case 11:
                 return new LongGrass(GrassSpecies.FERN_LIKE);
+            case 12:
+                return new Tree(TreeSpecies.ACACIA);
+            case 13:
+                return new Tree(TreeSpecies.DARK_OAK);
             default:
                 return null;
         }
@@ -90,7 +95,11 @@ public class FlowerPot extends MaterialData {
         Material mat = materialData.getItemType();
 
         if (mat == Material.RED_ROSE) {
-            setData((byte) 1);
+            FlowerSpecies species = ((Flower) materialData).getSpecies();
+
+            if (species == FlowerSpecies.POPPY) {
+                setData((byte) 1);
+            }
         } else if (mat == Material.YELLOW_FLOWER) {
             setData((byte) 2);
         } else if (mat == Material.RED_MUSHROOM) {
@@ -110,8 +119,12 @@ public class FlowerPot extends MaterialData {
                 setData((byte) 4);
             } else if (species == TreeSpecies.BIRCH) {
                 setData((byte) 5);
-            } else {
+            } else if (species == TreeSpecies.JUNGLE) {
                 setData((byte) 6);
+            } else if (species == TreeSpecies.ACACIA) {
+                setData((byte) 12);
+            } else if (species == TreeSpecies.DARK_OAK) {
+                setData((byte) 13);
             }
         } else if (mat == Material.LONG_GRASS) {
             GrassSpecies species = ((LongGrass) materialData).getSpecies();
