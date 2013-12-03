@@ -50,6 +50,7 @@ import org.bukkit.material.SmoothBrick;
 import org.bukkit.material.SpawnEgg;
 import org.bukkit.material.Stairs;
 import org.bukkit.material.Step;
+import org.bukkit.material.TallPlant;
 import org.bukkit.material.Torch;
 import org.bukkit.material.TrapDoor;
 import org.bukkit.material.Tree;
@@ -239,7 +240,7 @@ public enum Material {
     HARD_CLAY(172),
     COAL_BLOCK(173),
     PACKED_ICE(174),
-    DOUBLE_PLANT(175),
+    DOUBLE_PLANT(175, TallPlant.class),
     // ----- Item Separator -----
     IRON_SPADE(256, 1, 250),
     IRON_PICKAXE(257, 1, 250),
