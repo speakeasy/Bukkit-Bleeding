@@ -22,6 +22,7 @@ import org.bukkit.material.Dispenser;
 import org.bukkit.material.Door;
 import org.bukkit.material.Dye;
 import org.bukkit.material.EnderChest;
+import org.bukkit.material.Flower;
 import org.bukkit.material.FlowerPot;
 import org.bukkit.material.Furnace;
 import org.bukkit.material.Gate;
@@ -104,7 +105,7 @@ public enum Material {
     WOOL(35, Wool.class),
     PISTON_MOVING_PIECE(36),
     YELLOW_FLOWER(37),
-    RED_ROSE(38),
+    RED_ROSE(38, Flower.class),
     BROWN_MUSHROOM(39),
     RED_MUSHROOM(40),
     GOLD_BLOCK(41),
