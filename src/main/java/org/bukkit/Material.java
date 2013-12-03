@@ -17,6 +17,7 @@ import org.bukkit.material.CookedFish;
 import org.bukkit.material.Crops;
 import org.bukkit.material.DetectorRail;
 import org.bukkit.material.Diode;
+import org.bukkit.material.Dirt;
 import org.bukkit.material.Dispenser;
 import org.bukkit.material.Door;
 import org.bukkit.material.Dye;
@@ -68,7 +69,7 @@ public enum Material {
     AIR(0, 0),
     STONE(1),
     GRASS(2),
-    DIRT(3),
+    DIRT(3, Dirt.class),
     COBBLESTONE(4),
     WOOD(5, Tree.class),
     SAPLING(6, Tree.class),
