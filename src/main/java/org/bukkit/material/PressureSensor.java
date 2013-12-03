@@ -1,5 +1,5 @@
 package org.bukkit.material;
 
-public interface PressureSensor {
+public interface PressureSensor extends Redstone {
     public boolean isPressed();
 }

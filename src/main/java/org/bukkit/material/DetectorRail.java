@@ -53,4 +53,9 @@ public class DetectorRail extends ExtendedRails implements PressureSensor {
     public DetectorRail clone() {
         return (DetectorRail) super.clone();
     }
+
+    @Override
+    public boolean isPowered() {
+        return isPressed();
+    }
 }
