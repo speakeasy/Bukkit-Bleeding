@@ -41,6 +41,7 @@ import org.bukkit.material.Pumpkin;
 import org.bukkit.material.QuartzBlock;
 import org.bukkit.material.Rails;
 import org.bukkit.material.RawFish;
+import org.bukkit.material.RedstoneLamp;
 import org.bukkit.material.RedstoneTorch;
 import org.bukkit.material.RedstoneWire;
 import org.bukkit.material.Sand;
@@ -195,8 +196,8 @@ public enum Material {
     ENDER_PORTAL_FRAME(120),
     ENDER_STONE(121),
     DRAGON_EGG(122),
-    REDSTONE_LAMP_OFF(123),
-    REDSTONE_LAMP_ON(124),
+    REDSTONE_LAMP_OFF(123, RedstoneLamp.class),
+    REDSTONE_LAMP_ON(124, RedstoneLamp.class),
     WOOD_DOUBLE_STEP(125, WoodenStep.class),
     WOOD_STEP(126, WoodenStep.class),
     COCOA(127, CocoaPlant.class),
