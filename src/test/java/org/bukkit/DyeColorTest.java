@@ -30,38 +30,13 @@ public class DyeColorTest {
     @Parameter public DyeColor dye;
 
     @Test
-    @SuppressWarnings("deprecation")
-    public void getByData() {
-        byte data = dye.getData();
-
-        DyeColor byData = DyeColor.getByData(data);
-        assertThat(byData, is(dye));
-    }
-
-    @Test
-    public void getByWoolData() {
-        byte data = dye.getWoolData();
-
-        DyeColor byData = DyeColor.getByWoolData(data);
-        assertThat(byData, is(dye));
-    }
-
-    @Test
-    public void getByDyeData() {
-        byte data = dye.getDyeData();
-
-        DyeColor byData = DyeColor.getByDyeData(data);
-        assertThat(byData, is(dye));
-    }
-
-    @Test
     public void getDyeDyeColor() {
-        testColorable(new Dye(Material.INK_SACK, dye.getDyeData()));
+        testColorable(new Dye(this.dye));
     }
 
     @Test
     public void getWoolDyeColor() {
-        testColorable(new Wool(Material.WOOL, dye.getWoolData()));
+        testColorable(new Wool(this.dye));
     }
 
     private void testColorable(final Colorable colorable) {
