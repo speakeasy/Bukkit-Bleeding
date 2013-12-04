@@ -1,5 +1,6 @@
 package org.bukkit.material;
 
+import org.bukkit.CauldronState;
 import org.bukkit.Material;
 
 /**
@@ -47,6 +48,38 @@ public class Cauldron extends MaterialData {
      */
     public boolean isEmpty() {
         return getData() <= CAULDRON_EMPTY;
+    }
+
+    public CauldronState getState() {
+        switch (getData()) {
+            case 0x0:
+                return CauldronState.EMPTY;
+            case 0x1:
+                return CauldronState.ONE_THIRD_FULL;
+            case 0x2:
+                return CauldronState.TWO_THIRDS_FULL;
+            case 0x3:
+                return CauldronState.FULL;
+            default:
+                return null;
+        }
+    }
+
+    public void setState(CauldronState state) {
+        switch (state) {
+            case EMPTY:
+                setData((byte) 0x0);
+                return;
+            case ONE_THIRD_FULL:
+                setData((byte) 0x1);
+                return;
+            case TWO_THIRDS_FULL:
+                setData((byte) 0x2);
+                return;
+            case FULL:
+                setData((byte) 0x3);
+                return;
+        }
     }
 
     @Override
