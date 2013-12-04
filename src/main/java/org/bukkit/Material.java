@@ -28,6 +28,7 @@ import org.bukkit.material.Flower;
 import org.bukkit.material.FlowerPot;
 import org.bukkit.material.Furnace;
 import org.bukkit.material.Gate;
+import org.bukkit.material.Jukebox;
 import org.bukkit.material.Ladder;
 import org.bukkit.material.Lever;
 import org.bukkit.material.LongGrass;
@@ -159,7 +160,7 @@ public enum Material {
     CACTUS(81, MaterialData.class),
     CLAY(82),
     SUGAR_CANE_BLOCK(83, MaterialData.class),
-    JUKEBOX(84),
+    JUKEBOX(84, Jukebox.class),
     FENCE(85),
     PUMPKIN(86, Pumpkin.class),
     NETHERRACK(87),
