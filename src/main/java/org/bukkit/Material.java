@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.map.MapView;
+import org.bukkit.material.Anvil;
 import org.bukkit.material.Bed;
 import org.bukkit.material.Button;
 import org.bukkit.material.Cake;
@@ -219,7 +220,7 @@ public enum Material {
     POTATO(142, Crops.class),
     WOOD_BUTTON(143, Button.class),
     SKULL(144, Skull.class),
-    ANVIL(145),
+    ANVIL(145, Anvil.class),
     TRAPPED_CHEST(146),
     GOLD_PLATE(147, PressurePlate.class),
     IRON_PLATE(148, PressurePlate.class),
