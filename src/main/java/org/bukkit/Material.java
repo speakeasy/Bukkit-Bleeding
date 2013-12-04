@@ -28,6 +28,7 @@ import org.bukkit.material.Flower;
 import org.bukkit.material.FlowerPot;
 import org.bukkit.material.Furnace;
 import org.bukkit.material.Gate;
+import org.bukkit.material.GoldenApple;
 import org.bukkit.material.Jukebox;
 import org.bukkit.material.Ladder;
 import org.bukkit.material.Lever;
@@ -316,7 +317,7 @@ public enum Material {
     PORK(319),
     GRILLED_PORK(320),
     PAINTING(321),
-    GOLDEN_APPLE(322),
+    GOLDEN_APPLE(322, GoldenApple.class),
     SIGN(323, 16),
     WOOD_DOOR(324, 1),
     BUCKET(325, 16),
