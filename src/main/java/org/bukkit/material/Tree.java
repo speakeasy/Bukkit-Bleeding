@@ -7,7 +7,7 @@ import org.bukkit.block.BlockFace;
 /**
  * Represents the different types of Trees.
  */
-public class Tree extends MaterialData {
+public class Tree extends Rotateable {
     public Tree() {
         super(Material.LOG);
     }
@@ -20,7 +20,7 @@ public class Tree extends MaterialData {
     public Tree(TreeSpecies species, BlockFace dir) {
         this();
         setSpecies(species);
-        setDirection(dir);
+        setFacingDirection(dir);
     }
 
     /**
@@ -76,51 +76,27 @@ public class Tree extends MaterialData {
      * Get direction of the log
      *
      * @return BlockFace.TOP for upright (default), BlockFace.NORTH (east-west), BlockFace.WEST (north-sout), BlockFace.SELF (directionless)
+     * @deprecated use getFacing() from {@link Directional} instead
      */
+    @Deprecated
     public BlockFace getDirection() {
-        switch ((getData() >> 2) & 0x3) {
-            case 0: // Up-down
-            default:
-                return BlockFace.UP;
-            case 1: // North-south
-                return BlockFace.WEST;
-            case 2: // East-west
-                return BlockFace.NORTH;
-            case 3: // Directionless (bark on all sides)
-                return BlockFace.SELF;
-        }
+        return getFacing();
     }
+
     /**
      * Set direction of the log
      *
      * @param dir - direction of end of log (BlockFace.SELF for no direction)
+     * @deprecated use setFacingDirection() from {@link Directional} instead
      */
+    @Deprecated
     public void setDirection(BlockFace dir) {
-        int dat;
-        switch (dir) {
-            case UP:
-            case DOWN:
-            default:
-                dat = 0;
-                break;
-            case WEST:
-            case EAST:
-                dat = 1;
-                break;
-            case NORTH:
-            case SOUTH:
-                dat = 2;
-                break;
-            case SELF:
-                dat = 3;
-                break;
-        }
-        setData((byte) ((getData() & 0x3) | (dat << 2)));
+        setFacingDirection(dir);
     }
 
     @Override
     public String toString() {
-        return getSpecies() + " " + getDirection() + " " + super.toString();
+        return getSpecies() + " " + getFacing() + " " + super.toString();
     }
 
     @Override
