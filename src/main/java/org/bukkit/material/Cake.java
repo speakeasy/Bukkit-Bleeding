@@ -1,5 +1,6 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 
 public class Cake extends MaterialData {
@@ -62,9 +63,8 @@ public class Cake extends MaterialData {
      * @param n The number of slices eaten
      */
     public void setSlicesEaten(int n) {
-        if (n < 6) {
-            setData((byte) n);
-        } // TODO: else destroy the block? Probably not possible though
+        Validate.isTrue(n >= 0 && n <= 6, "The number of slices eaten must be between 0 and 6.");
+        setData((byte) n);
     }
 
     /**
@@ -73,9 +73,7 @@ public class Cake extends MaterialData {
      * @param n The number of slices remaining
      */
     public void setSlicesRemaining(int n) {
-        if (n > 6) {
-            n = 6;
-        }
+        Validate.isTrue(n >= 0 && n <= 6, "The number of slices remaining must be between 0 and 6.");
         setData((byte) (6 - n));
     }
 
