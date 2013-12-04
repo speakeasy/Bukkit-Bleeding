@@ -38,6 +38,7 @@ import org.bukkit.material.PistonExtensionMaterial;
 import org.bukkit.material.PoweredRail;
 import org.bukkit.material.PressurePlate;
 import org.bukkit.material.Pumpkin;
+import org.bukkit.material.QuartzBlock;
 import org.bukkit.material.Rails;
 import org.bukkit.material.RawFish;
 import org.bukkit.material.RedstoneTorch;
@@ -225,7 +226,7 @@ public enum Material {
     REDSTONE_BLOCK(152),
     QUARTZ_ORE(153),
     HOPPER(154),
-    QUARTZ_BLOCK(155),
+    QUARTZ_BLOCK(155, QuartzBlock.class),
     QUARTZ_STAIRS(156, Stairs.class),
     ACTIVATOR_RAIL(157, PoweredRail.class),
     DROPPER(158, Dispenser.class),
