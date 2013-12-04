@@ -44,6 +44,7 @@ import org.bukkit.material.RawFish;
 import org.bukkit.material.RedstoneLamp;
 import org.bukkit.material.RedstoneTorch;
 import org.bukkit.material.RedstoneWire;
+import org.bukkit.material.Rotateable;
 import org.bukkit.material.Sand;
 import org.bukkit.material.Sandstone;
 import org.bukkit.material.Sign;
@@ -238,7 +239,7 @@ public enum Material {
     LOG_2(162),
     ACACIA_STAIRS(163, Stairs.class),
     DARK_OAK_STAIRS(164, Stairs.class),
-    HAY_BLOCK(170),
+    HAY_BLOCK(170, Rotateable.class),
     CARPET(171, Wool.class),
     HARD_CLAY(172),
     COAL_BLOCK(173),
