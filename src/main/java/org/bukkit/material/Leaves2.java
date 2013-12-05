@@ -4,16 +4,16 @@ import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
 
 /**
- * Represents four types of leaves: {@link TreeSpecies#GENERIC}, {@link TreeSpecies#BIRCH}, {@link TreeSpecies#REDWOOD}, and {@link TreeSpecies#JUNGLE}.
+ * Represents two types of leaves: {@link TreeSpecies#ACACIA} and {@link TreeSpecies#DARK_OAK}.
  * </p>
  * The other types of leaves are represented by {@link Leaves2}.
  */
-public class Leaves extends SimpleLeaves {
-    public Leaves() {
-        super(Material.LEAVES);
+public class Leaves2 extends SimpleLeaves {
+    public Leaves2() {
+        super(Material.LEAVES_2);
     }
 
-    public Leaves(TreeSpecies species) {
+    public Leaves2(TreeSpecies species) {
         this();
         setSpecies(species);
     }
@@ -23,11 +23,11 @@ public class Leaves extends SimpleLeaves {
      * @deprecated Magic value
      */
     @Deprecated
-    public Leaves(final int type) {
+    public Leaves2(final int type) {
         super(type);
     }
 
-    public Leaves(final Material type) {
+    public Leaves2(final Material type) {
         super(type);
     }
 
@@ -36,7 +36,7 @@ public class Leaves extends SimpleLeaves {
      * @deprecated Magic value
      */
     @Deprecated
-    public Leaves(final int type, final byte data) {
+    public Leaves2(final int type, final byte data) {
         super(type, data);
     }
 
@@ -45,12 +45,12 @@ public class Leaves extends SimpleLeaves {
      * @deprecated Magic value
      */
     @Deprecated
-    public Leaves(final Material type, final byte data) {
+    public Leaves2(final Material type, final byte data) {
         super(type, data);
     }
 
     @Override
-    public Leaves clone() {
-        return (Leaves) super.clone();
+    public Leaves2 clone() {
+        return (Leaves2) super.clone();
     }
 }

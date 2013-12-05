@@ -4,12 +4,16 @@ import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
 
 /**
- * Represents the different types of wooden steps.
+ * Represents all 6 types of {@link TreeSpecies}.
  */
-public class WoodenStep extends MaterialData {
+public class Sapling extends MaterialData {
+    public Sapling() {
+        super(Material.SAPLING);
+    }
 
-    public WoodenStep() {
-        super(Material.WOOD_STEP);
+    public Sapling(TreeSpecies species) {
+        this();
+        setSpecies(species);
     }
 
     /**
@@ -17,19 +21,12 @@ public class WoodenStep extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public WoodenStep(final int type) {
+    public Sapling(final int type) {
         super(type);
     }
 
-    public WoodenStep(TreeSpecies species) {
-        this();
-        setSpecies(species);
-    }
-
-    public WoodenStep(TreeSpecies species, boolean inv) {
-        this();
-        setSpecies(species);
-        setInverted(inv);
+    public Sapling(final Material type) {
+        super(type);
     }
 
     /**
@@ -37,7 +34,7 @@ public class WoodenStep extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public WoodenStep(final int type, final byte data) {
+    public Sapling(final int type, final byte data) {
         super(type, data);
     }
 
@@ -46,15 +43,10 @@ public class WoodenStep extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public WoodenStep(final Material type, final byte data) {
+    public Sapling(final Material type, final byte data) {
         super(type, data);
     }
 
-    /**
-     * Gets the current species of this tree
-     *
-     * @return TreeSpecies of this tree
-     */
     public TreeSpecies getSpecies() {
         switch (getData() & 0x7) {
             case 0x0:
@@ -74,11 +66,6 @@ public class WoodenStep extends MaterialData {
         }
     }
 
-    /**
-     * Sets the species of this tree
-     *
-     * @param species New species of this tree
-     */
     public void setSpecies(TreeSpecies species) {
         switch (species) {
             case GENERIC:
@@ -102,35 +89,13 @@ public class WoodenStep extends MaterialData {
         }
     }
 
-    /**
-     * Test if step is inverted
-     *
-     * @return true if inverted (top half), false if normal (bottom half)
-     */
-    public boolean isInverted() {
-        return ((getData() & 0x8) != 0);
-    }
-    
-    /**
-     * Set step inverted state
-     *
-     * @param inv - true if step is inverted (top half), false if step is normal (bottom half)
-     */
-    public void setInverted(boolean inv) {
-        int dat = getData() & 0x7;
-        if (inv) {
-            dat |= 0x8;
-        }
-        setData((byte) dat);
-    }
-    
     @Override
-    public WoodenStep clone() {
-        return (WoodenStep) super.clone();
+    public String toString() {
+        return getSpecies() + " " + super.toString();
     }
 
     @Override
-    public String toString() {
-        return super.toString() + " " + getSpecies() + (isInverted()?" inverted":"");
+    public Sapling clone() {
+        return (Sapling) super.clone();
     }
 }

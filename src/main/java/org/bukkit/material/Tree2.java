@@ -5,21 +5,21 @@ import org.bukkit.TreeSpecies;
 import org.bukkit.block.BlockFace;
 
 /**
- * Represents four types of logs: {@link TreeSpecies#GENERIC}, {@link TreeSpecies#BIRCH}, {@link TreeSpecies#REDWOOD}, and {@link TreeSpecies#JUNGLE}.
+ * Represents two types of logs: {@link TreeSpecies#ACACIA} and {@link TreeSpecies#DARK_OAK}.
  * </p>
- * The other types of logs are represented by {@link Tree2}.
+ * The other types of logs are represented by {@link Tree}.
  */
-public class Tree extends SimpleTree {
-    public Tree() {
-        super(Material.LOG);
+public class Tree2 extends SimpleTree {
+    public Tree2() {
+        super(Material.LOG_2);
     }
 
-    public Tree(TreeSpecies species) {
+    public Tree2(TreeSpecies species) {
         this();
         setSpecies(species);
     }
 
-    public Tree(TreeSpecies species, BlockFace dir) {
+    public Tree2(TreeSpecies species, BlockFace dir) {
         this();
         setSpecies(species);
         setFacingDirection(dir);
@@ -30,11 +30,11 @@ public class Tree extends SimpleTree {
      * @deprecated Magic value
      */
     @Deprecated
-    public Tree(final int type) {
+    public Tree2(final int type) {
         super(type);
     }
 
-    public Tree(final Material type) {
+    public Tree2(final Material type) {
         super(type);
     }
 
@@ -43,7 +43,7 @@ public class Tree extends SimpleTree {
      * @deprecated Magic value
      */
     @Deprecated
-    public Tree(final int type, final byte data) {
+    public Tree2(final int type, final byte data) {
         super(type, data);
     }
 
@@ -52,12 +52,12 @@ public class Tree extends SimpleTree {
      * @deprecated Magic value
      */
     @Deprecated
-    public Tree(final Material type, final byte data) {
+    public Tree2(final Material type, final byte data) {
         super(type, data);
     }
 
     @Override
-    public Tree clone() {
-        return (Tree) super.clone();
+    public Tree2 clone() {
+        return (Tree2) super.clone();
     }
 }

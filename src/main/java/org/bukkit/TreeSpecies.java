@@ -1,9 +1,5 @@
 package org.bukkit;
 
-import java.util.Map;
-
-import com.google.common.collect.Maps;
-
 /**
  * Represents the different species of trees regardless of size.
  */
@@ -12,63 +8,26 @@ public enum TreeSpecies {
     /**
      * Represents the common tree species.
      */
-    GENERIC(0x0),
+    GENERIC,
     /**
      * Represents the darker barked/leaved tree species.
      */
-    REDWOOD(0x1),
+    REDWOOD,
     /**
      * Represents birches.
      */
-    BIRCH(0x2),
+    BIRCH,
     /**
      * Represents jungle trees.
      */
-    JUNGLE(0x3),
+    JUNGLE,
     /**
      * Represents acacia trees.
      */
-    ACACIA(0x4),
+    ACACIA,
     /**
      * Represents dark oak trees.
      */
-    DARK_OAK(0x5),
+    DARK_OAK,
     ;
-
-    private final byte data;
-    private final static Map<Byte, TreeSpecies> BY_DATA = Maps.newHashMap();
-
-    private TreeSpecies(final int data) {
-        this.data = (byte) data;
-    }
-
-    /**
-     * Gets the associated data value representing this species
-     *
-     * @return A byte containing the data value of this tree species
-     * @deprecated Magic value
-     */
-    @Deprecated
-    public byte getData() {
-        return data;
-    }
-
-    /**
-     * Gets the TreeSpecies with the given data value
-     *
-     * @param data Data value to fetch
-     * @return The {@link TreeSpecies} representing the given value, or null if
-     *         it doesn't exist
-     * @deprecated Magic value
-     */
-    @Deprecated
-    public static TreeSpecies getByData(final byte data) {
-        return BY_DATA.get(data);
-    }
-
-    static {
-        for (TreeSpecies species : values()) {
-            BY_DATA.put(species.data, species);
-        }
-    }
 }

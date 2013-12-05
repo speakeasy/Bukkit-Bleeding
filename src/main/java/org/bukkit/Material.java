@@ -31,6 +31,8 @@ import org.bukkit.material.Gate;
 import org.bukkit.material.GoldenApple;
 import org.bukkit.material.Jukebox;
 import org.bukkit.material.Ladder;
+import org.bukkit.material.Leaves;
+import org.bukkit.material.Leaves2;
 import org.bukkit.material.Lever;
 import org.bukkit.material.LongGrass;
 import org.bukkit.material.MaterialData;
@@ -51,6 +53,7 @@ import org.bukkit.material.RedstoneWire;
 import org.bukkit.material.Rotateable;
 import org.bukkit.material.Sand;
 import org.bukkit.material.Sandstone;
+import org.bukkit.material.Sapling;
 import org.bukkit.material.Sign;
 import org.bukkit.material.Skull;
 import org.bukkit.material.SkullItem;
@@ -62,6 +65,7 @@ import org.bukkit.material.TallPlant;
 import org.bukkit.material.Torch;
 import org.bukkit.material.TrapDoor;
 import org.bukkit.material.Tree;
+import org.bukkit.material.Tree2;
 import org.bukkit.material.Tripwire;
 import org.bukkit.material.TripwireHook;
 import org.bukkit.material.Vine;
@@ -82,8 +86,8 @@ public enum Material {
     GRASS(2),
     DIRT(3, Dirt.class),
     COBBLESTONE(4),
-    WOOD(5, Tree.class),
-    SAPLING(6, Tree.class),
+    WOOD(5, Sapling.class),
+    SAPLING(6, Sapling.class),
     BEDROCK(7),
     WATER(8, MaterialData.class),
     STATIONARY_WATER(9, MaterialData.class),
@@ -95,7 +99,7 @@ public enum Material {
     IRON_ORE(15),
     COAL_ORE(16),
     LOG(17, Tree.class),
-    LEAVES(18, Tree.class),
+    LEAVES(18, Leaves.class),
     SPONGE(19),
     GLASS(20),
     LAPIS_ORE(21),
@@ -240,8 +244,8 @@ public enum Material {
     DROPPER(158, Dispenser.class),
     STAINED_CLAY(159, Wool.class),
     STAINED_GLASS_PANE(160, Wool.class),
-    LEAVES_2(161),
-    LOG_2(162),
+    LEAVES_2(161, Leaves2.class),
+    LOG_2(162, Tree2.class),
     ACACIA_STAIRS(163, Stairs.class),
     DARK_OAK_STAIRS(164, Stairs.class),
     HAY_BLOCK(170, Rotateable.class),
