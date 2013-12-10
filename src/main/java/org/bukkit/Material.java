@@ -26,6 +26,7 @@ import org.bukkit.material.Dye;
 import org.bukkit.material.EnderChest;
 import org.bukkit.material.Flower;
 import org.bukkit.material.FlowerPot;
+import org.bukkit.material.Fluid;
 import org.bukkit.material.Furnace;
 import org.bukkit.material.Gate;
 import org.bukkit.material.GoldenApple;
@@ -89,10 +90,10 @@ public enum Material {
     WOOD(5, Sapling.class),
     SAPLING(6, Sapling.class),
     BEDROCK(7),
-    WATER(8, MaterialData.class),
-    STATIONARY_WATER(9, MaterialData.class),
-    LAVA(10, MaterialData.class),
-    STATIONARY_LAVA(11, MaterialData.class),
+    WATER(8, Fluid.class),
+    STATIONARY_WATER(9),
+    LAVA(10, Fluid.class),
+    STATIONARY_LAVA(11),
     SAND(12, Sand.class),
     GRAVEL(13),
     GOLD_ORE(14),
