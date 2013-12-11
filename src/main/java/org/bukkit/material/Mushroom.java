@@ -13,6 +13,8 @@ import org.bukkit.block.BlockFace;
 public class Mushroom extends MaterialData {
     private static final byte SHROOM_NONE = 0;
     private static final byte SHROOM_STEM = 10;
+    private static final byte ALL_CAP = 14;
+    private static final byte ALL_STEM = 15;
     private static final byte NORTH_LIMIT = 4;
     private static final byte SOUTH_LIMIT = 6;
     private static final byte EAST_WEST_LIMIT = 3;
@@ -69,8 +71,10 @@ public class Mushroom extends MaterialData {
     public boolean isFacePainted(BlockFace face) {
         byte data = getData();
 
-        if (data == SHROOM_NONE || data == SHROOM_STEM) {
+        if (data == SHROOM_NONE || (data >= SHROOM_STEM && data < ALL_CAP) || data == ALL_STEM) {
             return false;
+        } else if (data == ALL_CAP) {
+            return true;
         }
 
         switch (face) {
@@ -184,7 +188,7 @@ public class Mushroom extends MaterialData {
 
     @Override
     public String toString() {
-        return Material.getMaterial(getItemTypeId()).toString() + (isStem() ? "{STEM}" : getPaintedFaces());
+        return super.toString() + (isStem() ? "{STEM}" : getPaintedFaces());
     }
 
     @Override
