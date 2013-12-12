@@ -251,12 +251,13 @@ public class Potion {
 
     /**
      * Set whether this potion has extended duration. This will cause the potion
-     * to have roughly 8/3 more duration than a regular potion.
+     * to have roughly 8/3 more duration than a regular potion. For instant potions,
+     * this method will set them as reverted.
      *
      * @param isExtended Whether the potion should have extended duration
      */
     public void setHasExtendedDuration(boolean isExtended) {
-        Validate.isTrue(type == null || !type.isInstant(), "Instant potions cannot be extended");
+        Validate.notNull(type);
         extended = isExtended;
     }
 
