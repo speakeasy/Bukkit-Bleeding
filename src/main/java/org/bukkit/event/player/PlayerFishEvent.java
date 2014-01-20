@@ -127,5 +127,9 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
          * When a player fails to catch anything while fishing usually due to poor aiming or timing
          */
         FAILED_ATTEMPT,
+        /**
+         * When a player has successfully caught an item and is reeling it in.
+         */
+        CAUGHT_ITEM,
     }
 }
