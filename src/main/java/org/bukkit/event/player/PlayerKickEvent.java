@@ -1,5 +1,6 @@
 package org.bukkit.event.player;
 
+import org.bukkit.QuitReason;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
@@ -12,11 +13,18 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
     private String leaveMessage;
     private String kickReason;
     private Boolean cancel;
+    private QuitReason quitReason;
 
+    @Deprecated
     public PlayerKickEvent(final Player playerKicked, final String kickReason, final String leaveMessage) {
+        this(playerKicked, kickReason, leaveMessage, QuitReason.KICKED);
+    }
+
+    public PlayerKickEvent(final Player playerKicked, final String kickReason, final String leaveMessage, final QuitReason quitReason) {
         super(playerKicked);
         this.kickReason = kickReason;
         this.leaveMessage = leaveMessage;
+        this.quitReason = quitReason;
         this.cancel = false;
     }
 
@@ -30,12 +38,23 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
     }
 
     /**
-     * Gets the leave message send to all online players
+     * Gets the leave message to send to all online players
      *
-     * @return string kick reason
+     * @return string leave message
      */
     public String getLeaveMessage() {
         return leaveMessage;
+    }
+
+    /**
+     * Gets the reason the server kicked the player. This
+     * method returns an enum, intended for use by other
+     * plugins. Use getReason() to obtain a text version.
+     *
+     * @return QuitReason quit reason
+     */
+    public QuitReason getQuitReason() {
+        return quitReason;
     }
 
     public boolean isCancelled() {
@@ -56,7 +75,7 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
     }
 
     /**
-     * Sets the leave message send to all online players
+     * Sets the leave message to send to all online players
      *
      * @param leaveMessage leave message
      */
